@@ -1,0 +1,30 @@
+{
+  "robotWidth": 0.8382,
+  "robotLength": 0.9652,
+  "holonomicMode": true,
+  "pathFolders": [
+    "TEST"
+  ],
+  "autoFolders": [
+    "Five Note",
+    "Four Note",
+    "Two Note",
+    "One Note",
+    "TEST",
+    "Three Note"
+  ],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "robotMass": 56.245,
+  "robotMOI": 7.64,
+  "robotWheelbase": 0.546,
+  "robotTrackwidth": 0.546,
+  "driveWheelRadius": 0.0381,
+  "driveGearing": 4.71,
+  "maxDriveSpeed": 5.76,
+  "driveMotorType": "vortex",
+  "driveCurrentLimit": 80.0,
+  "wheelCOF": 1.2
+}

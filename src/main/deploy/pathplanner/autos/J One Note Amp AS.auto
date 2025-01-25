@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootBackwards"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "James ASTFL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "James LNT Amp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AmpShot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "One Note",
+  "choreoAuto": false
+}

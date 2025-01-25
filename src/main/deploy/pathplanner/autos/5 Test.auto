@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootBackwards"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 James CSTRB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 James RBTCS"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 James CSTRA"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 RATRC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 James RCTCS"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 CSTFN"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 FNTCS"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Five Note",
+  "choreoAuto": false
+}

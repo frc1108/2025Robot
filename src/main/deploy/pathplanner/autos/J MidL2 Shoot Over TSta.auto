@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootBackwards"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "James SSTFCN"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "James CNTCLN"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "James CLNTLN"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
