@@ -20,11 +20,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.HendersonConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.HendersonFeeder;
-import frc.robot.subsystems.Underroller;
-import frc.robot.subsystems.HendersonLauncher;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -43,10 +39,6 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final Underroller m_underroller = new Underroller();
-  private final HendersonLauncher m_launcher  = new HendersonLauncher();
-  private final HendersonFeeder m_feeder  = new HendersonFeeder();
-  private final Arm m_arm  = new Arm();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -86,32 +78,7 @@ public class RobotContainer {
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),
     //         m_robotDrive));
-
-
-        //**** OPERATOR CONTROLS ****
-    m_operatorController.a().whileTrue(Commands.runEnd(
-                                         ()->m_feeder.set(HendersonConstants.kFeederBackSpeed),
-                                         ()->m_feeder.set(0),m_feeder));
-    m_operatorController.b().whileTrue(Commands.runEnd(
-                                         ()->m_feeder.set(HendersonConstants.kFeederFrontSpeed),
-                                         ()->m_feeder.set(0),m_feeder));
-    m_operatorController.x().whileTrue(Commands.runEnd(
-                                         ()->m_launcher.set(HendersonConstants.kLauncherFrontSpeed),
-                                         ()->m_launcher.set(0),m_launcher));
-    m_operatorController.y().whileTrue(Commands.runEnd(
-                                         ()->m_launcher.set(HendersonConstants.kLauncherBackSpeed),
-                                         ()->m_launcher.set(0),m_launcher));
-    
-    
-    m_operatorController.leftBumper().whileTrue(m_underroller.runUnderroller().withName("Intaking"));
-    m_operatorController.rightBumper().whileTrue(m_underroller.reverseUnderroller().withName("Outtaking"));
-
-    m_operatorController.povDown().onTrue(m_arm.setArmGoalCommand(ArmConstants.kArmPickupAngleRads));
-    m_operatorController.povUp().onTrue(m_arm.setArmGoalCommand(ArmConstants.kArmShootingAngleRads));
-    m_operatorController.povRight().onTrue(m_arm.setArmGoalCommand(ArmConstants.kArmFarShootingAngleRads));
-    m_operatorController.povLeft().onTrue(m_arm.setArmGoalCommand(ArmConstants.kArmDownRads));
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
