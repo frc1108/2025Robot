@@ -25,16 +25,16 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
+    public static final double kMaxSpeedMetersPerSecond = 4.92;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
     public static final double kTopSpeed = 1.0; // 0 to 1
     public static final double kTopAngularSpeed = 1.0; // 0 to 1
 
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(26.5);
+    public static final double kTrackWidth = Units.inchesToMeters(21.5);
     // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(26.5);
+    public static final double kWheelBase = Units.inchesToMeters(21.5);
     // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -66,10 +66,10 @@ public final class Constants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
     // more teeth will result in a robot that drives faster).
-    public static final int kDrivingMotorPinionTeeth = 14;
+    public static final int kDrivingMotorPinionTeeth = 12;
 
     // Calculations required for driving motor conversion factors and feed forward
-    public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
+    public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = 0.0762;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
@@ -100,83 +100,7 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  public static final class NeoMotorConstants {
-    public static final double kFreeSpeedRpm = 5676;
+  public static final class VortexMotorConstants {
+    public static final double kFreeSpeedRpm = 6784;
   }
-
-  public static final class UnderrollerConstants {
-    public static final int kFrontCanId = 21;
-    public static final int kRearCanId = 22;
-    public static final double kUnderrollerIntakeSpeed = 0.8;
-  }
-
-  public static final class HendersonConstants {
-    public static final int kLeftLauncherMotorCanId = 1;
-    public static final int kRightLauncherMotorCanId = 2;
-    public static final int kLeftFeederMotorCanId = 3;
-    public static final int kRightFeederMotorCanId = 4;
-
-    public static final double kFeederGearRatio = 47/11;
-    public static final double kIntakeLauncherSpeed = 0.1;
-    public static final double kIntakeFeederSpeed = 0.3;
-    public static double kLauncherIdleRpm = 1000;
-    public static double kMaxLauncherRpm = 4000;
-
-    public static double kFeederBackSpeed = 1; // Feeder --> EXIT
-    public static double kFeederFrontSpeed = -0.55; // Feeder --> Launcher
-    public static double kLauncherFrontSpeed = 0.75; // Launcher --> EXIT
-    public static double kLauncherBackSpeed = -0.75; // Launcher --> Feeder
-    
-    public static double kLauncherIntakeNoteSpeed = -0.75; // Launcher --> Feeder
-    public static double kLauncherShootNoteBackSpeed = -0.75; // Launcher --> Feeder
-    public static double kLauncherCenteringSpeed = 0.1; // Launcher --> EXIT
-  }
-
-  public static final class ArmConstants {
-    public static final int kLeftArmMotorCanId = 31;
-    public static final int kRightArmMotorCanId = 32;
-
-    public static final double kSportGearRatio = 36.0;
-    public static final double kSportPinionTeeth = 10;
-    public static final double kArmSprocketTeeth = 36;
-    public static final double kArmGearRatio = 129.6;
-
-    // SysID values (in radians and radians/sec)
-    public static final double kSVolts = 1.8; //0.11356;
-    public static final double kGVolts = 0.5; //0.29175;
-    public static final double kVVoltSecondPerRad = 7; //3.65; //1.5928;
-    public static final double kAVoltSecondSquaredPerRad = 0.02;//0.030171;
-
-    // Set the arm speed and acceleration
-    public static final double kMaxVelocityRadPerSecond = 1.5;
-    public static final double kMaxAccelerationRadPerSecSquared = 2;
-
-    public static final double kArmOffsetRads = Units.degreesToRadians(-45); //Starting angle
-    public static final double kArmMaxRads = Units.degreesToRadians(90); //Ending angle
-
-    // public static final double kArmEncoderPositionPIDMinInput = kArmOffsetRads; // radians
-    // public static final double kArmEncoderPositionPIDMaxInput = kArmMaxRads; 
-
-
-    public static final double kMaxArmSpeedRpm = 
-      NeoMotorConstants.kFreeSpeedRpm / kArmGearRatio ;
-    public static final double kMaxArmRadiansPerSecond =
-      Units.rotationsPerMinuteToRadiansPerSecond(kMaxArmSpeedRpm);
-
-    public static final double kMaxArmSpeed = 0.8;
-    //public static final double kArmSlewRate = 2;
-    public static final double kArmDeadband = 0.1;
-
-    public static final double kArmTestOffsetRads = Units.degreesToRadians(15);
-    public static final double kArmShootingAngleRads = Units.degreesToRadians(57.5); //Amp shooting agngle
-    public static final double kArmFarShootingAngleRads = Units.degreesToRadians(47.5); //Connect to chain
-    public static final double kArmPickupAngleRads = Units.degreesToRadians(-39); //37.5 Normal Pickup & Auto Shoot
-    //public static final double kArmStraightUpAngleRads = Units.degreesToRadians(90 );
-    public static final double kArmDownRads = Units.degreesToRadians(-41); //-40 Jiggle & Trap 
-    public static final double kArmShootingStepsRads = (kArmShootingAngleRads - kArmFarShootingAngleRads) / 3; //20
-    public static final double kArmPickupStepsRads = Units.degreesToRadians(1); //20
-    public static final double kArmFeederAngle = Units.degreesToRadians(-20); //20
-
-  }
-
 }
