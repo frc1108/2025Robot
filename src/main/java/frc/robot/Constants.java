@@ -103,4 +103,8 @@ public final class Constants {
   public static final class VortexMotorConstants {
     public static final double kFreeSpeedRpm = 6784;
   }
+
+  public static final class ElevatorConstants {
+    public static final int kMotorCanId = 21;
+  }
 }

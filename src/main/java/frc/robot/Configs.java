@@ -5,8 +5,6 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
-
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ModuleConstants;
 
 public final class Configs {
@@ -23,7 +21,7 @@ public final class Configs {
 
             drivingConfig
                     .idleMode(IdleMode.kBrake)
-                    .smartCurrentLimit(50);
+                    .smartCurrentLimit(80);
             drivingConfig.encoder
                     .positionConversionFactor(drivingFactor) // meters
                     .velocityConversionFactor(drivingFactor / 60.0); // meters per second
@@ -56,74 +54,21 @@ public final class Configs {
                     .positionWrappingInputRange(0, turningFactor);
         }
     }
+    public static final class Elevator {
+        public static final SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
-    public static final class Brake {
-        public static final SparkMaxConfig brakeConfig = new SparkMaxConfig();
-
-        static {
-                brakeConfig
-                        .smartCurrentLimit(30)
-                        .idleMode(IdleMode.kBrake)
-                        .inverted(true);
+        static{
+                elevatorConfig
+                  .idleMode(IdleMode.kBrake)
+                  .smartCurrentLimit(40);
+                elevatorConfig.absoluteEncoder
+                  .positionConversionFactor(1)
+                  .positionConversionFactor(1);
+                elevatorConfig.closedLoop
+                  .feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+                elevatorConfig.closedLoop.maxMotion
+                  .maxAcceleration(0.1) // m/s
+                  .maxVelocity(0.2); //m/s
         }
     }
-
-    public static final class Feeder {
-        public static final SparkMaxConfig feederConfig = new SparkMaxConfig();
-
-        static {
-                feederConfig
-                        .smartCurrentLimit(30)
-                        .idleMode(IdleMode.kBrake);
-                feederConfig.limitSwitch
-                        .forwardLimitSwitchType(Type.kNormallyOpen)
-                        .forwardLimitSwitchEnabled(false);
-        }
-    }
-
-    public static final class Launcher {
-        public static final SparkFlexConfig launcherConfig = new SparkFlexConfig();
-
-        static {
-                launcherConfig
-                        .smartCurrentLimit(40)
-                        .idleMode(IdleMode.kCoast);
-                launcherConfig.closedLoop
-                        .pidf(0.00025,0.0,0.00001,0.0001505)
-                        .outputRange(-1,1);
-        }
-    }
-
-    public static final class Underroller {
-        public static final SparkMaxConfig underrollerConfig = new SparkMaxConfig();
-
-        static {
-                underrollerConfig
-                        .smartCurrentLimit(30)
-                        .idleMode(IdleMode.kBrake);              
-        }
-    }
-
-    public static final class Arm {
-        public static final SparkMaxConfig armConfig = new SparkMaxConfig();
-
-        static {
-                double armPositionFactor = ((2 * Math.PI) / ArmConstants.kArmGearRatio); // radians
-
-                armConfig
-                        .smartCurrentLimit(50)
-                        .idleMode(IdleMode.kBrake);
-                armConfig.encoder
-                        .positionConversionFactor(armPositionFactor) // radians
-                        .velocityConversionFactor(armPositionFactor / 60.0); // radians/sec
-                armConfig.closedLoop
-                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        .pidf(4,0,0.5,0)
-                        .outputRange(-1, 1);
-
-
-        }
-    }
-
-    
 }
