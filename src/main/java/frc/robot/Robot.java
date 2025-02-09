@@ -5,9 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.epilogue.Logged;
+
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.reduxrobotics.canand.CanandEventLoop;
+
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -32,10 +38,22 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    CanandEventLoop.getInstance();
+    FollowPathCommand.warmupCommand().schedule();
 
     // Initialize data logging.
     DataLogManager.start();
     Epilogue.bind(this);
+  }
+
+  @Override
+  public void driverStationConnected() {
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      m_robotContainer.configureWithAlliance(alliance.get());
+    } else {
+      m_robotContainer.configureWithAlliance(Alliance.Blue);
+    }
   }
 
   /**
