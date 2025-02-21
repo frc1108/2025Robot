@@ -93,6 +93,8 @@ public class RobotContainer {
 
     m_driverController.rightTrigger().whileTrue(m_climber.upClimber());
     m_driverController.leftTrigger().whileTrue(m_climber.downClimber());
+    m_driverController.leftTrigger().whileFalse(m_climber.stopClimber());
+    m_driverController.rightTrigger().whileFalse(m_climber.stopClimber());
     // new JoystickButton(m_driverController, Button.kR1.value)
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),

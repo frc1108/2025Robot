@@ -43,4 +43,10 @@ final DutyCycleOut m_request = new DutyCycleOut(0.2);
       set(-0.2);
     });
   }
+  public Command stopClimber(){
+    return this.run(
+    () -> {
+      set(0);
+    });
+  }
 }
