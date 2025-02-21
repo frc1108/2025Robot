@@ -115,10 +115,15 @@ public class RobotContainer {
     m_driverController.x().whileFalse(m_coral.coralSpinStop());
     m_driverController.y().whileFalse(m_coral.coralSpinStop());
 
-    m_driverController.povDown().whileTrue(m_coral.coralIn());
-    m_driverController.povUp().whileTrue(m_coral.coralOut());
-    m_driverController.povDown().whileFalse(m_coral.coralStop());
-    m_driverController.povUp().whileFalse(m_coral.coralStop());
+    m_driverController.povRight().whileTrue(m_coral.coralIn());
+    m_driverController.povLeft().whileTrue(m_coral.coralOut());
+    m_driverController.povRight().whileFalse(m_coral.coralStop());
+    m_driverController.povLeft().whileFalse(m_coral.coralStop());
+
+    m_driverController.povUp().whileTrue(m_coral.elevatorUp());
+    m_driverController.povDown().whileTrue(m_coral.elevatorDown());
+    m_driverController.povUp().whileFalse(m_coral.elevatorStop());
+    m_driverController.povDown().whileFalse(m_coral.elevatorStop());
 
     // new JoystickButton(m_driverController, Button.kR1.value)
     //     .whileTrue(new RunCommand(

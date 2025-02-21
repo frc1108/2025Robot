@@ -13,8 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class CoralSubsystem extends SubsystemBase {
   /** Creates a new CoralSubsystem. */
 
-final SparkMax m_coralUpDown = new SparkMax(26, MotorType.kBrushless);
-final SparkMax m_coralInOut = new SparkMax(27, MotorType.kBrushless);
+final SparkMax m_coralUpDown = new SparkMax(41, MotorType.kBrushless);
+final SparkMax m_coralInOut = new SparkMax(42, MotorType.kBrushless);
+final SparkMax m_elevator = new SparkMax(21, MotorType.kBrushless);
 
 
   public CoralSubsystem() {}
@@ -30,6 +31,9 @@ final SparkMax m_coralInOut = new SparkMax(27, MotorType.kBrushless);
     m_coralInOut.set(speed);
   }
   private void set(double speed){
+    m_coralUpDown.set(speed);
+  }
+  private void setElevator(double speed){
     m_coralUpDown.set(speed);
   }
 public Command coralOut(){
@@ -53,19 +57,37 @@ public Command coralOut(){
     public Command coralSpinIn(){
       return this.run(
       () -> {
-        set(0.25);
+        set(0.5);
       });
     }
     public Command coralSpinOut(){
       return this.run(
       () -> {
-        set(-0.25);
+        set(-0.5);
       });
     }
     public Command coralSpinStop(){
       return this.run(
       () -> {
         set(0);
+      });
+    }
+    public Command elevatorUp(){
+      return this.run(
+      () -> {
+        setElevator(0.15);
+      });
+    }
+    public Command elevatorDown(){
+      return this.run(
+      () -> {
+        setElevator(-0.15);
+      });
+    }
+    public Command elevatorStop(){
+      return this.run(
+      () -> {
+        setElevator(0);
       });
     }
 }
