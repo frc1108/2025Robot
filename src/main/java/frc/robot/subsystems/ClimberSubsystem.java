@@ -33,14 +33,14 @@ final DutyCycleOut m_request = new DutyCycleOut(0.2);
   public Command upClimber(){
     return this.run(
     () -> {
-      set(0.2);
+      set(0.6);
     });
   }
 
   public Command downClimber(){
     return this.run(
     () -> {
-      set(-0.2);
+      set(-1);
     });
   }
   public Command stopClimber(){
