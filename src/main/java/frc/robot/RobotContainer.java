@@ -24,6 +24,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -49,6 +50,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
+  private final CoralSubsystem m_coral = new CoralSubsystem();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -107,6 +109,16 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_algae.outAlgaeRoller());
     m_driverController.a().whileFalse(m_algae.stopAlgaeRoller());
     m_driverController.b().whileFalse(m_algae.stopAlgaeRoller());
+
+    m_driverController.x().whileTrue(m_coral.coralSpinIn());
+    m_driverController.y().whileTrue(m_coral.coralSpinOut());
+    m_driverController.x().whileFalse(m_coral.coralSpinStop());
+    m_driverController.y().whileFalse(m_coral.coralSpinStop());
+
+    m_driverController.povDown().whileTrue(m_coral.coralIn());
+    m_driverController.povUp().whileTrue(m_coral.coralOut());
+    m_driverController.povDown().whileFalse(m_coral.coralStop());
+    m_driverController.povUp().whileFalse(m_coral.coralStop());
 
     // new JoystickButton(m_driverController, Button.kR1.value)
     //     .whileTrue(new RunCommand(
