@@ -20,16 +20,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Robot;
-import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.CoralSubsystemConstants;
 import frc.robot.Constants.CoralSubsystemConstants.ArmSetpoints;
 import frc.robot.Constants.CoralSubsystemConstants.ElevatorSetpoints;
 import frc.robot.Constants.CoralSubsystemConstants.IntakeSetpoints;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.IntakeConstants;
+
 
 @Logged
 public class CoralSubsystem extends SubsystemBase {
   public enum Setpoint {
+    kStow,
     kFeederStation,
     kLevel1,
     kLevel2,
@@ -39,25 +39,25 @@ public class CoralSubsystem extends SubsystemBase {
 
   // Initialize arm SPARK.  Using MaxMotion with Absolute REV Through Bore for control.  So initialize
   // the closed loop controller and encoder
-  private final SparkMax m_armMotor = new SparkMax(ArmConstants.kMotorCanId, MotorType.kBrushless);
+  private final SparkMax m_armMotor = new SparkMax(CoralSubsystemConstants.kArmMotorCanId, MotorType.kBrushless);
   private final SparkClosedLoopController m_armController = m_armMotor.getClosedLoopController();
   private final AbsoluteEncoder m_armEncoder = m_armMotor.getAbsoluteEncoder();
 
   // Initialize elevator SPARK.  Using MaxMotion with Relative REV Through Bore for control.  So initialize
   // the closed loop controller and encoder
-  private final SparkMax m_elevatorMotor = new SparkMax(ElevatorConstants.kMotorCanId, MotorType.kBrushless);
+  private final SparkMax m_elevatorMotor = new SparkMax(CoralSubsystemConstants.kElevatorMotorCanId, MotorType.kBrushless);
   private final SparkClosedLoopController m_elevatorController = m_elevatorMotor.getClosedLoopController();
   private final RelativeEncoder m_elevatorEncoder = m_elevatorMotor.getAlternateEncoder();
   private final DigitalInput m_elevatorLowerLimit = new DigitalInput(0);
 
   // Initialize intake SPARK.  We will use open loop control for this.
-  private final SparkMax m_intakeMotor = new SparkMax(IntakeConstants.kMotorCanId, MotorType.kBrushless);
+  private final SparkMax m_intakeMotor = new SparkMax(CoralSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
   // Managing the state of the robot
   private boolean m_resetByButton = false;
   private boolean m_resetByLimit = false;
-  private double m_armCurrentTarget = ArmSetpoints.kFeederStation;
-  private double m_elevatorCurrentTarget = ElevatorSetpoints.kFeederStation;
+  private double m_armCurrentTarget = ArmSetpoints.kStow;
+  private double m_elevatorCurrentTarget = ElevatorSetpoints.kStow;
 
   /** Creates a new Elevator. */
   public CoralSubsystem() {
@@ -125,6 +125,10 @@ public Command setSetpointCommand(Setpoint setpoint) {
   return this.runOnce(
     () -> {
       switch (setpoint) {
+        case kStow:
+          m_armCurrentTarget = ArmSetpoints.kStow;
+          m_elevatorCurrentTarget = ElevatorSetpoints.kStow;
+          break;
         case kFeederStation:
           m_armCurrentTarget = ArmSetpoints.kFeederStation;
           m_elevatorCurrentTarget = ElevatorSetpoints.kFeederStation;

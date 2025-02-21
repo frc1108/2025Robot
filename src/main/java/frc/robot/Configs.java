@@ -122,7 +122,7 @@ public final class Configs {
                   .p(3)
                   .outputRange(-1, 1);
                 elevatorConfig.closedLoop.maxMotion
-                  .maxVelocity(60) // m/s Not sure what exact units are in??
+                  .maxVelocity(50) // m/s Not sure what exact units are in??
                   .maxAcceleration(300)
                   .allowedClosedLoopError(0.004);  // 4mm
         }
