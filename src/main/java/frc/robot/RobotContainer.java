@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,6 +48,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
+  private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -95,6 +97,11 @@ public class RobotContainer {
     m_driverController.leftTrigger().whileTrue(m_climber.downClimber());
     m_driverController.leftTrigger().whileFalse(m_climber.stopClimber());
     m_driverController.rightTrigger().whileFalse(m_climber.stopClimber());
+
+    m_driverController.rightBumper().whileTrue(m_algae.upAlgae());
+    m_driverController.leftBumper().whileTrue(m_algae.downAlgae());
+    m_driverController.leftBumper().whileFalse(m_algae.stopAlgae());
+    m_driverController.rightBumper().whileFalse(m_algae.stopAlgae());
     // new JoystickButton(m_driverController, Button.kR1.value)
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),
