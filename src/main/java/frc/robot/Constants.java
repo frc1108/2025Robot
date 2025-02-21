@@ -25,8 +25,8 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.92;
-    public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
+    public static final double kMaxSpeedMetersPerSecond = 3; //4.92 is maximum 
+    public static final double kMaxAngularSpeed = Math.PI; // radians per second //2*Pi is maximum
     public static final double kTopSpeed = 1.0; // 0 to 1
     public static final double kTopAngularSpeed = 1.0; // 0 to 1
 
@@ -60,7 +60,7 @@ public final class Constants {
     public static final int kFrontRightTurningCanId = 14;
     public static final int kRearRightTurningCanId = 16;
 
-    public static final boolean kGyroReversed = false;
+    // public static final boolean kGyroReversed = false;
   }
 
   public static final class ModuleConstants {
@@ -86,20 +86,20 @@ public final class Constants {
     public static final double kDriveDeadband = 0.05;
   }
 
-  public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+  // public static final class AutoConstants {
+  //   public static final double kMaxSpeedMetersPerSecond = 3;
+  //   public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+  //   public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+  //   public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPXController = 1;
-    public static final double kPYController = 1;
-    public static final double kPThetaController = 1;
+  //   public static final double kPXController = 1;
+  //   public static final double kPYController = 1;
+  //   public static final double kPThetaController = 1;
 
-    // Constraint for the motion profiled robot angle controller
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-  }
+  //   // Constraint for the motion profiled robot angle controller
+  //   public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+  //       kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+  // }
 
   public static final class VortexMotorConstants {
     public static final double kFreeSpeedRpm = 6784;
@@ -108,4 +108,41 @@ public final class Constants {
   public static final class ElevatorConstants {
     public static final int kMotorCanId = 21;
   }
+
+  public static final class ArmConstants {
+    public static final int kMotorCanId = 41;
+  }
+
+  public static final class IntakeConstants {
+    public static final int kMotorCanId = 42;
+  }
+
+  public static final class CoralSubsystemConstants {
+    public static final int kElevatorMotorCanId = 21;
+    public static final int kArmMotorCanId = 41;
+    public static final int kIntakeMotorCanId = 42;
+
+    public static final class ElevatorSetpoints {
+      public static final double kFeederStation = 0.0;
+      public static final double kLevel1 = 0.0;
+      public static final double kLevel2 = 0.0;
+      public static final double kLevel3 = 0.25;
+      public static final double kLevel4 = 0.4;
+    }
+
+    public static final class ArmSetpoints {
+      public static final double kFeederStation = 0.5;
+      public static final double kLevel1 = 0.0;
+      public static final double kLevel2 = 0.0;
+      public static final double kLevel3 = 1.25;
+      public static final double kLevel4 = 1.4;
+    }
+
+    public static final class IntakeSetpoints {
+      public static final double kForward = 0.5;
+      public static final double kReverse = -0.5;
+    }
+  }
+
+
 }

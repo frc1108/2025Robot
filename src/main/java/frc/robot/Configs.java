@@ -4,6 +4,9 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.math.util.Units;
+
 import com.revrobotics.spark.config.SparkFlexConfig;
 import frc.robot.Constants.ModuleConstants;
 
@@ -54,21 +57,82 @@ public final class Configs {
                     .positionWrappingInputRange(0, turningFactor);
         }
     }
+
+    public static final class Arm {
+        public static final SparkMaxConfig armConfig = new SparkMaxConfig();
+
+        static {
+
+                double armFactor = 2*Math.PI;
+                // Configure basic settings of the arm motor
+                armConfig
+                  .idleMode(IdleMode.kCoast)
+                  .inverted(true)
+                  .smartCurrentLimit(20)
+                  .voltageCompensation(10);
+        
+                armConfig.absoluteEncoder
+                  .setSparkMaxDataPortConfig()
+                  .positionConversionFactor(armFactor)
+                  .velocityConversionFactor(armFactor/60)
+                  .inverted(true);
+                /*
+                 * Configure the closed loop controller. We want to make sure we set the
+                 * feedback sensor as the primary encoder.
+                 */
+                armConfig
+                    .closedLoop
+                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                    .positionWrappingEnabled(true)
+                    .positionWrappingInputRange(0, armFactor)
+                    // Set PID values for position control
+                    .p(1.2)
+                    .d(0.075)
+                    .outputRange(-1, 1)
+                    .maxMotion
+                    // Set MAXMotion parameters for position control
+                    .maxVelocity(300)
+                    .maxAcceleration(900)
+                    .allowedClosedLoopError(0.1);
+        }
+    }
+    
     public static final class Elevator {
         public static final SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
         static{
+                double gearRatio = 12.0*14.0/16.0;
+                double sprocketDistanceMeters = Units.inchesToMeters(6.5);
+                double countsPerRevolution = 8192;
+                
                 elevatorConfig
-                  .idleMode(IdleMode.kBrake)
-                  .smartCurrentLimit(40);
-                elevatorConfig.absoluteEncoder
-                  .positionConversionFactor(1)
-                  .positionConversionFactor(1);
+                  .idleMode(IdleMode.kCoast)
+                  .smartCurrentLimit(50)
+                  .inverted(true)
+                  .voltageCompensation(10);
+                elevatorConfig.encoder
+                  .positionConversionFactor(sprocketDistanceMeters/gearRatio)
+                  .velocityConversionFactor(sprocketDistanceMeters/gearRatio/60);
+                elevatorConfig.alternateEncoder
+                  .countsPerRevolution(8192)
+                  .positionConversionFactor(sprocketDistanceMeters/countsPerRevolution)
+                  .velocityConversionFactor(sprocketDistanceMeters/countsPerRevolution/60);
                 elevatorConfig.closedLoop
-                  .feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+                  .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)
+                  .p(3)
+                  .outputRange(-1, 1);
                 elevatorConfig.closedLoop.maxMotion
-                  .maxAcceleration(0.1) // m/s
-                  .maxVelocity(0.2); //m/s
+                  .maxVelocity(60) // m/s Not sure what exact units are in??
+                  .maxAcceleration(300)
+                  .allowedClosedLoopError(0.004);  // 4mm
         }
-    }
+}
+
+public static final class Intake {
+        public static final SparkMaxConfig intakeConfig = new SparkMaxConfig();
+
+        static {
+                // Configure basic settings of the arm motor
+                intakeConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(20).voltageCompensation(12);
+        }}
 }
