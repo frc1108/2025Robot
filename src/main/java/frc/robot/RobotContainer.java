@@ -102,6 +102,12 @@ public class RobotContainer {
     m_driverController.leftBumper().whileTrue(m_algae.downAlgae());
     m_driverController.leftBumper().whileFalse(m_algae.stopAlgae());
     m_driverController.rightBumper().whileFalse(m_algae.stopAlgae());
+
+    m_driverController.a().whileTrue(m_algae.inAlgaeRoller());
+    m_driverController.b().whileTrue(m_algae.outAlgaeRoller());
+    m_driverController.a().whileFalse(m_algae.stopAlgaeRoller());
+    m_driverController.b().whileFalse(m_algae.stopAlgaeRoller());
+
     // new JoystickButton(m_driverController, Button.kR1.value)
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),
