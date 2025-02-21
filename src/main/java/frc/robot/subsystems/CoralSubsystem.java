@@ -34,18 +34,18 @@ final SparkMax m_elevator = new SparkMax(21, MotorType.kBrushless);
     m_coralUpDown.set(speed);
   }
   private void setElevator(double speed){
-    m_coralUpDown.set(speed);
+    m_elevator.set(speed);
   }
 public Command coralOut(){
       return this.run(
       () -> {
-        setInOut(0.25);
+        setInOut(0.5);
       });
     }
     public Command coralIn(){
       return this.run(
       () -> {
-        setInOut(-0.25);
+        setInOut(-0.5);
       });
     }
     public Command coralStop(){
@@ -57,13 +57,13 @@ public Command coralOut(){
     public Command coralSpinIn(){
       return this.run(
       () -> {
-        set(0.5);
+        set(0.4);
       });
     }
     public Command coralSpinOut(){
       return this.run(
       () -> {
-        set(-0.5);
+        set(-0.4);
       });
     }
     public Command coralSpinStop(){
@@ -75,13 +75,13 @@ public Command coralOut(){
     public Command elevatorUp(){
       return this.run(
       () -> {
-        setElevator(0.15);
+        setElevator(-0.3);
       });
     }
     public Command elevatorDown(){
       return this.run(
       () -> {
-        setElevator(-0.15);
+        setElevator(0.3);
       });
     }
     public Command elevatorStop(){
