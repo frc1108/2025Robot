@@ -160,7 +160,7 @@ public class RobotContainer {
 
   public void configureNamedCommands() {
     NamedCommands.registerCommand("level4Up", Commands.none());
-    NamedCommands.registerCommand("level4Down", Commands.none());
+    NamedCommands.registerCommand("down", Commands.none());
   }
   //
 
@@ -170,7 +170,7 @@ public class RobotContainer {
         Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel4))
         );
   }
-  public Command level4Down() {
+  public Command down() {
     return 
       Commands.sequence(
         Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel1))
