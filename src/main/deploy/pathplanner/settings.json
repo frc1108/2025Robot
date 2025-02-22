@@ -4,15 +4,17 @@
   "holonomicMode": true,
   "pathFolders": [
     "2025",
+    "2024",
     "TEST"
   ],
   "autoFolders": [
     "Five Note",
     "Four Note",
-    "Two Note",
+    "2024",
     "One Note",
     "TEST",
-    "Three Note"
+    "Three Note",
+    "Two Note"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

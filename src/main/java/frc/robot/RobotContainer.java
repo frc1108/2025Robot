@@ -140,11 +140,11 @@ public class RobotContainer {
     m_operatorController.povUp().whileTrue(m_coral.reverseSlowIntakeCommand());
 
 
-    m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation));
-    m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2));
-    m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3));
-    m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4));
-    m_operatorController.povDown().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1));
+    m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation)); //Pickup
+    m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2)); //L2
+    m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3)); //L3
+    m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4)); //L4
+    m_operatorController.povDown().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1)); //L4Down
 
     //m_driverController.start().onTrue(m_robotDrive.zeroHeading();
 
@@ -159,16 +159,25 @@ public class RobotContainer {
   }
 
   public void configureNamedCommands() {
-    NamedCommands.registerCommand("LaunchNote", Commands.none());
-    NamedCommands.registerCommand("IntakeNote", Commands.none());
-    NamedCommands.registerCommand("AmpShot", Commands.none());
-    NamedCommands.registerCommand("Stop", Commands.none());
-    NamedCommands.registerCommand("ShootBackwards", Commands.none());
-    NamedCommands.registerCommand("CenteringNote", Commands.none());
-    NamedCommands.registerCommand("AllWheelsForward", Commands.none());
-    NamedCommands.registerCommand("AllWheelsRight", Commands.none());
+    NamedCommands.registerCommand("level4Up", Commands.none());
+    NamedCommands.registerCommand("level4Down", Commands.none());
+  }
+  //
+
+  public Command level4Up() {
+    return 
+      Commands.sequence(
+        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel4))
+        );
+  }
+  public Command level4Down() {
+    return 
+      Commands.sequence(
+        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel1))
+        );
   }
 
+//
   public void configureWithAlliance(Alliance alliance) {
     m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
   }
