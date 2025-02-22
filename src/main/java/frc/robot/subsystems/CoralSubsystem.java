@@ -168,6 +168,11 @@ public Command reverseIntakeCommand() {
   return this.startEnd(
     () -> this.setIntakePower(IntakeSetpoints.kReverse),() -> this.setIntakePower(0.0));
 }
+//slow coral out
+public Command reverseSlowIntakeCommand() {
+  return this.startEnd(
+    () -> this.setIntakePower(-0.1),() -> this.setIntakePower(0.0));
+}
 
   @Override
   public void periodic() {

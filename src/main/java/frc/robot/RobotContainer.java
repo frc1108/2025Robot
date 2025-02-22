@@ -136,10 +136,15 @@ public class RobotContainer {
 
     m_operatorController.leftTrigger().whileTrue(m_coral.runIntakeCommand());
     m_operatorController.rightTrigger().whileTrue(m_coral.reverseIntakeCommand());
+    m_driverController.rightBumper().whileTrue(m_coral.reverseIntakeCommand());
+    m_operatorController.povUp().whileTrue(m_coral.reverseSlowIntakeCommand());
+
+
     m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation));
     m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2));
     m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3));
     m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4));
+    m_operatorController.povDown().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1));
 
     //m_driverController.start().onTrue(m_robotDrive.zeroHeading();
 
