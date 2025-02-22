@@ -32,17 +32,17 @@ final SparkMax m_algaeSpin = new SparkMax(27, MotorType.kBrushless);
     public Command upAlgae(){
       return this.run(
       () -> {
-        set(-0.4);
+        set(0.3);
       });
     }
   
     public Command downAlgae(){
       return this.run(
       () -> {
-        set(0.3);
+        set(-0.4);
       });
     }
-    
+
     public Command stopAlgae(){
       return this.run(
       () -> {
