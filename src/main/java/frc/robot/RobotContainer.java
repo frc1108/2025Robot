@@ -113,20 +113,20 @@ public class RobotContainer {
     m_operatorController.povLeft().whileFalse(m_algae.stopAlgaeRoller());
     m_operatorController.povRight().whileFalse(m_algae.stopAlgaeRoller());
 
-    m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
-    m_operatorController.leftTrigger().whileTrue(m_coral.coralSpinOut());
-    m_operatorController.rightTrigger().whileFalse(m_coral.coralSpinStop());
-    m_operatorController.leftTrigger().whileFalse(m_coral.coralSpinStop());
+    // m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
+    // m_operatorController.leftTrigger().whileTrue(m_coral.coralSpinOut());
+    // m_operatorController.rightTrigger().whileFalse(m_coral.coralSpinStop());
+    // m_operatorController.leftTrigger().whileFalse(m_coral.coralSpinStop());
 
-    m_operatorController.a().whileTrue(m_coral.coralIn());
-    m_operatorController.b().whileTrue(m_coral.coralOut());
-    m_operatorController.a().whileFalse(m_coral.coralStop());
-    m_operatorController.b().whileFalse(m_coral.coralStop());
+    // m_operatorController.a().whileTrue(m_coral.coralIn());
+    // m_operatorController.b().whileTrue(m_coral.coralOut());
+    // m_operatorController.a().whileFalse(m_coral.coralStop());
+    // m_operatorController.b().whileFalse(m_coral.coralStop());
 
-    m_operatorController.povDown().whileTrue(m_coral.elevatorUp());
-    m_operatorController.povUp().whileTrue(m_coral.elevatorDown());
-    m_operatorController.povDown().whileFalse(m_coral.elevatorStop());
-    m_operatorController.povUp().whileFalse(m_coral.elevatorStop());
+    // m_operatorController.povDown().whileTrue(m_coral.elevatorUp());
+    // m_operatorController.povUp().whileTrue(m_coral.elevatorDown());
+    // m_operatorController.povDown().whileFalse(m_coral.elevatorStop());
+    // m_operatorController.povUp().whileFalse(m_coral.elevatorStop());
 
     
     // new JoystickButton(m_driverController, Button.kR1.value)
@@ -134,12 +134,12 @@ public class RobotContainer {
     //         () -> m_robotDrive.setX(),
     //         m_robotDrive));
 
-    m_driverController.leftBumper().whileTrue(m_CoralSubsystem.runIntakeCommand());
-    m_driverController.rightBumper().whileTrue(m_CoralSubsystem.reverseIntakeCommand());
-    m_driverController.b().onTrue(m_CoralSubsystem.setSetpointCommand(Setpoint.kFeederStation));
-    m_driverController.a().onTrue(m_CoralSubsystem.setSetpointCommand(Setpoint.kLevel2));
-    m_driverController.x().onTrue(m_CoralSubsystem.setSetpointCommand(Setpoint.kLevel3));
-    m_driverController.y().onTrue(m_CoralSubsystem.setSetpointCommand(Setpoint.kLevel4));
+    m_operatorController.leftTrigger().whileTrue(m_coral.runIntakeCommand());
+    m_operatorController.rightTrigger().whileTrue(m_coral.reverseIntakeCommand());
+    m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation));
+    m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2));
+    m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3));
+    m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4));
 
     //m_driverController.start().onTrue(m_robotDrive.zeroHeading();
 
