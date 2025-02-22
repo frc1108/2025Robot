@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -32,6 +33,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -100,31 +103,32 @@ public class RobotContainer {
     m_driverController.leftTrigger().whileFalse(m_climber.stopClimber());
     m_driverController.rightTrigger().whileFalse(m_climber.stopClimber());
 
-    m_driverController.rightBumper().whileTrue(m_algae.upAlgae());
-    m_driverController.leftBumper().whileTrue(m_algae.downAlgae());
-    m_driverController.leftBumper().whileFalse(m_algae.stopAlgae());
-    m_driverController.rightBumper().whileFalse(m_algae.stopAlgae());
+    m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
+    m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());
+    m_operatorController.leftBumper().whileFalse(m_algae.stopAlgae());
+    m_operatorController.rightBumper().whileFalse(m_algae.stopAlgae());
 
-    m_driverController.a().whileTrue(m_algae.inAlgaeRoller());
-    m_driverController.b().whileTrue(m_algae.outAlgaeRoller());
-    m_driverController.a().whileFalse(m_algae.stopAlgaeRoller());
-    m_driverController.b().whileFalse(m_algae.stopAlgaeRoller());
+    m_operatorController.povLeft().whileTrue(m_algae.inAlgaeRoller());
+    m_operatorController.povRight().whileTrue(m_algae.outAlgaeRoller());
+    m_operatorController.povLeft().whileFalse(m_algae.stopAlgaeRoller());
+    m_operatorController.povRight().whileFalse(m_algae.stopAlgaeRoller());
 
-    m_driverController.x().whileTrue(m_coral.coralSpinIn());
-    m_driverController.y().whileTrue(m_coral.coralSpinOut());
-    m_driverController.x().whileFalse(m_coral.coralSpinStop());
-    m_driverController.y().whileFalse(m_coral.coralSpinStop());
+    m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
+    m_operatorController.leftTrigger().whileTrue(m_coral.coralSpinOut());
+    m_operatorController.rightTrigger().whileFalse(m_coral.coralSpinStop());
+    m_operatorController.leftTrigger().whileFalse(m_coral.coralSpinStop());
 
-    m_driverController.povRight().whileTrue(m_coral.coralIn());
-    m_driverController.povLeft().whileTrue(m_coral.coralOut());
-    m_driverController.povRight().whileFalse(m_coral.coralStop());
-    m_driverController.povLeft().whileFalse(m_coral.coralStop());
+    m_operatorController.a().whileTrue(m_coral.coralIn());
+    m_operatorController.b().whileTrue(m_coral.coralOut());
+    m_operatorController.a().whileFalse(m_coral.coralStop());
+    m_operatorController.b().whileFalse(m_coral.coralStop());
 
-    m_driverController.povDown().whileTrue(m_coral.elevatorUp());
-    m_driverController.povUp().whileTrue(m_coral.elevatorDown());
-    m_driverController.povDown().whileFalse(m_coral.elevatorStop());
-    m_driverController.povUp().whileFalse(m_coral.elevatorStop());
+    m_operatorController.povDown().whileTrue(m_coral.elevatorUp());
+    m_operatorController.povUp().whileTrue(m_coral.elevatorDown());
+    m_operatorController.povDown().whileFalse(m_coral.elevatorStop());
+    m_operatorController.povUp().whileFalse(m_coral.elevatorStop());
 
+    
     // new JoystickButton(m_driverController, Button.kR1.value)
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),
