@@ -112,11 +112,11 @@ public final class Constants {
 
     public static final class ElevatorSetpoints {
       public static final double kStow = 0.0;
-      public static final double kFeederStation = 0.0;
-      public static final double kLevel1 = 0.0;
-      public static final double kLevel2 = 0.0;
-      public static final double kLevel3 = 0.1;
-      public static final double kLevel4 = 0.2;
+      public static final double kFeederStation = 0.0125;
+      public static final double kLevel1 = 0.0125;
+      public static final double kLevel2 = 0.0125;
+      public static final double kLevel3 = 0.4;
+      public static final double kLevel4 = 0.68;
     }
 
     public static final class ArmSetpoints {
@@ -124,8 +124,8 @@ public final class Constants {
       public static final double kFeederStation = 3.28;
       public static final double kLevel1 = 3.28;
       public static final double kLevel2 = 3.28;
-      public static final double kLevel3 = .25;
-      public static final double kLevel4 = 3.28;
+      public static final double kLevel3 = 3.7;
+      public static final double kLevel4 = 2.0;
     }
 
     public static final class IntakeSetpoints {

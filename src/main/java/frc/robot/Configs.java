@@ -115,8 +115,8 @@ public final class Configs {
                   .velocityConversionFactor(sprocketDistanceMeters/gearRatio/60);
                 elevatorConfig.alternateEncoder
                   .countsPerRevolution(8192)
-                  .positionConversionFactor(sprocketDistanceMeters/countsPerRevolution)
-                  .velocityConversionFactor(sprocketDistanceMeters/countsPerRevolution/60);
+                  .positionConversionFactor(sprocketDistanceMeters)
+                  .velocityConversionFactor(sprocketDistanceMeters/60);
                 elevatorConfig.closedLoop
                   .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)
                   .p(3)

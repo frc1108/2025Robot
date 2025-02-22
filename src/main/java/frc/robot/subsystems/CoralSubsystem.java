@@ -176,4 +176,13 @@ public Command reverseIntakeCommand() {
     zeroOnUserButton();
     // This method will be called once per scheduler run
   }
+
+  public double getElevatorAlternateEncoder() {
+    return m_elevatorEncoder.getPosition();
+  }
+
+  public double getArmAbsoluteEncoder() {
+    return m_armEncoder.getPosition();
+  }
+
 }
