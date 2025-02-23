@@ -116,7 +116,7 @@ public final class Constants {
       public static final double kLevel1 = 0.0; //povDown
       public static final double kLevel2 = 0.075; //a
       public static final double kLevel3 = 0.45; //x
-      public static final double kLevel4 = 0.69; //y
+      public static final double kLevel4 = 0.7; //y
     }
 
     public static final class ArmSetpoints {
