@@ -134,12 +134,12 @@ public class RobotContainer {
     //         () -> m_robotDrive.setX(),
     //         m_robotDrive));
 
-    m_operatorController.leftTrigger().whileTrue(m_coral.runIntakeCommand());
-    m_operatorController.rightTrigger().whileTrue(m_coral.reverseIntakeCommand());
-    m_driverController.rightBumper().whileTrue(m_coral.reverseIntakeCommand());
-    m_operatorController.povUp().whileTrue(m_coral.reverseSlowIntakeCommand());
-
-
+    //Coral Intake
+    m_operatorController.leftTrigger().whileTrue(m_coral.runIntakeCommand()); //In
+    m_operatorController.rightTrigger().whileTrue(m_coral.reverseIntakeCommand()); //OutOperator
+    m_driverController.rightBumper().whileTrue(m_coral.reverseIntakeCommand()); //OutDriver
+    m_operatorController.povUp().whileTrue(m_coral.reverseSlowIntakeCommand()); //Slow Out
+    //Coral/Elevator Positions
     m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation)); //Pickup
     m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2)); //L2
     m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3)); //L3
@@ -157,7 +157,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected();
   }
-
+  // Commands for Autos
   public void configureNamedCommands() {
     NamedCommands.registerCommand("level4Up", level4Up());
     NamedCommands.registerCommand("level3Up", level3Up());
@@ -166,10 +166,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakePosition", intakePosition());
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
     NamedCommands.registerCommand("reverseCoral", reverseCoral());
+    NamedCommands.registerCommand("reverseSlowCoral", reverseSlowCoral());
     NamedCommands.registerCommand("none", none());
   }
-  //
-
+  //Command Names and Their Actions
   public Command level4Up() {
     return 
       Commands.sequence(
@@ -214,12 +214,18 @@ public class RobotContainer {
         Commands.waitSeconds(2)
         );
   }
-  public Command none() {
+  public Command reverseSlowCoral() {
     return 
       Commands.parallel(
+        Commands.runOnce(()->m_coral.reverseSlowIntakeCommand()),
+        Commands.waitSeconds(.1)
         );
   }
-//
+  public Command none() {
+    return 
+      Commands.parallel();
+  }
+
   public void configureWithAlliance(Alliance alliance) {
     m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
   }
