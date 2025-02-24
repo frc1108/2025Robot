@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -40,6 +41,7 @@ import java.util.List;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
+
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -146,6 +148,24 @@ public class RobotContainer {
     m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3)); //L3
     m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4)); //L4
     m_operatorController.povDown().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1)); //L4Down
+    //m_operatorController.().onTrue(m_coral.setSetpointCommand(Setpoint.kStow)); //Stow
+    
+    m_driverController.a()
+    .onTrue(Commands.run(() -> 
+        m_operatorController.setRumble(RumbleType.kLeftRumble, 1)
+    ));
+    m_driverController.a()
+    .onTrue(Commands.run(() -> 
+        m_operatorController.setRumble(RumbleType.kRightRumble, 1)
+    ));
+    m_driverController.b()
+    .onTrue(Commands.run(() -> 
+        m_operatorController.setRumble(RumbleType.kRightRumble, 0)
+    ));
+    m_driverController.b()
+    .onTrue(Commands.run(() -> 
+        m_operatorController.setRumble(RumbleType.kRightRumble, 0)
+    ));
 
     //m_driverController.start().onTrue(m_robotDrive.zeroHeading();
 
