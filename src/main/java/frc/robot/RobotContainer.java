@@ -139,6 +139,7 @@ public class RobotContainer {
     m_operatorController.rightTrigger().whileTrue(m_coral.reverseIntakeCommand()); //OutOperator
     m_driverController.rightBumper().whileTrue(m_coral.reverseIntakeCommand()); //OutDriver
     m_operatorController.povUp().whileTrue(m_coral.reverseSlowIntakeCommand()); //Slow Out
+    m_operatorController.start().whileTrue(m_coral.reverseFastIntakeCommand()); //Fast Out
     //Coral/Elevator Positions
     m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation)); //Pickup
     m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2)); //L2
@@ -222,7 +223,7 @@ public class RobotContainer {
     return 
       Commands.parallel(
         Commands.run(()->m_coral.reverseSlowIntakeCommand()),
-        Commands.waitSeconds(.1)
+        Commands.waitSeconds(.25)
         );
   }
   public Command intakeAlgae() {
