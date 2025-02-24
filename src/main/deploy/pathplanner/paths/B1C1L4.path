@@ -1,5 +1,5 @@
-"{
-  "version": 2025.0,
+{
+  "version": "2025.0",
   "waypoints": [
     {
       "anchor": {
@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.2,
-        "y": 0.5
+        "x": 7.802301154854446,
+        "y": 0.10207756780949784
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 2.7
       },
       "prevControl": {
-        "x": 4,
-        "y": 2.7
+        "x": 4.514516077892081,
+        "y": 2.3757879499728336
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": level3Up,
+      "name": "level3Up",
       "waypointRelativePos": 0.75,
       "endWaypointRelativePos": null,
       "command": null
@@ -49,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 57.20046872738072
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": 2025,
+  "folder": "2025",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
   "useDefaultConstraints": true
-}"
+}
