@@ -167,6 +167,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
     NamedCommands.registerCommand("reverseCoral", reverseCoral());
     NamedCommands.registerCommand("reverseSlowCoral", reverseSlowCoral());
+    NamedCommands.registerCommand("intakeAlgae", intakeAlgae());
+    NamedCommands.registerCommand("reverseIntakeAlgae", reverseIntakeAlgae());
+    NamedCommands.registerCommand("upAlgae", upAlgae());
+    NamedCommands.registerCommand("downAlgae", downAlgae());
     NamedCommands.registerCommand("none", none());
   }
   //Command Names and Their Actions
@@ -219,6 +223,34 @@ public class RobotContainer {
       Commands.parallel(
         Commands.run(()->m_coral.reverseSlowIntakeCommand()),
         Commands.waitSeconds(.1)
+        );
+  }
+  public Command intakeAlgae() {
+    return 
+      Commands.parallel(
+        Commands.run(()->m_algae.inAlgaeRoller()),
+        Commands.waitSeconds(1)
+        );
+  }
+  public Command reverseIntakeAlgae() {
+    return 
+      Commands.parallel(
+        Commands.run(()->m_algae.outAlgaeRoller()),
+        Commands.waitSeconds(1)
+        );
+  }
+  public Command upAlgae() {
+    return 
+      Commands.parallel(
+        Commands.run(()->m_algae.upAlgae()),
+        Commands.waitSeconds(1)
+        );
+  }
+  public Command downAlgae() {
+    return 
+      Commands.parallel(
+        Commands.run(()->m_algae.downAlgae()),
+        Commands.waitSeconds(1)
         );
   }
   public Command none() {
