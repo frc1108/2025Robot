@@ -165,6 +165,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("down", down());
     NamedCommands.registerCommand("intakePosition", intakePosition());
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
+    NamedCommands.registerCommand("reverseCoral", reverseCoral());
   }
   //
 
@@ -202,6 +203,13 @@ public class RobotContainer {
     return 
       Commands.parallel(
         Commands.runOnce(()->m_coral.runIntakeCommand()),
+        Commands.waitSeconds(2)
+        );
+  }
+  public Command reverseCoral() {
+    return 
+      Commands.parallel(
+        Commands.runOnce(()->m_coral.reverseIntakeCommand()),
         Commands.waitSeconds(2)
         );
   }
