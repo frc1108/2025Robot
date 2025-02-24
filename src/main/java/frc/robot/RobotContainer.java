@@ -151,21 +151,15 @@ public class RobotContainer {
     //m_operatorController.().onTrue(m_coral.setSetpointCommand(Setpoint.kStow)); //Stow
     
     m_driverController.a()
-    .onTrue(Commands.run(() -> 
-        m_operatorController.setRumble(RumbleType.kLeftRumble, 1)
-    ));
-    m_driverController.a()
-    .onTrue(Commands.run(() -> 
-        m_operatorController.setRumble(RumbleType.kRightRumble, 1)
-    ));
-    m_driverController.a()
-    .onFalse(Commands.run(() -> 
-        m_operatorController.setRumble(RumbleType.kRightRumble, 0)
-    ));
-    m_driverController.a()
-    .onFalse(Commands.run(() -> 
-        m_operatorController.setRumble(RumbleType.kRightRumble, 0)
-    ));
+    .onTrue(Commands.run(() -> {
+        m_operatorController.setRumble(RumbleType.kLeftRumble, 1);
+        m_operatorController.setRumble(RumbleType.kRightRumble, 1); // Set both rumble types on True
+    }))
+    .onFalse(Commands.run(() -> {
+        m_operatorController.setRumble(RumbleType.kLeftRumble, 0);
+        m_operatorController.setRumble(RumbleType.kRightRumble, 0); // Set both rumble types on False
+    }));
+
 
 
     //m_driverController.start().onTrue(m_robotDrive.zeroHeading();
