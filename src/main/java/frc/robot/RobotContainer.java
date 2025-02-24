@@ -173,51 +173,51 @@ public class RobotContainer {
   public Command level4Up() {
     return 
       Commands.sequence(
-        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel4))
+        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel4))
         );
   }
   public Command level3Up() {
     return 
       Commands.sequence(
-        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel3))
+        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel3))
         );
   }
   public Command level2Up() {
     return 
       Commands.sequence(
-        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel2))
+        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel2))
         );
   }
   public Command down() {
     return 
       Commands.sequence(
-        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kLevel1))
+        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel1))
         );
   }
   public Command intakePosition() {
     return 
       Commands.sequence(
-        Commands.runOnce(()->m_coral.setSetpointCommand(Setpoint.kFeederStation))
+        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kFeederStation))
         );
   }
   public Command intakeCoral() {
     return 
       Commands.parallel(
-        Commands.runOnce(()->m_coral.runIntakeCommand()),
+        Commands.run(()->m_coral.runIntakeCommand()),
         Commands.waitSeconds(2)
         );
   }
   public Command reverseCoral() {
     return 
       Commands.parallel(
-        Commands.runOnce(()->m_coral.reverseIntakeCommand()),
+        Commands.run(()->m_coral.reverseIntakeCommand()),
         Commands.waitSeconds(2)
         );
   }
   public Command reverseSlowCoral() {
     return 
       Commands.parallel(
-        Commands.runOnce(()->m_coral.reverseSlowIntakeCommand()),
+        Commands.run(()->m_coral.reverseSlowIntakeCommand()),
         Commands.waitSeconds(.1)
         );
   }
