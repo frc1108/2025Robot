@@ -166,6 +166,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakePosition", intakePosition());
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
     NamedCommands.registerCommand("reverseCoral", reverseCoral());
+    NamedCommands.registerCommand("none", none());
   }
   //
 
@@ -213,7 +214,11 @@ public class RobotContainer {
         Commands.waitSeconds(2)
         );
   }
-
+  public Command none() {
+    return 
+      Commands.parallel(
+        );
+  }
 //
   public void configureWithAlliance(Alliance alliance) {
     m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
