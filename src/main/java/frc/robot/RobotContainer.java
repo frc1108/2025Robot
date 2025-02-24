@@ -158,14 +158,15 @@ public class RobotContainer {
     .onTrue(Commands.run(() -> 
         m_operatorController.setRumble(RumbleType.kRightRumble, 1)
     ));
-    m_driverController.b()
-    .onTrue(Commands.run(() -> 
+    m_driverController.a()
+    .onFalse(Commands.run(() -> 
         m_operatorController.setRumble(RumbleType.kRightRumble, 0)
     ));
-    m_driverController.b()
-    .onTrue(Commands.run(() -> 
+    m_driverController.a()
+    .onFalse(Commands.run(() -> 
         m_operatorController.setRumble(RumbleType.kRightRumble, 0)
     ));
+
 
     //m_driverController.start().onTrue(m_robotDrive.zeroHeading();
 
@@ -198,79 +199,79 @@ public class RobotContainer {
   public Command level4Up() {
     return 
       Commands.sequence(
-        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel4))
+        m_coral.setSetpointCommand(Setpoint.kLevel4)
         );
   }
   public Command level3Up() {
     return 
       Commands.sequence(
-        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel3))
+        m_coral.setSetpointCommand(Setpoint.kLevel3)
         );
   }
   public Command level2Up() {
     return 
       Commands.sequence(
-        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel2))
+        m_coral.setSetpointCommand(Setpoint.kLevel2)
         );
   }
   public Command down() {
     return 
       Commands.sequence(
-        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kLevel1))
+        m_coral.setSetpointCommand(Setpoint.kLevel1)
         );
   }
   public Command intakePosition() {
     return 
       Commands.sequence(
-        Commands.run(()->m_coral.setSetpointCommand(Setpoint.kFeederStation))
+        m_coral.setSetpointCommand(Setpoint.kFeederStation)
         );
   }
   public Command intakeCoral() {
     return 
       Commands.parallel(
-        Commands.run(()->m_coral.runIntakeCommand()),
+        m_coral.runIntakeCommand(),
         Commands.waitSeconds(2)
         );
   }
   public Command reverseCoral() {
     return 
       Commands.parallel(
-        Commands.run(()->m_coral.reverseIntakeCommand()),
+        m_coral.reverseIntakeCommand(),
         Commands.waitSeconds(2)
         );
   }
   public Command reverseSlowCoral() {
     return 
       Commands.parallel(
-        Commands.run(()->m_coral.reverseSlowIntakeCommand()),
+        m_coral.reverseSlowIntakeCommand(),
         Commands.waitSeconds(.25)
         );
   }
   public Command intakeAlgae() {
     return 
       Commands.parallel(
-        Commands.run(()->m_algae.inAlgaeRoller()),
+        m_algae.inAlgaeRoller(),
         Commands.waitSeconds(1)
         );
   }
   public Command reverseIntakeAlgae() {
     return 
       Commands.parallel(
-        Commands.run(()->m_algae.outAlgaeRoller()),
+        m_algae.outAlgaeRoller(),
         Commands.waitSeconds(1)
         );
   }
   public Command upAlgae() {
     return 
       Commands.parallel(
-        Commands.run(()->m_algae.upAlgae()),
+        m_algae.upAlgae(),
         Commands.waitSeconds(1)
         );
   }
   public Command downAlgae() {
     return 
       Commands.parallel(
-        Commands.run(()->m_algae.downAlgae()),
+        m_algae.downAlgae(),
         Commands.waitSeconds(1)
         );
   }
