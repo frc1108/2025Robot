@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "FeederPosition",
+      "name": "intakePosition",
       "waypointRelativePos": 0.75,
       "endWaypointRelativePos": null,
       "command": null

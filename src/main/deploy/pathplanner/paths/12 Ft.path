@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 2.7966321535257386,
-        "y": 0.00
+        "y": 1.0548713760731529e-16
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,14 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "level4Up",
+      "waypointRelativePos": 0.5,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,

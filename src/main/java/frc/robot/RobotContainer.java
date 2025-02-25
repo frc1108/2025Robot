@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.CoralSubsystemConstants.ArmSetpoints;
+import frc.robot.Constants.CoralSubsystemConstants.ElevatorSetpoints;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.AlgaeSubsystem;
@@ -30,6 +32,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -148,17 +151,18 @@ public class RobotContainer {
     m_operatorController.x().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3)); //L3
     m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4)); //L4
     m_operatorController.povDown().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1)); //L4Down
-    //m_operatorController.().onTrue(m_coral.setSetpointCommand(Setpoint.kStow)); //Stow
+    m_operatorController.back().onTrue(m_coral.setSetpointCommand(Setpoint.kStow)); //Stow
     
-    m_driverController.a()
-    .onTrue(Commands.run(() -> {
+m_driverController.a()
+    .onTrue(new InstantCommand(() -> {
         m_operatorController.setRumble(RumbleType.kLeftRumble, 1);
         m_operatorController.setRumble(RumbleType.kRightRumble, 1); // Set both rumble types on True
     }))
-    .onFalse(Commands.run(() -> {
+    .onFalse(new InstantCommand(() -> {
         m_operatorController.setRumble(RumbleType.kLeftRumble, 0);
         m_operatorController.setRumble(RumbleType.kRightRumble, 0); // Set both rumble types on False
     }));
+
 
 
 
@@ -193,16 +197,16 @@ public class RobotContainer {
   public Command level4Up() {
     return 
       Commands.sequence(
-        m_coral.setSetpointCommand(Setpoint.kLevel4)
-        );
+       m_coral.setSetpointCommand(Setpoint.kLevel4)
+       );
   }
   public Command level3Up() {
     return 
       Commands.sequence(
-        m_coral.setSetpointCommand(Setpoint.kLevel3)
-        );
+       m_coral.setSetpointCommand(Setpoint.kLevel3)
+       );
   }
-  public Command level2Up() {
+          public Command level2Up() {
     return 
       Commands.sequence(
         m_coral.setSetpointCommand(Setpoint.kLevel2)
