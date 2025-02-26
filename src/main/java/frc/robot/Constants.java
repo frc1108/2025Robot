@@ -121,7 +121,7 @@ public final class Constants {
 
     public static final class ArmSetpoints {
       public static final double kStow = 0.3;
-      public static final double kFeederStation = 3.2; //b
+      public static final double kFeederStation = 3.1; //b
       public static final double kLevel1 = 2.3; //povDown
       public static final double kLevel2 = 4.0; //a
       public static final double kLevel3 = 3.9; //x
