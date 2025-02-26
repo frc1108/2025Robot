@@ -179,11 +179,11 @@ m_driverController.a()
   }
   // Commands for Autos
   public void configureNamedCommands() {
-    NamedCommands.registerCommand("level4Up", level4Up());
-    NamedCommands.registerCommand("level3Up", level3Up());
-    NamedCommands.registerCommand("level2Up", level2Up());
-    NamedCommands.registerCommand("down", down());
-    NamedCommands.registerCommand("intakePosition", intakePosition());
+    NamedCommands.registerCommand("level4Up", m_coral.setSetpointCommand(Setpoint.kLevel4));
+    NamedCommands.registerCommand("level3Up", m_coral.setSetpointCommand(Setpoint.kLevel3));
+    NamedCommands.registerCommand("level2Up", m_coral.setSetpointCommand(Setpoint.kLevel2));
+    NamedCommands.registerCommand("down", m_coral.setSetpointCommand(Setpoint.kLevel1));
+    NamedCommands.registerCommand("intakePosition", m_coral.setSetpointCommand(Setpoint.kFeederStation));
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
     NamedCommands.registerCommand("reverseCoral", reverseCoral());
     NamedCommands.registerCommand("reverseSlowCoral", reverseSlowCoral());
@@ -194,36 +194,6 @@ m_driverController.a()
     NamedCommands.registerCommand("none", none());
   }
   //Command Names and Their Actions
-  public Command level4Up() {
-    return 
-      Commands.sequence(
-       m_coral.setSetpointCommand(Setpoint.kLevel4)
-       ); 
-  }
-  public Command level3Up() {
-    return 
-      Commands.sequence(
-       m_coral.setSetpointCommand(Setpoint.kLevel3)
-       );
-  }
-          public Command level2Up() {
-    return 
-      Commands.sequence(
-        m_coral.setSetpointCommand(Setpoint.kLevel2)
-        );
-  }
-  public Command down() {
-    return 
-      Commands.sequence(
-        m_coral.setSetpointCommand(Setpoint.kLevel1)
-        );
-  }
-  public Command intakePosition() {
-    return 
-      Commands.sequence(
-        m_coral.setSetpointCommand(Setpoint.kFeederStation)
-        );
-  }
   public Command intakeCoral() {
     return 
       Commands.parallel(

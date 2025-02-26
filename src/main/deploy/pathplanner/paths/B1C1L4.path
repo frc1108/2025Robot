@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "level4Up",
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.25,
       "endWaypointRelativePos": null,
       "command": null
     }
