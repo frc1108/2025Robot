@@ -179,9 +179,9 @@ m_driverController.a()
   }
   // Commands for Autos
   public void configureNamedCommands() {
-    NamedCommands.registerCommand("level4Up", m_coral.setSetpointCommand(Setpoint.kLevel4));
-    NamedCommands.registerCommand("level3Up", m_coral.setSetpointCommand(Setpoint.kLevel3));
-    NamedCommands.registerCommand("level2Up", m_coral.setSetpointCommand(Setpoint.kLevel2));
+    NamedCommands.registerCommand("levelFourUp", m_coral.setSetpointCommand(Setpoint.kLevel4));
+    NamedCommands.registerCommand("levelThreeUp", m_coral.setSetpointCommand(Setpoint.kLevel3));
+    NamedCommands.registerCommand("levelTwoUp", m_coral.setSetpointCommand(Setpoint.kLevel2));
     NamedCommands.registerCommand("down", m_coral.setSetpointCommand(Setpoint.kLevel1));
     NamedCommands.registerCommand("intakePosition", m_coral.setSetpointCommand(Setpoint.kFeederStation));
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
