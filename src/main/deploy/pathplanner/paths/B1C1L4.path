@@ -33,9 +33,9 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "level4Up",
-      "waypointRelativePos": 0.25,
-      "endWaypointRelativePos": null,
+      "name": "levelFourUp",
+      "waypointRelativePos": 0.5,
+      "endWaypointRelativePos": 1.0,
       "command": null
     }
   ],

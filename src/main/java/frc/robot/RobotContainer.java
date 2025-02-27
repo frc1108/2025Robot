@@ -43,6 +43,7 @@ import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.events.EventTrigger;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 
@@ -75,6 +76,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureNamedCommands();
+    //configureEventTriggers();
     m_autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
@@ -193,13 +195,22 @@ m_driverController.a()
     NamedCommands.registerCommand("downAlgae", downAlgae());
     NamedCommands.registerCommand("none", none());
   }
+  /*
+  public void configureEventTriggers() {
+    new EventTrigger("levelFourUp").onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4));
+    new EventTrigger("levelThreeUp").onTrue(m_coral.setSetpointCommand(Setpoint.kLevel3));
+    new EventTrigger("levelTwoUp").onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2));
+    new EventTrigger("down").onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1));
+    new EventTrigger("intakePosition").onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation));
+  }
+  */
   //Command Names and Their Actions
   public Command intakeCoral() {
-    return 
+    return
       Commands.parallel(
         m_coral.runIntakeCommand(),
         Commands.waitSeconds(2)
-        );
+      );
   }
   public Command reverseCoral() {
     return 

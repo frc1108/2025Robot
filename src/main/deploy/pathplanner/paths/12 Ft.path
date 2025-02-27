@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 0.7672131147540984,
+        "y": 1.6214651639344266
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8085054469031033,
-        "y": 0.0
+        "x": 1.9779713114754096,
+        "y": 1.7413422131147547
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.658,
-        "y": 0.0
+        "x": 3.955942622950819,
+        "y": 1.6214651639344266
       },
       "prevControl": {
-        "x": 2.7966321535257386,
-        "y": 1.0548713760731529e-16
+        "x": 2.9249999999999994,
+        "y": 1.705379098360655
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "levelFourUp",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.19610636277302756,
       "endWaypointRelativePos": null,
       "command": null
     }

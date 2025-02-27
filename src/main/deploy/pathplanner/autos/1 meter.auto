@@ -9,12 +9,6 @@
           "data": {
             "pathName": "1 meter"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "level4Up"
-          }
         }
       ]
     }
