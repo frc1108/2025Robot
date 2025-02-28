@@ -4,7 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -134,5 +139,34 @@ public final class Constants {
     }
   }
 
+public static final class BargeVisionConstants {
+        public static final String kCameraName = "Barge Tag Camera";
+        public static final Transform3d kCameraOffset = new Transform3d(
+            new Translation3d(
+                Units.inchesToMeters(5.5), // 1.0 in
+                Units.inchesToMeters(5.5), // -12 in
+                Units.inchesToMeters(7.375)), //8.5 in
+            new Rotation3d(
+                0.0,
+                Rotation2d.fromDegrees(30.0).getRadians(), //22
+                Rotation2d.fromDegrees(10).getRadians()
+            ));
+        public static final double kMaxDistanceMeters = 3;
+    }
+
+    public static final class ReefVisionConstants {
+      public static final String kCameraName = "Reef Tag Camera";
+      public static final Transform3d kCameraOffset = new Transform3d(
+          new Translation3d(
+              Units.inchesToMeters(6.5), // 1.0 in
+              Units.inchesToMeters(-5.75), // -12 in
+              Units.inchesToMeters(15)), //8.5 in
+          new Rotation3d(
+              0.0,
+              Rotation2d.fromDegrees(170).getRadians(), //22
+              Rotation2d.fromDegrees(0).getRadians()
+          ));
+      public static final double kMaxDistanceMeters = 3;
+  }
 
 }
