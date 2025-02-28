@@ -213,43 +213,37 @@ m_driverController.a()
   public Command reverseCoral() {
     return 
       Commands.parallel(
-        m_coral.reverseIntakeCommand(),
-        Commands.waitSeconds(1)
+        m_coral.reverseIntakeCommand().withTimeout(1)
         );
   }
   public Command reverseSlowCoral() {
     return 
       Commands.parallel(
-        m_coral.reverseSlowIntakeCommand(),
-        Commands.waitSeconds(.25)
+        m_coral.reverseSlowIntakeCommand().withTimeout(.25)
         );
   }
   public Command intakeAlgae() {
     return 
       Commands.parallel(
-        m_algae.inAlgaeRoller(),
-        Commands.waitSeconds(1)
+        m_algae.inAlgaeRoller().withTimeout(1)
         );
   }
   public Command reverseIntakeAlgae() {
     return 
       Commands.parallel(
-        m_algae.outAlgaeRoller(),
-        Commands.waitSeconds(1)
+        m_algae.outAlgaeRoller().withTimeout(1)
         );
   }
   public Command upAlgae() {
     return 
       Commands.parallel(
-        m_algae.upAlgae(),
-        Commands.waitSeconds(1)
+        m_algae.upAlgae().withTimeout(1)
         );
   }
   public Command downAlgae() {
     return 
       Commands.parallel(
-        m_algae.downAlgae(),
-        Commands.waitSeconds(1)
+        m_algae.downAlgae().withTimeout(1)
         );
   }
   public Command none() {

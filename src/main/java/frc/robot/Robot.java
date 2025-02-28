@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.epilogue.Logged;
 
+import org.littletonrobotics.urcl.URCL;
+
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.reduxrobotics.canand.CanandEventLoop;
 
@@ -43,6 +45,7 @@ public class Robot extends TimedRobot {
 
     // Initialize data logging.
     DataLogManager.start();
+    URCL.start(DataLogManager.getLog());
     Epilogue.bind(this);
   }
 
