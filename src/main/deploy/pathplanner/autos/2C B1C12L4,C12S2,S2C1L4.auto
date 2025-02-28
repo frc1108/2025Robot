@@ -7,7 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "B1C12L4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C12S2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S2C1L4"
           }
         }
       ]
