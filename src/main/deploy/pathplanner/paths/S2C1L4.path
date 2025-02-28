@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0,
-        "y": 0
+        "x": 1.567150971094958,
+        "y": 1.8625175403932515
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 2.845
       },
       "prevControl": {
-        "x": 0,
-        "y": 0
+        "x": 3.3106868076895304,
+        "y": 2.38440997720934
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "levelFourUp",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.15,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -54,13 +54,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 60
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126
+    "rotation": -126.0
   },
   "useDefaultConstraints": true
 }

@@ -185,7 +185,7 @@ m_driverController.a()
     NamedCommands.registerCommand("levelThreeUp", m_coral.setSetpointCommand(Setpoint.kLevel3));
     NamedCommands.registerCommand("levelTwoUp", m_coral.setSetpointCommand(Setpoint.kLevel2));
     NamedCommands.registerCommand("down", m_coral.setSetpointCommand(Setpoint.kLevel1));
-    NamedCommands.registerCommand("intakePosition", m_coral.setSetpointCommand(Setpoint.kFeederStation));
+    NamedCommands.registerCommand("feederPosition", m_coral.setSetpointCommand(Setpoint.kFeederStation));
     NamedCommands.registerCommand("intakeCoral", intakeCoral());
     NamedCommands.registerCommand("reverseCoral", reverseCoral());
     NamedCommands.registerCommand("reverseSlowCoral", reverseSlowCoral());
@@ -206,17 +206,15 @@ m_driverController.a()
   */
   //Command Names and Their Actions
   public Command intakeCoral() {
-    return
-      Commands.parallel(
-        m_coral.runIntakeCommand(),
-        Commands.waitSeconds(2)
-      );
-  }
+    return Commands.parallel(
+        m_coral.runIntakeCommand().withTimeout(1)
+    );
+}
   public Command reverseCoral() {
     return 
       Commands.parallel(
         m_coral.reverseIntakeCommand(),
-        Commands.waitSeconds(2)
+        Commands.waitSeconds(1)
         );
   }
   public Command reverseSlowCoral() {
