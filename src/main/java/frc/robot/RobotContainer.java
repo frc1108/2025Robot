@@ -18,10 +18,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants.CoralSubsystemConstants.ArmSetpoints;
 import frc.robot.Constants.CoralSubsystemConstants.ElevatorSetpoints;
 import frc.robot.Constants.DriveConstants;
@@ -173,6 +175,9 @@ m_driverController.a()
         m_operatorController.setRumble(RumbleType.kLeftRumble, 0);
         m_operatorController.setRumble(RumbleType.kRightRumble, 0); // Set both rumble types on False
     }));
+
+m_driverController.a().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
+m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
 
 

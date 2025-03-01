@@ -39,15 +39,15 @@ public Command downAlgae() {
 }
 
 private void setSpinPower(double power) {
-  m_algaeUpDown.set(power);
+  m_algaeSpin.set(power);
 }
 
 public Command inAlgaeRoller() {
   return this.startEnd(
-    () -> this.setSpinPower(0.5),() -> this.setAlgaePower(0.0));
+    () -> this.setSpinPower(0.5),() -> this.setSpinPower(0.0));
 }
 public Command outAlgaeRoller() {
   return this.startEnd(
-    () -> this.setSpinPower(-0.5),() -> this.setAlgaePower(0.0));
+    () -> this.setSpinPower(-0.5),() -> this.setSpinPower(0.0));
 }
   }
