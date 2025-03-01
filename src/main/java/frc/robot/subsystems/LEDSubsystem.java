@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
   private AddressableLED m_led = new AddressableLED(0);
-  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(120);
-  private AddressableLEDBufferView m_ledBufferStripView = new AddressableLEDBufferView(m_ledBuffer, 0, 50);
+  private AddressableLEDBuffer m_buffer = new AddressableLEDBuffer(120);
+  private AddressableLEDBufferView m_ledBufferStripView = new AddressableLEDBufferView(m_buffer, 0, 50);
   // all hues at maximum saturation and half brightness
   private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
 
