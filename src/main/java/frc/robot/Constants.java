@@ -114,7 +114,7 @@ public final class Constants {
       public static final double kStow = 0.0;
       public static final double kFeederStation = 0.0; //b
       public static final double kLevel1 = 0.0; //povDown
-      public static final double kLevel2 = 0.2; //a
+      public static final double kLevel2 = 0.125; //a
       public static final double kLevel3 = 0.5; //x
       public static final double kLevel4 = 0.7; //y
     }
