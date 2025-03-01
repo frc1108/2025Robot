@@ -30,6 +30,7 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -64,6 +65,7 @@ public class RobotContainer {
   private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
   private final CoralSubsystem m_coral = new CoralSubsystem();
   private Vision m_vision;
+  private final LEDSubsystem m_led = new LEDSubsystem();
 
 
   // The driver's controller
