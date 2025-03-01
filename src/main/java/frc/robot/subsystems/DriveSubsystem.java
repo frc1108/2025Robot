@@ -12,6 +12,8 @@ import com.reduxrobotics.sensors.canandgyro.Canandgyro;
 //import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -21,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -52,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
   //private final Pigeon2 m_gyro = new Pigeon2(0);
 
   // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+  SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
       m_gyro.getRotation2d(),
       new SwerveModulePosition[] {
@@ -60,8 +63,13 @@ public class DriveSubsystem extends SubsystemBase {
           m_frontRight.getPosition(),
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
-      });
+      },
+      new Pose2d());
     
+    private final Field2d m_field = new Field2d();
+    private boolean isVisionAdded = true;
+    private boolean m_visionAdded = false;
+
           // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
     RobotConfig config;
@@ -114,6 +122,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+
+  m_field.setRobotPose(m_odometry.getEstimatedPosition());
   }
 
   /**
@@ -122,7 +132,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
+    return m_odometry.getEstimatedPosition();
   }
 
   /**
@@ -140,6 +150,37 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         },
         pose);
+  }
+
+    public void visionPose(Pose2d pose,double timestamp){
+    if (isVisionAdded) {
+      // var tagPose = DriverStation.getAlliance().get() == Alliance.Blue?
+      //                     TagVisionConstants.kBlueSpeakerSubwoofer:
+      //                     TagVisionConstants.kRedSpeakerSubwoofer;
+      // var measuredDistance = PhotonUtils.getDistanceToPose(this.getPose(),speakerPose);
+      //this.log("Vision target distance",measuredDistance);
+      //if (measuredDistance <= TagVisionConstants.kMaxDistanceMeters || !m_visionAdded) {
+        m_odometry.addVisionMeasurement(pose, timestamp);
+        // this.log("Vision target added",pose);
+        m_visionAdded = true;
+      // }
+    }
+  }
+
+  public void stopVisionPose(){
+    isVisionAdded = false;
+  }
+
+  public void startVisionPose(){
+    isVisionAdded = true;
+  }
+
+  public boolean getVisionAdded(){
+    return isVisionAdded;
+  }
+
+  public void setVisionStdDevs(double xMeters, double yMeters, double thetaRads) {
+    m_odometry.setVisionMeasurementStdDevs(VecBuilder.fill(xMeters,yMeters,thetaRads));
   }
 
   /**

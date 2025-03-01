@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -29,6 +30,8 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -39,6 +42,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -60,6 +64,9 @@ public class RobotContainer {
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
   private final CoralSubsystem m_coral = new CoralSubsystem();
+  private Vision m_vision;
+  private final LEDSubsystem m_led = new LEDSubsystem();
+
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -80,6 +87,12 @@ public class RobotContainer {
     m_autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
+    try {
+      m_vision = new Vision(m_robotDrive::visionPose, m_robotDrive);
+    }
+     catch(IOException e) {
+     DriverStation.reportWarning("Unable to initialize vision", e.getStackTrace());
+    }
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
