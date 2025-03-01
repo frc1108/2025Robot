@@ -14,11 +14,12 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
   private AddressableLED m_led = new AddressableLED(0);
-  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(118);
+  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(120);
   private AddressableLEDBufferView m_ledBufferStripView = new AddressableLEDBufferView(m_ledBuffer, 0, 50);
   // all hues at maximum saturation and half brightness
   private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
@@ -33,20 +34,28 @@ public class LEDSubsystem extends SubsystemBase {
     /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     
-    m_led.setLength(m_ledBuffer.getLength());
+    m_led.setLength(m_buffer.getLength());
     // for (int i=0;i<m_ledBuffer.getLength();i++) {
     // m_ledBuffer.setLED(i, Color.kAliceBlue);
     // }
-    m_led.setData(m_ledBuffer);
     m_led.start();
+    setDefaultCommand(runPattern(LEDPattern.solid(Color.kBlue)).withName("Blue"));
   }
 
   @Override
   public void periodic() {
-        // Update the buffer with the rainbow animation
-        m_scrollingRainbow.applyTo(m_ledBuffer);
-        // Set the LEDs
-        m_led.setData(m_ledBuffer);
+        // // Update the buffer with the rainbow animation
+        // m_scrollingRainbow.applyTo(m_buffer);
+        // // Set the LEDs
+        m_led.setData(m_buffer);
     // This method will be called once per scheduler run
   }
-}
+
+  /**
+   * Creates a command that runs a pattern on the entire LED strip.
+   *
+   * @param pattern the LED pattern to run
+   */
+  public Command runPattern(LEDPattern pattern) {
+    return run(() -> pattern.applyTo(m_buffer));
+  }}
