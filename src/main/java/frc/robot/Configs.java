@@ -94,6 +94,12 @@ public final class Configs {
                     .maxVelocity(300)
                     .maxAcceleration(900)
                     .allowedClosedLoopError(0.1);
+
+                armConfig
+                    .signals
+                    .absoluteEncoderPositionAlwaysOn(true)
+                    .faultsAlwaysOn(true)
+                    .warningsAlwaysOn(true);
         }
     }
     
