@@ -154,16 +154,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void visionPose(Pose2d pose,double timestamp){
     if (isVisionAdded) {
-      // var tagPose = DriverStation.getAlliance().get() == Alliance.Blue?
-      //                     TagVisionConstants.kBlueSpeakerSubwoofer:
-      //                     TagVisionConstants.kRedSpeakerSubwoofer;
-      // var measuredDistance = PhotonUtils.getDistanceToPose(this.getPose(),speakerPose);
-      //this.log("Vision target distance",measuredDistance);
-      //if (measuredDistance <= TagVisionConstants.kMaxDistanceMeters || !m_visionAdded) {
         m_odometry.addVisionMeasurement(pose, timestamp);
-        // this.log("Vision target added",pose);
         m_visionAdded = true;
-      // }
     }
   }
 
