@@ -50,8 +50,6 @@ public class CoralSubsystem extends SubsystemBase {
   private final RelativeEncoder m_elevatorEncoder = m_elevatorMotor.getAlternateEncoder();
   private final DigitalInput m_elevatorLowerLimit = new DigitalInput(0);
 
-  // Initialize intake SPARK.  We will use open loop control for this.
-  private final SparkMax m_intakeMotor = new SparkMax(CoralSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
   // Managing the state of the robot
   private boolean m_resetByButton = false;
@@ -69,10 +67,7 @@ public class CoralSubsystem extends SubsystemBase {
       Configs.Elevator.elevatorConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
-    m_intakeMotor.configure(
-      Configs.Intake.intakeConfig,
-      ResetMode.kResetSafeParameters,
-      PersistMode.kPersistParameters);
+
 
       // Zero arm and elevator encoders on initialization
       //m_armEncoder.setPosition(0); //Only for Relative encoder, using Absolute.
@@ -113,10 +108,7 @@ private void zeroOnUserButton() {
   }
 }
 
-/** Set the intake motor power in range of [-1,1] */
-private void setIntakePower(double power) {
-  m_intakeMotor.set(power);
-}
+
 
 /** 
  * Command to set the subsystem setpoint. This will set to predefined positions for the given setpoints
@@ -152,32 +144,6 @@ public Command setSetpointCommand(Setpoint setpoint) {
       }
     });
 }
-
-/**
- * Command to run the intake motor.  Stops when interrupted e.g. button released
- */
-public Command runIntakeCommand() {
-  return this.startEnd(
-    () -> this.setIntakePower(IntakeSetpoints.kForward),() -> this.setIntakePower(0.0));
-}
-
-/**
- * Command to run the intake motor.  Stops when interrupted e.g. button released
- */
-public Command reverseIntakeCommand() {
-  return this.startEnd(
-    () -> this.setIntakePower(IntakeSetpoints.kReverse),() -> this.setIntakePower(0.0));
-}
-//slow coral out
-public Command reverseSlowIntakeCommand() {
-  return this.startEnd(
-    () -> this.setIntakePower(-0.1),() -> this.setIntakePower(0.0));
-}
-public Command reverseFastIntakeCommand() {
-  return this.startEnd(
-    () -> this.setIntakePower(-1.0),() -> this.setIntakePower(0.0));
-}
-
 
   @Override
   public void periodic() {
