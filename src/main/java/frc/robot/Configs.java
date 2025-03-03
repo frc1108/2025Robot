@@ -141,4 +141,25 @@ public static final class Intake {
                 // Configure basic settings of the arm motor
                 intakeConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(20).voltageCompensation(12);
         }}
+
+public static final class Algae {
+        public static final SparkMaxConfig algaeConfig = new SparkMaxConfig();
+        
+        static {
+                // Configure basic settings of the algae motor
+                algaeConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(60)
+                .voltageCompensation(12);
+        }}
+public static final class AlgaeIntake {
+        public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
+        
+        static {
+                // Configure basic settings of the algaeIntake motor
+                algaeIntakeConfig
+                .idleMode(IdleMode.kCoast)
+                .smartCurrentLimit(60)
+                .voltageCompensation(12);
+        }}
 }

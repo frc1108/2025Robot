@@ -7,9 +7,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+@Logged
 public class ClimberSubsystem extends SubsystemBase {
 
 // initialize devices on the rio can bus
@@ -26,6 +28,21 @@ final DutyCycleOut m_request = new DutyCycleOut(0.2);
     // This method will be called once per scheduler run
 
   // set request to motor controller
+
+
+  private void setClimberPower(double power) {
+    m_climber.set(power);
+  }
+  public Command upClimber() {
+    return this.startEnd(
+      () -> this.setClimberPower(0.85),() -> this.setClimberPower(0.0));
+  }
+  public Command downClimber() {
+    return this.startEnd(
+      () -> this.setClimberPower(-1),() -> this.setClimberPower(0.0));
+  }
+
+/*
   private void set(double speed){
     m_climber.setControl(m_request.withOutput(speed));
   }
@@ -49,4 +66,5 @@ final DutyCycleOut m_request = new DutyCycleOut(0.2);
       set(0);
     });
   }
+    */
 }
