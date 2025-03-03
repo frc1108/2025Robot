@@ -30,6 +30,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -68,6 +69,7 @@ public class RobotContainer {
   private final CoralSubsystem m_coral = new CoralSubsystem();
   private Vision m_reefVision, m_bargeVision;
   private final LEDSubsystem m_led = new LEDSubsystem();
+  private final CoralIntakeSubsystem m_coralIntake = new CoralIntakeSubsystem();
 
 
   // The driver's controller
@@ -123,8 +125,6 @@ public class RobotContainer {
 
     m_driverController.rightTrigger().whileTrue(m_climber.upClimber());
     m_driverController.leftTrigger().whileTrue(m_climber.downClimber());
-    m_driverController.leftTrigger().whileFalse(m_climber.stopClimber());
-    m_driverController.rightTrigger().whileFalse(m_climber.stopClimber());
 
     m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
     m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());
@@ -154,11 +154,11 @@ public class RobotContainer {
     //         m_robotDrive));
 
     //Coral Intake
-    m_operatorController.leftTrigger().whileTrue(m_coral.runIntakeCommand()); //In
-    m_operatorController.rightTrigger().whileTrue(m_coral.reverseIntakeCommand()); //OutOperator
-    m_driverController.rightBumper().whileTrue(m_coral.reverseIntakeCommand()); //OutDriver
-    m_operatorController.povUp().whileTrue(m_coral.reverseSlowIntakeCommand()); //Slow Out
-    m_operatorController.start().whileTrue(m_coral.reverseFastIntakeCommand()); //Fast Out
+    m_operatorController.leftTrigger().whileTrue(m_coralIntake.runIntakeCommand()); //In
+    m_operatorController.rightTrigger().whileTrue(m_coralIntake.reverseIntakeCommand()); //OutOperator
+    m_driverController.rightBumper().whileTrue(m_coralIntake.reverseIntakeCommand()); //OutDriver
+    m_operatorController.povUp().whileTrue(m_coralIntake.reverseSlowIntakeCommand()); //Slow Out
+    m_operatorController.start().whileTrue(m_coralIntake.reverseFastIntakeCommand()); //Fast Out
     //Coral/Elevator Positions
     m_operatorController.b().onTrue(m_coral.setSetpointCommand(Setpoint.kFeederStation)); //Pickup
     m_operatorController.a().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel2)); //L2
@@ -222,19 +222,19 @@ m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
   //Command Names and Their Actions
   public Command intakeCoral() {
     return Commands.parallel(
-        m_coral.runIntakeCommand().withTimeout(1)
+        m_coralIntake.runIntakeCommand().withTimeout(1)
     );
 }
   public Command reverseCoral() {
     return 
       Commands.parallel(
-        m_coral.reverseIntakeCommand().withTimeout(1)
+        m_coralIntake.reverseIntakeCommand().withTimeout(1)
         );
   }
   public Command reverseSlowCoral() {
     return 
       Commands.parallel(
-        m_coral.reverseSlowIntakeCommand().withTimeout(.25)
+        m_coralIntake.reverseSlowIntakeCommand().withTimeout(.25)
         );
   }
   public Command intakeAlgae() {
@@ -259,6 +259,12 @@ m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
     return 
       Commands.parallel(
         m_algae.downAlgae().withTimeout(1)
+        );
+  }
+  public Command downLOneAlgae() {
+    return 
+      Commands.parallel(
+        m_algae.downAlgae().withTimeout(.1)
         );
   }
   public Command none() {
