@@ -125,8 +125,6 @@ public class RobotContainer {
 
     m_driverController.rightTrigger().whileTrue(m_climber.upClimber());
     m_driverController.leftTrigger().whileTrue(m_climber.downClimber());
-    m_driverController.leftTrigger().whileFalse(m_climber.stopClimber());
-    m_driverController.rightTrigger().whileFalse(m_climber.stopClimber());
 
     m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
     m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());

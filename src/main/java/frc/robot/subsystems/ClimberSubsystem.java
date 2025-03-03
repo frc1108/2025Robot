@@ -26,6 +26,21 @@ final DutyCycleOut m_request = new DutyCycleOut(0.2);
     // This method will be called once per scheduler run
 
   // set request to motor controller
+
+
+  private void setClimberPower(double power) {
+    m_climber.set(power);
+  }
+  public Command upClimber() {
+    return this.startEnd(
+      () -> this.setClimberPower(0.85),() -> this.setClimberPower(0.0));
+  }
+  public Command downClimber() {
+    return this.startEnd(
+      () -> this.setClimberPower(-1),() -> this.setClimberPower(0.0));
+  }
+
+/*
   private void set(double speed){
     m_climber.setControl(m_request.withOutput(speed));
   }
@@ -49,4 +64,5 @@ final DutyCycleOut m_request = new DutyCycleOut(0.2);
       set(0);
     });
   }
+    */
 }
