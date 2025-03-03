@@ -143,16 +143,32 @@ public static final class BargeVisionConstants {
         public static final String kCameraName = "Barge Tag Camera";
         public static final Transform3d kCameraOffset = new Transform3d(
             new Translation3d(
-                Units.inchesToMeters(-5.5), // 5.5 in
-                Units.inchesToMeters(5.5), // -12 in
-                Units.inchesToMeters(7.375)), //8.5 in
+                Units.inchesToMeters(6.5), // 5.5 in
+                Units.inchesToMeters(-4.75), // -12 in
+                Units.inchesToMeters(38.625)), //8.5 in
             new Rotation3d(
-                0.0,
-                Rotation2d.fromDegrees(32.0).getRadians(), //22
-                Rotation2d.fromDegrees(3.5).getRadians()
+              Rotation2d.fromDegrees(90).getRadians(),
+                Rotation2d.fromDegrees(360-35).getRadians(), //
+                Rotation2d.fromDegrees(0).getRadians()
             ));
         public static final double kMaxDistanceMeters = 3;
     }
+
+// Lower camera position constants
+// public static final class BargeVisionConstants {
+//       public static final String kCameraName = "Barge Tag Camera";
+//       public static final Transform3d kCameraOffset = new Transform3d(
+//           new Translation3d(
+//               Units.inchesToMeters(-5.5), // 5.5 in
+//               Units.inchesToMeters(5.5), // -12 in
+//               Units.inchesToMeters(7.375)), //8.5 in
+//           new Rotation3d(
+//               0.0,
+//               Rotation2d.fromDegrees(32.0).getRadians(), //22
+//               Rotation2d.fromDegrees(3.5).getRadians()
+//           ));
+//       public static final double kMaxDistanceMeters = 3;
+//   }
 
     public static final class ReefVisionConstants {
       public static final String kCameraName = "Reef Tag Camera";
