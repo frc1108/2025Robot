@@ -66,7 +66,7 @@ public class RobotContainer {
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
   private final CoralSubsystem m_coral = new CoralSubsystem();
-  private Vision m_vision;
+  private Vision m_reefVision, m_bargeVision;
   private final LEDSubsystem m_led = new LEDSubsystem();
 
 
@@ -90,7 +90,8 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
     try {
-      m_vision = new Vision(m_robotDrive::visionPose, m_robotDrive);
+      m_reefVision = new Vision(m_robotDrive::visionPose, m_robotDrive,Constants.ReefVisionConstants.kCameraName,Constants.ReefVisionConstants.kCameraOffset);
+      m_bargeVision= new Vision(m_robotDrive::visionPose, m_robotDrive,Constants.BargeVisionConstants.kCameraName,Constants.BargeVisionConstants.kCameraOffset);
     }
      catch(IOException e) {
      DriverStation.reportWarning("Unable to initialize vision", e.getStackTrace());

@@ -17,108 +17,73 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ReefVisionConstants;
 
 
 @Logged
 public class Vision extends SubsystemBase {
-    private final PhotonCamera reefCamera, bargeCamera;    
-    private final PhotonPoseEstimator reefCameraPoseEstimator, bargeCameraPoseEstimator;
+    private final PhotonCamera photonCamera;    
+    private final PhotonPoseEstimator poseEstimator;
     private final AprilTagFieldLayout fieldLayout;
     private final BiConsumer<Pose2d, Double> consumer;
     private final DriveSubsystem drive;
+    private Pose3d estimated3dPose;
 
-    public Vision(BiConsumer<Pose2d, Double> consumer, DriveSubsystem drive) throws IOException{
+    public Vision(BiConsumer<Pose2d, Double> consumer, DriveSubsystem drive, String photonCameraName, Transform3d cameraOffset) throws IOException{
 
         // Upper and lower cameras are used
-        reefCamera = new PhotonCamera(Constants.ReefVisionConstants.kCameraName);
-        bargeCamera = new PhotonCamera(Constants.BargeVisionConstants.kCameraName);
+        photonCamera = new PhotonCamera(photonCameraName);
 
         // Field layout is loaded
         fieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2025ReefscapeWelded.m_resourceFile);
 
-        reefCameraPoseEstimator = new PhotonPoseEstimator(
+        poseEstimator = new PhotonPoseEstimator(
             fieldLayout,
             PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-            Constants.ReefVisionConstants.kCameraOffset);
+            cameraOffset);
 
-        bargeCameraPoseEstimator = new PhotonPoseEstimator(
-            fieldLayout,
-            PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-            Constants.BargeVisionConstants.kCameraOffset);
+        estimated3dPose = new Pose3d();
 
         this.consumer = consumer;
         this.drive = drive;
     }
 
-    private boolean isReefCameraConnected() {
-        return reefCamera.isConnected();
-    }
-
-    private boolean isBargeCameraConnected() {
-        return bargeCamera.isConnected();
-    }
-
-    @Override
+     @Override
     public void periodic(){
-        if (!isReefCameraConnected() && !isBargeCameraConnected()) 
+        if (!photonCamera.isConnected()) 
             return;
 
-        PhotonPipelineResult reefPipelineResult = new PhotonPipelineResult();
-        PhotonPipelineResult bargePipelineResult = new PhotonPipelineResult();
-        List<PhotonTrackedTarget> badTargets = new ArrayList<>();
-
-        if (isReefCameraConnected())
-         {
-            reefPipelineResult = reefCamera.getLatestResult();
-            boolean hasReefTargets = reefPipelineResult.hasTargets();
-            if (!hasReefTargets)
+          var pipelineResult = photonCamera.getLatestResult();
+          boolean hasTargets = pipelineResult.hasTargets();
+            if (!hasTargets)
                 return;
-
-            List<PhotonTrackedTarget> badReefTargets = new ArrayList<>();
-            for(PhotonTrackedTarget reefTarget : reefPipelineResult.targets){
-                var reefTagPose = fieldLayout.getTagPose(reefTarget.getFiducialId());
-                var distanceToReefTag = PhotonUtils.getDistanceToPose(drive.getPose(),reefTagPose.get().toPose2d());
-                if(reefTarget.getPoseAmbiguity()>0.35 || distanceToReefTag > ReefVisionConstants.kMaxDistanceMeters){  // Changed from 0.5 ambiguity
-                    badReefTargets.add(reefTarget);
+          
+          List<PhotonTrackedTarget> badTargets = new ArrayList<>();
+            for(PhotonTrackedTarget target : pipelineResult.targets){
+                var tagPose = fieldLayout.getTagPose(target.getFiducialId());
+                var distanceTotag = PhotonUtils.getDistanceToPose(drive.getPose(),tagPose.get().toPose2d());
+                if(target.getPoseAmbiguity()>0.35 || distanceTotag > ReefVisionConstants.kMaxDistanceMeters){  // Changed from 0.5 ambiguity
+                    badTargets.add(target);
                 }
             }
-            reefPipelineResult.targets.removeAll(badReefTargets);
-         }
-
-         if (isBargeCameraConnected())
-         {
-            bargePipelineResult = reefCamera.getLatestResult();
-            boolean hasBargeTargets = bargePipelineResult.hasTargets();
-            if (!hasBargeTargets)
-                return;
-
-            List<PhotonTrackedTarget> badBargeTargets = new ArrayList<>();
-            for(PhotonTrackedTarget bargeTarget : bargePipelineResult.targets){
-                var bargeTagPose = fieldLayout.getTagPose(bargeTarget.getFiducialId());
-                var distanceToBargeTag = PhotonUtils.getDistanceToPose(drive.getPose(),bargeTagPose.get().toPose2d());
-                if(bargeTarget.getPoseAmbiguity()>0.35 || distanceToBargeTag > ReefVisionConstants.kMaxDistanceMeters){  // Changed from 0.5 ambiguity
-                    badBargeTargets.add(bargeTarget);
-                }
-            }
-            bargePipelineResult.targets.removeAll(badBargeTargets);
-         }
-        
-
-        PhotonPipelineResult totalPipelineResult = new PhotonPipelineResult();
-        totalPipelineResult.targets.addAll(bargePipelineResult.targets);
-        totalPipelineResult.targets.addAll(reefPipelineResult.targets);
-        
-        Optional<EstimatedRobotPose> reefPoseResult = reefCameraPoseEstimator.update(totalPipelineResult);
-        boolean posePresent = reefPoseResult.isPresent();
-        if (!posePresent)
+            pipelineResult.targets.removeAll(badTargets);
+             
+          Optional<EstimatedRobotPose> poseResult = poseEstimator.update(pipelineResult);
+          boolean posePresent = poseResult.isPresent();
+          if (!posePresent)
             return;
 
-        EstimatedRobotPose estimatedPose = reefPoseResult.get();
+          EstimatedRobotPose estimatedPose = poseResult.get();
 
-        consumer.accept(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds);
+          estimated3dPose = estimatedPose.estimatedPose;
+          consumer.accept(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds);
+    }
+
+    public Pose3d getEstimated3dPose() {
+        return estimated3dPose;
     }
 
 
