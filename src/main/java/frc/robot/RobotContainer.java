@@ -274,6 +274,8 @@ m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
   public void configureWithAlliance(Alliance alliance) {
     m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
+    m_led.runPattern((alliance == Alliance.Blue)?LEDPattern.solid(Color.kBlue)
+                                                :LEDPattern.solid(Color.kRed));
   }
 
   private void setupPathPlannerLog() {
