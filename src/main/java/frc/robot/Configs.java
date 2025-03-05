@@ -139,7 +139,7 @@ public static final class Intake {
 
         static {
                 // Configure basic settings of the arm motor
-                intakeConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(20).voltageCompensation(12);
+                intakeConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(20).voltageCompensation(10);
         }}
 
 public static final class Algae {

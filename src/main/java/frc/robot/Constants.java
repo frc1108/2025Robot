@@ -76,7 +76,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.075; //762
+    public static final double kWheelDiameterMeters = 0.07395; //762
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -134,8 +134,8 @@ public final class Constants {
     }
 
     public static final class IntakeSetpoints {
-      public static final double kForward = 0.35;
-      public static final double kReverse = -0.35;
+      public static final double kForward = 0.5;
+      public static final double kReverse = -0.5;
     }
   }
 
@@ -143,13 +143,13 @@ public static final class BargeVisionConstants {
         public static final String kCameraName = "Barge Tag Camera";
         public static final Transform3d kCameraOffset = new Transform3d(
             new Translation3d(
-                Units.inchesToMeters(6.5), // 5.5 in
-                Units.inchesToMeters(-4.75), // -12 in
-                Units.inchesToMeters(38.625)), //8.5 in
+                Units.inchesToMeters(6.25), // 5.5 in
+                Units.inchesToMeters(-4.25), // -8.75 in
+                Units.inchesToMeters(39.375)), //8.5 in
             new Rotation3d(
-              Rotation2d.fromDegrees(90).getRadians(),
-                Rotation2d.fromDegrees(360-35).getRadians(), //
-                Rotation2d.fromDegrees(0).getRadians()
+              Rotation2d.fromDegrees(270).getRadians(), // 
+                Rotation2d.fromDegrees(360-37).getRadians(), //360-35
+                Rotation2d.fromDegrees(360-5).getRadians() //0
             ));
         public static final double kMaxDistanceMeters = 3;
     }
