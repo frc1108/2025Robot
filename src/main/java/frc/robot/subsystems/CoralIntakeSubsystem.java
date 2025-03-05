@@ -43,11 +43,11 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   //slow coral out
   public Command reverseSlowIntakeCommand() {
     return this.startEnd(
-      () -> this.setIntakePower(-0.1),() -> this.setIntakePower(0.0));
+      () -> this.setIntakePower(0.15),() -> this.setIntakePower(0.0));
   }
   public Command reverseFastIntakeCommand() {
     return this.startEnd(
-      () -> this.setIntakePower(-1.0),() -> this.setIntakePower(0.0));
+      () -> this.setIntakePower(1.0),() -> this.setIntakePower(0.0));
   }
   
   @Override
