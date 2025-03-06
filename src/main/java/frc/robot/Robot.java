@@ -52,15 +52,15 @@ public class Robot extends TimedRobot {
     Epilogue.bind(this);
   }
 
-  @Override
-  public void driverStationConnected() {
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
-      m_robotContainer.configureWithAlliance(alliance.get());
-    } else {
-      m_robotContainer.configureWithAlliance(Alliance.Blue);
-    }
-  }
+  // @Override
+  // public void driverStationConnected() {
+  //   var alliance = DriverStation.getAlliance();
+  //   if (alliance.isPresent()) {
+  //     m_robotContainer.configureWithAlliance(alliance.get());
+  //   } else {
+  //     m_robotContainer.configureWithAlliance(Alliance.Blue);
+  //   }
+  // }
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics

@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -34,6 +35,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 2*Math.PI; // radians per second //2*Pi is maximum
     public static final double kTopSpeed = 1.0; // 0 to 1
     public static final double kTopAngularSpeed = 1.0; // 0 to 1
+    public static final Alliance kAlliance = Alliance.Red;
 
 
     // Chassis configuration
@@ -76,7 +78,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.07395; //762
+    public static final double kWheelDiameterMeters = 0.0762; //New - .0762 Worn - .07395
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -119,18 +121,18 @@ public final class Constants {
       public static final double kStow = 0.0;
       public static final double kFeederStation = 0.0; //b intake
       public static final double kLevel1 = 0.0; //povDown
-      public static final double kLevel2 = 0.125; //a
-      public static final double kLevel3 = 0.5; //x
-      public static final double kLevel4 = 0.7; //y
+      public static final double kLevel2 = 0.1; //a L2
+      public static final double kLevel3 = 0.475; //x L3
+      public static final double kLevel4 = 0.7; //y L4
     }
 
     public static final class ArmSetpoints {
       public static final double kStow = 0.3;
       public static final double kFeederStation = 3.34; //b intake
       public static final double kLevel1 = 2.3; //povDown
-      public static final double kLevel2 = 3.95; //a
-      public static final double kLevel3 = 3.9; //x
-      public static final double kLevel4 = 2.1; //y
+      public static final double kLevel2 = 3.95; //a L2
+      public static final double kLevel3 = 3.9; //x L3
+      public static final double kLevel4 = 2.1; //y L4
     }
 
     public static final class IntakeSetpoints {
@@ -175,11 +177,11 @@ public static final class BargeVisionConstants {
       public static final Transform3d kCameraOffset = new Transform3d(
           new Translation3d(
               Units.inchesToMeters(6.5), // 1.0 in 6.5
-              Units.inchesToMeters(-5.75), // -12 in
+              Units.inchesToMeters(-5.375), // -12 in
               Units.inchesToMeters(15)), //8.5 in
           new Rotation3d(
               0.0,
-              Rotation2d.fromDegrees(10).getRadians(), //22
+              Rotation2d.fromDegrees(5).getRadians(), //22
               Rotation2d.fromDegrees(0).getRadians()
           ));
       public static final double kMaxDistanceMeters = 3;
