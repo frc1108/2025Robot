@@ -117,7 +117,7 @@ public final class Constants {
 
     public static final class ElevatorSetpoints {
       public static final double kStow = 0.0;
-      public static final double kFeederStation = 0.0; //b
+      public static final double kFeederStation = 0.0; //b intake
       public static final double kLevel1 = 0.0; //povDown
       public static final double kLevel2 = 0.125; //a
       public static final double kLevel3 = 0.5; //x
@@ -126,7 +126,7 @@ public final class Constants {
 
     public static final class ArmSetpoints {
       public static final double kStow = 0.3;
-      public static final double kFeederStation = 3.1; //b
+      public static final double kFeederStation = 3.34; //b intake
       public static final double kLevel1 = 2.3; //povDown
       public static final double kLevel2 = 3.95; //a
       public static final double kLevel3 = 3.9; //x

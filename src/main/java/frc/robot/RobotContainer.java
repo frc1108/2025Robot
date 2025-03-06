@@ -177,7 +177,7 @@ m_driverController.a()
         m_operatorController.setRumble(RumbleType.kRightRumble, 0); // Set both rumble types on False
     }));
 
-m_driverController.a().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
+m_driverController.x().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
 m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
 
