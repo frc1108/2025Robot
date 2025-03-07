@@ -23,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -135,6 +136,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
       m_gyro.getRotation2d(),
+      //isAllianceFlipped() ? m_gyro.getRotation2d().rotateBy(Rotation2d.fromDegrees(180)) : m_gyro.getRotation2d(),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -189,6 +191,7 @@ public class DriveSubsystem extends SubsystemBase {
                                                       : m_gyro.getRotation2d())
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     setStates(swerveModuleStates);
+    SmartDashboard.putBoolean("allianceFlipped", isAllianceFlipped());
   }
 
   public void setStates(SwerveModuleState[] targetStates) {
@@ -251,6 +254,12 @@ public class DriveSubsystem extends SubsystemBase {
     //m_gyro.reset();
   }
 
+    /** Zeroes the heading of the robot. */
+    public void flipHeading() {
+      m_gyro.setPose(m_gyro.getRotation3d().rotateBy(new Rotation3d(Rotation2d.k180deg)), 0);
+      //m_gyro.setPose(new Rotation3d(),0);
+      //m_gyro.reset();
+    }
   /**
    * Returns the heading of the robot.
    *
