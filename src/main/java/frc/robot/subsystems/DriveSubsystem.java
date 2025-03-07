@@ -100,7 +100,7 @@ public class DriveSubsystem extends SubsystemBase {
             this // Reference to this subsystem to set requirements
     );
 
-    setVisionStdDevs(5,5,999);
+    setVisionStdDevs(0.25,0.25,9999);
   }
 
   @Override
