@@ -97,18 +97,12 @@ public class DriveSubsystem extends SubsystemBase {
                     new PIDConstants(5, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-
-                return Constants.DriveConstants.kAlliance == DriverStation.Alliance.Red;
-              },
+            () -> isAllianceFlipped(), // Boolean supplier that is true when alliance is red to mirror paths.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
             this // Reference to this subsystem to set requirements
     );
 
-   // setVisionStdDevs(5,5,999);
+    setVisionStdDevs(5,5,999);
   }
 
   @Override
@@ -193,7 +187,8 @@ public class DriveSubsystem extends SubsystemBase {
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-            m_gyro.getRotation2d())
+                                                    isAllianceFlipped()? m_gyro.getRotation2d().rotateBy(Rotation2d.k180deg)
+                                                      : m_gyro.getRotation2d())
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     setStates(swerveModuleStates);
   }
@@ -266,4 +261,19 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
   }
+
+  /**
+   * Returns the alliance is flipped
+   * @return the robot alliance is blue by default if true
+   */
+  public boolean isAllianceFlipped(){
+    var alliance = DriverStation.getAlliance();
+
+    if (alliance.isPresent()) {
+      return alliance.get() == DriverStation.Alliance.Red;
+    }
+
+    return false;
+  }
+
 }

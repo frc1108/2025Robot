@@ -87,7 +87,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureNamedCommands();
-    configureWithAlliance(Constants.DriveConstants.kAlliance);
+    //configureWithAlliance(Constants.DriveConstants.kAlliance);
     //configureEventTriggers();
     m_autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
@@ -273,12 +273,12 @@ m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
       Commands.parallel();
   }
 
-  public void configureWithAlliance(Alliance alliance) {
-    m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
-    //m_led.runPattern((alliance == Alliance.Blue)?LEDPattern.solid(Color.kBlue)
-    //
-    //                                            :LEDPattern.solid(Color.kRed));
-  }
+  // public void configureWithAlliance(Alliance alliance) {
+  //   m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
+  //   //m_led.runPattern((alliance == Alliance.Blue)?LEDPattern.solid(Color.kBlue)
+  //   //
+  //   //                                            :LEDPattern.solid(Color.kRed));
+  // }
 
   private void setupPathPlannerLog() {
     PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
