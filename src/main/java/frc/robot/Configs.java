@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.util.Units;
@@ -109,7 +108,6 @@ public final class Configs {
         static{
                 double gearRatio = 12.0*14.0/16.0;
                 double sprocketDistanceMeters = Units.inchesToMeters(6.5);
-                double countsPerRevolution = 8192;
                 
                 elevatorConfig
                   .idleMode(IdleMode.kCoast)
