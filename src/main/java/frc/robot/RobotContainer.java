@@ -164,6 +164,8 @@ m_driverController.a()
 m_driverController.x().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
 m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
+m_driverController.y().onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
+
 
 
 
