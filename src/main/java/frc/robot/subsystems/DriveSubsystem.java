@@ -12,15 +12,18 @@ import com.reduxrobotics.sensors.canandgyro.Canandgyro;
 //import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -52,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
   //private final Pigeon2 m_gyro = new Pigeon2(0);
 
   // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+  SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
       m_gyro.getRotation2d(),
       new SwerveModulePosition[] {
@@ -60,8 +63,13 @@ public class DriveSubsystem extends SubsystemBase {
           m_frontRight.getPosition(),
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
-      });
+      },
+      new Pose2d());
     
+    private final Field2d m_field = new Field2d();
+    private boolean isVisionAdded = true;
+    private boolean m_visionAdded = false;
+
           // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
     RobotConfig config;
@@ -84,23 +92,16 @@ public class DriveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(5, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
+            () -> isAllianceFlipped(), // Boolean supplier that is true when alliance is red to mirror paths.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
             this // Reference to this subsystem to set requirements
     );
+
+    setVisionStdDevs(0.25,0.25,9999);
   }
 
   @Override
@@ -114,6 +115,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+
+  m_field.setRobotPose(m_odometry.getEstimatedPosition());
   }
 
   /**
@@ -122,7 +125,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
+    return m_odometry.getEstimatedPosition();
   }
 
   /**
@@ -133,6 +136,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
       m_gyro.getRotation2d(),
+      //isAllianceFlipped() ? m_gyro.getRotation2d().rotateBy(Rotation2d.fromDegrees(180)) : m_gyro.getRotation2d(),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -140,6 +144,29 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         },
         pose);
+  }
+
+    public void visionPose(Pose2d pose,double timestamp){
+    if (isVisionAdded) {
+        m_odometry.addVisionMeasurement(pose, timestamp);
+        m_visionAdded = true;
+    }
+  }
+
+  public void stopVisionPose(){
+    isVisionAdded = false;
+  }
+
+  public void startVisionPose(){
+    isVisionAdded = true;
+  }
+
+  public boolean getVisionAdded(){
+    return isVisionAdded;
+  }
+
+  public void setVisionStdDevs(double xMeters, double yMeters, double thetaRads) {
+    m_odometry.setVisionMeasurementStdDevs(VecBuilder.fill(xMeters,yMeters,thetaRads));
   }
 
   /**
@@ -160,9 +187,11 @@ public class DriveSubsystem extends SubsystemBase {
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-            m_gyro.getRotation2d())
+                                                    isAllianceFlipped()? m_gyro.getRotation2d().rotateBy(Rotation2d.k180deg)
+                                                      : m_gyro.getRotation2d())
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     setStates(swerveModuleStates);
+    SmartDashboard.putBoolean("allianceFlipped", isAllianceFlipped());
   }
 
   public void setStates(SwerveModuleState[] targetStates) {
@@ -225,6 +254,12 @@ public class DriveSubsystem extends SubsystemBase {
     //m_gyro.reset();
   }
 
+    /** Zeroes the heading of the robot. */
+    public void flipHeading() {
+      m_gyro.setPose(m_gyro.getRotation3d().rotateBy(new Rotation3d(Rotation2d.k180deg)), 0);
+      //m_gyro.setPose(new Rotation3d(),0);
+      //m_gyro.reset();
+    }
   /**
    * Returns the heading of the robot.
    *
@@ -233,4 +268,19 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
   }
+
+  /**
+   * Returns the alliance is flipped
+   * @return the robot alliance is blue by default if true
+   */
+  public boolean isAllianceFlipped(){
+    var alliance = DriverStation.getAlliance();
+
+    if (alliance.isPresent()) {
+      return alliance.get() == DriverStation.Alliance.Red;
+    }
+
+    return false;
+  }
+
 }
