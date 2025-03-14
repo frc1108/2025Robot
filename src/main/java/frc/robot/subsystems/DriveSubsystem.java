@@ -19,11 +19,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -96,19 +96,12 @@ public class DriveSubsystem extends SubsystemBase {
                     new PIDConstants(5, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
+            () -> isAllianceFlipped(), // Boolean supplier that is true when alliance is red to mirror paths.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
             this // Reference to this subsystem to set requirements
     );
+
+    setVisionStdDevs(0.25,0.25,9999);
   }
 
   @Override
@@ -143,6 +136,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
       m_gyro.getRotation2d(),
+      //isAllianceFlipped() ? m_gyro.getRotation2d().rotateBy(Rotation2d.fromDegrees(180)) : m_gyro.getRotation2d(),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -193,9 +187,11 @@ public class DriveSubsystem extends SubsystemBase {
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-            m_gyro.getRotation2d())
+                                                    isAllianceFlipped()? m_gyro.getRotation2d().rotateBy(Rotation2d.k180deg)
+                                                      : m_gyro.getRotation2d())
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     setStates(swerveModuleStates);
+    SmartDashboard.putBoolean("allianceFlipped", isAllianceFlipped());
   }
 
   public void setStates(SwerveModuleState[] targetStates) {
@@ -258,6 +254,12 @@ public class DriveSubsystem extends SubsystemBase {
     //m_gyro.reset();
   }
 
+    /** Zeroes the heading of the robot. */
+    public void flipHeading() {
+      m_gyro.setPose(m_gyro.getRotation3d().rotateBy(new Rotation3d(Rotation2d.k180deg)), 0);
+      //m_gyro.setPose(new Rotation3d(),0);
+      //m_gyro.reset();
+    }
   /**
    * Returns the heading of the robot.
    *
@@ -266,4 +268,19 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
   }
+
+  /**
+   * Returns the alliance is flipped
+   * @return the robot alliance is blue by default if true
+   */
+  public boolean isAllianceFlipped(){
+    var alliance = DriverStation.getAlliance();
+
+    if (alliance.isPresent()) {
+      return alliance.get() == DriverStation.Alliance.Red;
+    }
+
+    return false;
+  }
+
 }
