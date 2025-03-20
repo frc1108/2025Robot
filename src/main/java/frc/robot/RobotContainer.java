@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.XboxController;
@@ -89,8 +90,8 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -1*MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -1*MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                m_invertDriveAlliance*MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                m_invertDriveAlliance*MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 // m_robotDrive.isAllianceFlipped()?1:-1*MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 // m_robotDrive.isAllianceFlipped()?1:-1*MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
@@ -167,7 +168,7 @@ m_driverController.x().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
 m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
 m_driverController.y().onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
-m_driverController.povUp().onTrue(Commands.runOnce(() -> m_robotDrive.flipHeading()));
+m_driverController.povUp().onTrue(this.intakeCoral());
 
 
 
@@ -211,8 +212,8 @@ m_driverController.povUp().onTrue(Commands.runOnce(() -> m_robotDrive.flipHeadin
   //Command Names and Their Actions
   public Command intakeCoral() {
     return Commands.parallel(
-        m_coralIntake.runIntakeCommand().withTimeout(1)
-    );
+        m_coralIntake.runIntakeCommand().withTimeout(2)
+    ).until(()->m_coralIntake.isCoralPresent());
 }
   public Command reverseCoral() {
     return 
@@ -261,12 +262,9 @@ m_driverController.povUp().onTrue(Commands.runOnce(() -> m_robotDrive.flipHeadin
       Commands.parallel();
   }
 
-  // public void configureWithAlliance(Alliance alliance) {
-  //   m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
-  //   //m_led.runPattern((alliance == Alliance.Blue)?LEDPattern.solid(Color.kBlue)
-  //   //
-  //   //                                            :LEDPattern.solid(Color.kRed));
-  // }
+  public void configureWithAlliance(Alliance alliance) {
+    m_invertDriveAlliance = (alliance == Alliance.Blue)?-1:1;
+  }
 
   private void setupPathPlannerLog() {
     PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {

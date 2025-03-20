@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.util.Units;
@@ -90,8 +91,8 @@ public final class Configs {
                     .outputRange(-1, 1)
                     .maxMotion
                     // Set MAXMotion parameters for position control
-                    .maxVelocity(300)
-                    .maxAcceleration(900)
+                    .maxVelocity(360)  // Added 20% speed to max pre-Heartland
+                    .maxAcceleration(1080)
                     .allowedClosedLoopError(0.1);
 
                 armConfig
@@ -123,12 +124,12 @@ public final class Configs {
                   .velocityConversionFactor(sprocketDistanceMeters/60);
                 elevatorConfig.closedLoop
                   .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)
-                  .p(3)
+                  .p(3) //3
                   .outputRange(-1, 1);
                 elevatorConfig.closedLoop.maxMotion
-                  .maxVelocity(50) // m/s Not sure what exact units are in??
-                  .maxAcceleration(300)
-                  .allowedClosedLoopError(0.004);  // 4mm
+                  .maxVelocity(55) // 10 percent faster pre-Heartland both V & A
+                  .maxAcceleration(330)
+                  .allowedClosedLoopError(0.006);  // 0.004m 
         }
 }
 
@@ -138,6 +139,7 @@ public static final class Intake {
         static {
                 // Configure basic settings of the arm motor
                 intakeConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(20).voltageCompensation(10);
+                intakeConfig.limitSwitch.forwardLimitSwitchEnabled(false).forwardLimitSwitchType(Type.kNormallyClosed);
         }}
 
 public static final class Algae {
