@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.io.IOException;
 
@@ -169,6 +171,11 @@ m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
 m_driverController.y().onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 m_driverController.povUp().onTrue(this.intakeCoral());
+
+new Trigger(()->m_coralIntake.isCoralPresent())
+                .onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)))
+                .onFalse(m_led.runPattern(LEDPattern.solid(Color.kBlack)));
+ // RobotModeTriggers.disabled().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1));
 
 
 

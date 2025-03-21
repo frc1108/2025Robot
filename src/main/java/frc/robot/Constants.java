@@ -76,7 +76,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.076; //New - .0762 Worn - .07395 Halfway Worn - .075
+    public static final double kWheelDiameterMeters = 0.075; //New - .0762 Worn - .07395 Halfway Worn - .075
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -183,6 +183,7 @@ public static final class BargeVisionConstants {
               Rotation2d.fromDegrees(0).getRadians()
           ));
       public static final double kMaxDistanceMeters = 3;
+      //public static final double kMinDistanceMeters = 0.25;
   }
 
 }
