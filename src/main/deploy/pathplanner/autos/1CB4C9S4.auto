@@ -63,6 +63,18 @@
           "data": {
             "waitTime": 0.5
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C5S5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeCoral"
+          }
         }
       ]
     }
