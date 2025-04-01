@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 
     // Initialize data logging.
     DataLogManager.start();
-    URCL.start(DataLogManager.getLog());
+    URCL.start();
     SignalLogger.start();
     Epilogue.bind(this);
   }

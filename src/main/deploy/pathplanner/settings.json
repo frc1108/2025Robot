@@ -4,10 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "2025",
-    "Test"
+    "Test",
+    "Texas"
   ],
   "autoFolders": [
     "2025",
+    "Right 3 Coral",
     "Test"
   ],
   "defaultMaxVel": 3.0,

@@ -37,6 +37,7 @@ import java.io.IOException;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 
@@ -75,7 +76,10 @@ public class RobotContainer {
     configureNamedCommands();
     //configureWithAlliance(Constants.DriveConstants.kAlliance);
     //configureEventTriggers();
-    m_autoChooser = AutoBuilder.buildAutoChooser();
+    //m_autoChooser = AutoBuilder.buildAutoChooser();
+    m_autoChooser = new SendableChooser<>();
+    m_autoChooser.addOption("Test Either", this.TestEither());
+    m_autoChooser.addOption("2 Coral", AutoBuilder.buildAuto("T2C B1C12L4,C12S2,S2C1L4"));
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
     try {
@@ -286,4 +290,31 @@ new Trigger(()->m_coralIntake.isCoralPresent())
       m_path.getObject("path").setPoses(poses);
     });
   }
+
+  // Command Right3Coral(){
+  //   return Commands.sequence(
+  //            new PathPlannerAuto("Score Pos 1"),
+  //            Commands.either(new PathPlannerAuto("RescoreCoralAtPos1"),
+  //                            new PathPlannerAuto("GetCoralFromPos1"),
+  //                            m_coralIntake::isCoralPresent),
+  //            Commands.either(new PathPlannerAuto("ScorePos2"),
+  //                            new PathPlannerAuto("RegetToScorePos2"),
+  //                            m_coralIntake::isCoralPresent),
+  //            Commands.either(new PathPlannerAuto("RescoreCoralAtPos2"),
+  //                            new PathPlannerAuto("GetCoralFromPos2"),
+  //                            m_coralIntake::isCoralPresent),
+  //            Commands.either(new PathPlannerAuto("ScorePos3"),
+  //                            new PathPlannerAuto("RegetToScorePos3"),
+  //                            m_coralIntake::isCoralPresent));
+  // }
+
+  Command TestEither(){
+    return Commands.sequence(
+             new PathPlannerAuto("TAAB3C12"),
+             Commands.either(new PathPlannerAuto("TAAC12RS1"),
+                             new PathPlannerAuto("TAAC12S1"),
+                             m_coralIntake::isCoralPresent));
+  }
+
+
 }
