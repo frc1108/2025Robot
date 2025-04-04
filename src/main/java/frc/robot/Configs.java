@@ -127,9 +127,9 @@ public final class Configs {
                   .p(3) //3
                   .outputRange(-1, 1);
                 elevatorConfig.closedLoop.maxMotion
-                  .maxVelocity(55) // 10 percent faster pre-Heartland both V & A
-                  .maxAcceleration(330)
-                  .allowedClosedLoopError(0.006);  // 0.004m 
+                  .maxVelocity(60) // 10 percent faster pre-Heartland both V & A  55
+                  .maxAcceleration(350) //355 
+                  .allowedClosedLoopError(0.005);  // 0.004m 
         }
 }
 

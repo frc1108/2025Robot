@@ -114,6 +114,7 @@ public final class Constants {
     public static final int kElevatorMotorCanId = 21;
     public static final int kArmMotorCanId = 41;
     public static final int kIntakeMotorCanId = 42;
+    public static final double kElevatorMotorFeedforwardinVolts = 0.26;
 
     public static final class ElevatorSetpoints {
       public static final double kStow = 0.0;
