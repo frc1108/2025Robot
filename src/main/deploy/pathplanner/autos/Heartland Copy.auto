@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TB1C12L4"
+            "pathName": "B1C12L4"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.15
+            "waitTime": 0.5
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TC12S2"
+            "pathName": "C12S2"
           }
         },
         {
@@ -43,13 +43,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TS2C1L4"
+            "pathName": "S2C1L4"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.15
+            "waitTime": 0.5
           }
         },
         {
@@ -67,7 +67,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TC1S2"
+            "pathName": "C1S2"
           }
         },
         {
@@ -79,13 +79,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TS2C2L4"
+            "pathName": "S2C2L4"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.15
+            "waitTime": 0.5
           }
         },
         {
@@ -103,13 +103,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TC2S2"
+            "pathName": "C2S2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "2025",
+  "folder": "SAVE",
   "choreoAuto": false
 }

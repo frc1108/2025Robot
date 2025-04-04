@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TPAC12S1"
+            "pathName": "TPAS1S1R"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TPAS1RS1"
           }
         },
         {
@@ -17,7 +23,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 2.0
                 }
               },
               {
@@ -28,11 +34,29 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TPAS1C1L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "down"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Right 3 Coral",
   "choreoAuto": false
 }

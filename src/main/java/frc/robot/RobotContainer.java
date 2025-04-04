@@ -80,7 +80,7 @@ public class RobotContainer {
     m_autoChooser = new SendableChooser<>();
     m_autoChooser.addOption("Test Either", this.TestEither());
     m_autoChooser.addOption("2 Coral B1", AutoBuilder.buildAuto("2C B1C12L4,C12S2,S2C1L4"));
-    m_autoChooser.addOption("3 Coral B1", AutoBuilder.buildAuto("T2C B1C12L4,C12S2,S2C1L4"));
+    m_autoChooser.addOption("3 Coral B2", AutoBuilder.buildAuto("T3C B2C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral BX", AutoBuilder.buildAuto("TTwo2C BXC12L4,C12S2,S2C1L4"));
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
@@ -315,6 +315,9 @@ new Trigger(()->m_coralIntake.isCoralPresent())
              new PathPlannerAuto("TAAB3C12"),
              Commands.either(new PathPlannerAuto("TAAC12RS1"),
                              new PathPlannerAuto("TAAC12S1"),
+                             m_coralIntake::isCoralPresent),
+             Commands.either(new PathPlannerAuto("TAAS1C1"),
+                             new PathPlannerAuto("TAAS1RC1"),
                              m_coralIntake::isCoralPresent));
   }
 

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.215,
-        "y": 0.7977499999999997
+        "x": 1.9,
+        "y": 1.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.057471692471958,
-        "y": 0.6036241842841333
+        "x": 1.775,
+        "y": 0.7834936490538904
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.011499999994493,
-        "y": 2.8550000000055706
+        "x": 1.732,
+        "y": 0.77
       },
       "prevControl": {
-        "x": 5.961500790765094,
-        "y": 2.4453588428350925
+        "x": 1.857,
+        "y": 0.9865063509461097
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 2.75,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
-    "nominalVoltage": 12.0,
+    "nominalVoltage": 10.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": 120.34324888423971
+    "velocity": 0,
+    "rotation": -126.0
   },
   "reversed": false,
-  "folder": "New Folder",
+  "folder": "Texas",
   "idealStartingState": {
-    "velocity": 4.0,
-    "rotation": -0.962863625636179
+    "velocity": 0,
+    "rotation": -126.0
   },
   "useDefaultConstraints": false
 }

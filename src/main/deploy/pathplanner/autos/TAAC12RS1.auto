@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TC12C12R"
+                  "pathName": "TPAC12C12R"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TC12RC12"
+            "pathName": "TPAC12RC12"
           }
         },
         {
@@ -55,9 +55,41 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TC12S1"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "reverseCoral"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TPAC12S1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeCoral"
+                }
+              }
+            ]
           }
         }
       ]

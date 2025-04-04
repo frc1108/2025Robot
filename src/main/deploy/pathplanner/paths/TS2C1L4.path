@@ -8,8 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.891229932277212,
-        "y": 1.808026180769601
+        "x": 1.97925,
+        "y": 1.3242499999999995
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.2955,
+        "y": 2.1725
+      },
+      "prevControl": {
+        "x": 2.636139791106908,
+        "y": 1.705276436676701
+      },
+      "nextControl": {
+        "x": 3.705390155828877,
+        "y": 2.4629487359026547
       },
       "isLocked": false,
       "linkedName": null
@@ -20,18 +36,18 @@
         "y": 2.845
       },
       "prevControl": {
-        "x": 3.716174443729962,
-        "y": 2.837901350389512
+        "x": 3.8245,
+        "y": 2.5410250832716623
       },
       "nextControl": null,
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 45.0
+      "waypointRelativePos": 1.1,
+      "rotationDegrees": 59.99999999999999
     }
   ],
   "constraintZones": [],
@@ -39,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "levelFourUp",
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.3,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

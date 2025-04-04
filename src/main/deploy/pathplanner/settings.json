@@ -4,12 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "2025",
-    "New Folder",
     "Test",
     "Texas"
   ],
   "autoFolders": [
     "2025",
+    "SAVE",
     "Right 3 Coral",
     "Test"
   ],
