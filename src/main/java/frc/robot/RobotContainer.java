@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.io.IOException;
+import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -78,7 +79,8 @@ public class RobotContainer {
     //configureEventTriggers();
     //m_autoChooser = AutoBuilder.buildAutoChooser();
     m_autoChooser = new SendableChooser<>();
-    m_autoChooser.addOption("Test Either", this.TestEither());
+    m_autoChooser.addOption("Three Coral Right B3", this.ThreeCoralRight());
+    m_autoChooser.addOption("12 Ft", AutoBuilder.buildAuto("12 Ft"));
     m_autoChooser.addOption("2 Coral B1", AutoBuilder.buildAuto("2C B1C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral B2", AutoBuilder.buildAuto("T3C B2C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral BX", AutoBuilder.buildAuto("TTwo2C BXC12L4,C12S2,S2C1L4"));
@@ -310,14 +312,29 @@ new Trigger(()->m_coralIntake.isCoralPresent())
   //                            m_coralIntake::isCoralPresent));
   // }
 
-  Command TestEither(){
+  Command ThreeCoralRight(){
+    var reefScoringTimeDelay = 0.5;  //Adjust to reduce stopping time after scoring in seconds
+    BooleanSupplier isAllianceFlipped = () -> m_robotDrive.isAllianceFlipped(); // Supplier so checked at time Command runs
+    var isPathMirrored = isAllianceFlipped.getAsBoolean();
     return Commands.sequence(
-             new PathPlannerAuto("TAAB3C12"),
-             Commands.either(new PathPlannerAuto("TAAC12RS1"),
-                             new PathPlannerAuto("TAAC12S1"),
+             new PathPlannerAuto("TAAB3C12",isPathMirrored),
+             Commands.waitSeconds(reefScoringTimeDelay),
+             Commands.either(new PathPlannerAuto("TAAC12RS1",isPathMirrored),
+                             new PathPlannerAuto("TAAC12S1",isPathMirrored),
                              m_coralIntake::isCoralPresent),
-             Commands.either(new PathPlannerAuto("TAAS1C1"),
-                             new PathPlannerAuto("TAAS1RC1"),
+             Commands.either(new PathPlannerAuto("TAAS1C1",isPathMirrored),
+                             new PathPlannerAuto("TAAS1RC1",isPathMirrored),
+                             m_coralIntake::isCoralPresent),
+             Commands.waitSeconds(reefScoringTimeDelay),
+             Commands.either(new PathPlannerAuto("TAAC1RS1",isPathMirrored),
+                             new PathPlannerAuto("TAAC1S1",isPathMirrored),
+                             m_coralIntake::isCoralPresent),
+            Commands.either(new PathPlannerAuto("TAAS1C2",isPathMirrored),
+                             new PathPlannerAuto("TAAS1RC2",isPathMirrored),
+                             m_coralIntake::isCoralPresent),
+            Commands.waitSeconds(reefScoringTimeDelay),
+            Commands.either(new PathPlannerAuto("TAAC2RS2",isPathMirrored),
+                             new PathPlannerAuto("TAAC2S2",isPathMirrored),
                              m_coralIntake::isCoralPresent));
   }
 

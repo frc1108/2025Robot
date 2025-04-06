@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 1.732,
-        "y": 0.77
+        "y": 1.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.732,
-        "y": 1.02
+        "x": 1.5217265861070197,
+        "y": 1.252764970507045
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.732,
-        "y": 1.4
+        "x": 1.25,
+        "y": 1.1
       },
       "prevControl": {
-        "x": 1.732,
-        "y": 1.15
+        "x": 1.454788011072248,
+        "y": 1.2433941090877616
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -140.0
+    "rotation": -126.0
   },
   "reversed": false,
   "folder": "Texas",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": -140.0
   },
   "useDefaultConstraints": false
 }
