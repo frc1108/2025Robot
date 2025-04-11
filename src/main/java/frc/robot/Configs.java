@@ -150,7 +150,7 @@ public static final class Algae {
                 algaeConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(60)
-                .voltageCompensation(12);
+                ;
         }}
 public static final class AlgaeIntake {
         public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
@@ -159,7 +159,17 @@ public static final class AlgaeIntake {
                 // Configure basic settings of the algaeIntake motor
                 algaeIntakeConfig
                 .idleMode(IdleMode.kCoast)
-                .smartCurrentLimit(60)
+                .smartCurrentLimit(40)
+                .voltageCompensation(12);
+        }}
+public static final class CoralIntake {
+        public static final SparkMaxConfig coralIntakeConfig = new SparkMaxConfig();
+        
+        static {
+                // Configure basic settings of the algaeIntake motor
+                coralIntakeConfig
+                .idleMode(IdleMode.kCoast)
+                .smartCurrentLimit(20)
                 .voltageCompensation(12);
         }}
 }

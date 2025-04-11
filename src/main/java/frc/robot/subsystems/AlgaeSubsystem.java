@@ -18,6 +18,7 @@ public class AlgaeSubsystem extends SubsystemBase {
 
   final SparkMax m_algaeUpDown = new SparkMax(26, MotorType.kBrushless);
   final SparkMax m_algaeSpin = new SparkMax(27, MotorType.kBrushless);
+  final SparkMax m_coralSpin = new SparkMax(28, MotorType.kBrushless);
 
   /** Creates a new AlgaeSubsystem. */
   public AlgaeSubsystem() {
@@ -29,6 +30,10 @@ public class AlgaeSubsystem extends SubsystemBase {
       Configs.AlgaeIntake.algaeIntakeConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
+    m_coralSpin.configure(
+      Configs.CoralIntake.coralIntakeConfig,
+      ResetMode.kResetSafeParameters,
+      PersistMode.kPersistParameters);
   }
 
   @Override
@@ -36,19 +41,21 @@ public class AlgaeSubsystem extends SubsystemBase {
 
   // This method will be called once per scheduler run
   private void setAlgaePower(double power) {
-    m_algaeUpDown.set(power);
+    m_algaeUpDown.setVoltage(power);
   }
   public Command upAlgae() {
     return this.startEnd(
-      () -> this.setAlgaePower(0.3),() -> this.setAlgaePower(-0.025));
+      () -> this.setAlgaePower(0),() -> this.setAlgaePower(-0.025));
   }
   public Command downAlgae() {
     return this.startEnd(
-      () -> this.setAlgaePower(-0.3),() -> this.setAlgaePower(-0.025));
+      () -> this.setAlgaePower(-12),() -> this.setAlgaePower(-0.025));
   }
+  
   private void setSpinPower(double power) {
     m_algaeSpin.set(power);
   }
+
   public Command inAlgaeRoller() {
     return this.startEnd(
       () -> this.setSpinPower(0.5),() -> this.setSpinPower(0.0));
@@ -56,5 +63,33 @@ public class AlgaeSubsystem extends SubsystemBase {
   public Command outAlgaeRoller() {
     return this.startEnd(
       () -> this.setSpinPower(-0.5),() -> this.setSpinPower(0.0));
+  }
+
+  private void setCoralSpinPower(double power) {
+    m_coralSpin.set(power);
+  }
+
+  public Command inCoralRoller() {
+    return this.startEnd(
+      () -> {
+        this.setSpinPower(0.5);
+        this.setCoralSpinPower(-0.5);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
+  }
+
+  public Command outCoralRoller() {
+    return this.startEnd(
+      () -> {
+        this.setSpinPower(-0.5);
+        this.setCoralSpinPower(0.5);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
   }
 }

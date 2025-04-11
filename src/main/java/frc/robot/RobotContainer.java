@@ -80,10 +80,12 @@ public class RobotContainer {
     //m_autoChooser = AutoBuilder.buildAutoChooser();
     m_autoChooser = new SendableChooser<>();
     m_autoChooser.addOption("Three Coral Right B3", this.ThreeCoralRight());
+    m_autoChooser.addOption("Two Coral Center BCenter", this.none());
     m_autoChooser.addOption("12 Ft", AutoBuilder.buildAuto("12 Ft"));
     m_autoChooser.addOption("2 Coral B1", AutoBuilder.buildAuto("2C B1C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral B2", AutoBuilder.buildAuto("T3C B2C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral BX", AutoBuilder.buildAuto("TTwo2C BXC12L4,C12S2,S2C1L4"));
+    m_autoChooser.addOption("T2C BBCC10L4, C10S1, S1C11L4", AutoBuilder.buildAuto("T2C BBCC10L4, C10S1, S1C11L4"));
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
     try {
@@ -128,6 +130,10 @@ public class RobotContainer {
 
     m_operatorController.povLeft().whileTrue(m_algae.inAlgaeRoller());
     m_operatorController.povRight().whileTrue(m_algae.outAlgaeRoller());
+
+    m_operatorController.povLeft().and(m_operatorController.rightBumper()).whileTrue(m_algae.inCoralRoller());
+    m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_algae.inCoralRoller());
+
 
     // m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
     // m_operatorController.leftTrigger().whileTrue(m_coral.coralSpinOut());
@@ -313,7 +319,7 @@ new Trigger(()->m_coralIntake.isCoralPresent())
   // }
 
   Command ThreeCoralRight(){
-    var reefScoringTimeDelay = 0.5;  //Adjust to reduce stopping time after scoring in seconds
+    var reefScoringTimeDelay = 0.15;  //Adjust to reduce stopping time after scoring in seconds
     BooleanSupplier isAllianceFlipped = () -> m_robotDrive.isAllianceFlipped(); // Supplier so checked at time Command runs
     var isPathMirrored = isAllianceFlipped.getAsBoolean();
     return Commands.sequence(
