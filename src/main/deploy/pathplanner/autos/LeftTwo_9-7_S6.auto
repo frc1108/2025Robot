@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TPBBCC10L4"
+            "pathName": "TPBBCC9L4"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TPBC10S1"
+            "pathName": "TPBC9S6"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TPBS1C11L4"
+            "pathName": "TPBS6C7L4"
           }
         },
         {
@@ -62,6 +62,12 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TPBC7S6"
           }
         }
       ]
