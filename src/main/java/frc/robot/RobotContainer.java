@@ -80,12 +80,13 @@ public class RobotContainer {
     //m_autoChooser = AutoBuilder.buildAutoChooser();
     m_autoChooser = new SendableChooser<>();
     m_autoChooser.addOption("Three Coral Right B3", this.ThreeCoralRight());
-    m_autoChooser.addOption("Two Coral Center BCenter", this.none());
     m_autoChooser.addOption("12 Ft", AutoBuilder.buildAuto("12 Ft"));
     m_autoChooser.addOption("2 Coral B1", AutoBuilder.buildAuto("2C B1C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral B2", AutoBuilder.buildAuto("T3C B2C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral BX", AutoBuilder.buildAuto("TTwo2C BXC12L4,C12S2,S2C1L4"));
-    m_autoChooser.addOption("T2C BBCC10L4, C10S1, S1C11L4", AutoBuilder.buildAuto("T2C BBCC10L4, C10S1, S1C11L4"));
+    //m_autoChooser.addOption("T2C BBCC10L4, C10S1, S1C11L4", AutoBuilder.buildAuto("T2C BBCC10L4, C10S1, S1C11L4"));
+    m_autoChooser.addOption("LeftTwo_9-8_S6", AutoBuilder.buildAuto("LeftTwo_9-8_S6"));
+    m_autoChooser.addOption("RightTwo_10-11_S1", AutoBuilder.buildAuto("RightTwo_10-11_S1"));
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
     try {
