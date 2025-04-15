@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 1.732,
-        "y": 0.77
+        "y": 7.282
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9982811922831396,
-        "y": 1.8879101292163951
+        "x": 2.9982813412035094,
+        "y": 6.164090039468979
       },
       "isLocked": false,
       "linkedName": null
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 4,
-        "y": 2.845
+        "y": 5.206999999999999
       },
       "prevControl": {
-        "x": 3.8745328900940748,
-        "y": 2.628764007778875
+        "x": 3.8745317282672427,
+        "y": 5.423235318087482
       },
       "nextControl": null,
       "isLocked": true,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5025989604158351,
-      "rotationDegrees": 59.99999999999999
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -59.99999999999999
     }
   ],
   "constraintZones": [],
@@ -59,13 +59,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Texas",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 126.0
   },
   "useDefaultConstraints": false
 }

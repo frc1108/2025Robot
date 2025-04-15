@@ -77,8 +77,9 @@ public final class Constants {
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
     // REV Spiky wheel New 0.078
+    // REV Spikey wheels Halfway 0.0771875
     // REV v2 wheel New 0.0762 
-    public static final double kWheelDiameterMeters = 0.078; //New - .0762 Worn - .07395 Halfway Worn - .075 
+    public static final double kWheelDiameterMeters = 0.0771875; //New - .0762 Worn - .07395 Halfway Worn - .075 
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion

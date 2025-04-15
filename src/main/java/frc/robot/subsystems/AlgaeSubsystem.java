@@ -45,11 +45,11 @@ public class AlgaeSubsystem extends SubsystemBase {
   }
   public Command upAlgae() {
     return this.startEnd(
-      () -> this.setAlgaePower(0),() -> this.setAlgaePower(-0.025));
+      () -> this.setAlgaePower(4),() -> this.setAlgaePower(-0.025));
   }
   public Command downAlgae() {
     return this.startEnd(
-      () -> this.setAlgaePower(-12),() -> this.setAlgaePower(-0.025));
+      () -> this.setAlgaePower(-4),() -> this.setAlgaePower(-0.025));
   }
   
   private void setSpinPower(double power) {

@@ -3,43 +3,52 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.732,
-        "y": 0.77
+        "x": 7.2,
+        "y": 5.052
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9982811922831396,
-        "y": 1.8879101292163951
+        "x": 6.995211988927752,
+        "y": 5.195394109087761
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4,
-        "y": 2.845
+        "x": 4.975,
+        "y": 5.206999999999999
       },
       "prevControl": {
-        "x": 3.8745328900940748,
-        "y": 2.628764007778875
+        "x": 5.2431155550916415,
+        "y": 5.431975663390288
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
+  "rotationTargets": [],
+  "constraintZones": [
     {
-      "waypointRelativePos": 0.5025989604158351,
-      "rotationDegrees": 59.99999999999999
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 2.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
     }
   ],
-  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "levelFourUp",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.01,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -50,8 +59,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.75,
-    "maxAcceleration": 3.25,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -59,13 +68,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -119.99999999999999
   },
   "reversed": false,
   "folder": "Texas",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": -179.23097531742198
   },
   "useDefaultConstraints": false
 }

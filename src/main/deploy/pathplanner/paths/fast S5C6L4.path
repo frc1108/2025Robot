@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.732,
-        "y": 0.77
+        "x": 1.25,
+        "y": 6.952
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9982811922831396,
-        "y": 1.8879101292163951
+        "x": 1.8926826397993186,
+        "y": 6.2328228869129525
       },
       "isLocked": false,
       "linkedName": null
@@ -17,21 +17,21 @@
     {
       "anchor": {
         "x": 4,
-        "y": 2.845
+        "y": 5.206999999999999
       },
       "prevControl": {
-        "x": 3.8745328900940748,
-        "y": 2.628764007778875
+        "x": 3.706916699431041,
+        "y": 5.195381963490924
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5025989604158351,
-      "rotationDegrees": 59.99999999999999
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [],
@@ -39,7 +39,7 @@
   "eventMarkers": [
     {
       "name": "levelFourUp",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.15,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -50,8 +50,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.75,
-    "maxAcceleration": 3.25,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -59,13 +59,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "Texas",
+  "folder": "2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 126.0
   },
   "useDefaultConstraints": false
 }

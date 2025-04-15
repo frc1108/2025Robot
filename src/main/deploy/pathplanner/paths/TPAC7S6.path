@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.02675,
-        "y": 2.8744999999999994
+        "x": 4.975,
+        "y": 5.206999999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.36925,
-        "y": 1.889749999999999
+        "x": 2.902035612609295,
+        "y": 6.318234275777647
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.732,
-        "y": 0.77
+        "x": 1.7621926229508196,
+        "y": 7.219723360655737
       },
       "prevControl": {
-        "x": 2.145,
-        "y": 1.3339999999999999
+        "x": 2.0161848743311443,
+        "y": 7.0793790458643056
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.2944881889763806,
-      "rotationDegrees": -155.0
+      "waypointRelativePos": 0.35,
+      "rotationDegrees": 160.0
     }
   ],
   "constraintZones": [
@@ -53,7 +53,7 @@
   "eventMarkers": [
     {
       "name": "feederPosition",
-      "waypointRelativePos": 0.24,
+      "waypointRelativePos": 0.25,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -73,13 +73,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 126.0
   },
   "reversed": false,
   "folder": "Texas",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 60.52411099675424
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": false
 }

@@ -4,68 +4,51 @@
     {
       "anchor": {
         "x": 1.732,
-        "y": 0.77
+        "y": 6.651999999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9982811922831396,
-        "y": 1.8879101292163951
+        "x": 1.5217265861070193,
+        "y": 6.799235029492954
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4,
-        "y": 2.845
+        "x": 1.25,
+        "y": 6.952
       },
       "prevControl": {
-        "x": 3.8745328900940748,
-        "y": 2.628764007778875
+        "x": 1.454788011072248,
+        "y": 6.808605890912238
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5025989604158351,
-      "rotationDegrees": 59.99999999999999
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "levelFourUp",
-      "waypointRelativePos": 0.2,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "levelFourUp"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.75,
     "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
-    "nominalVoltage": 12.0,
+    "nominalVoltage": 10.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 126.0
   },
   "reversed": false,
   "folder": "Texas",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 140.0
   },
   "useDefaultConstraints": false
 }

@@ -80,6 +80,7 @@ public class RobotContainer {
     //m_autoChooser = AutoBuilder.buildAutoChooser();
     m_autoChooser = new SendableChooser<>();
     m_autoChooser.addOption("Three Coral Right B3", this.ThreeCoralRight());
+    m_autoChooser.addOption("Three Coral Left B4", this.ThreeCoralLeft());
     m_autoChooser.addOption("12 Ft", AutoBuilder.buildAuto("12 Ft"));
     m_autoChooser.addOption("2 Coral B1", AutoBuilder.buildAuto("2C B1C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral B2", AutoBuilder.buildAuto("T3C B2C12L4,C12S2,S2C1L4"));
@@ -133,7 +134,7 @@ public class RobotContainer {
     m_operatorController.povRight().whileTrue(m_algae.outAlgaeRoller());
 
     m_operatorController.povLeft().and(m_operatorController.rightBumper()).whileTrue(m_algae.inCoralRoller());
-    m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_algae.inCoralRoller());
+    m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_algae.outCoralRoller());
 
 
     // m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
@@ -320,7 +321,7 @@ new Trigger(()->m_coralIntake.isCoralPresent())
   // }
 
   Command ThreeCoralRight(){
-    var reefScoringTimeDelay = 0.15;  //Adjust to reduce stopping time after scoring in seconds
+    var reefScoringTimeDelay = 0.3;  //Adjust to reduce stopping time after scoring in seconds
     BooleanSupplier isAllianceFlipped = () -> m_robotDrive.isAllianceFlipped(); // Supplier so checked at time Command runs
     var isPathMirrored = isAllianceFlipped.getAsBoolean();
     return Commands.sequence(
@@ -344,6 +345,35 @@ new Trigger(()->m_coralIntake.isCoralPresent())
                              new PathPlannerAuto("TAAC2S2",isPathMirrored),
                              m_coralIntake::isCoralPresent));
   }
+
+  Command ThreeCoralLeft(){
+    var reefScoringTimeDelay = 0.3;  //Adjust to reduce stopping time after scoring in seconds
+    BooleanSupplier isAllianceFlipped = () -> m_robotDrive.isAllianceFlipped(); // Supplier so checked at time Command runs
+    var isPathMirrored = isAllianceFlipped.getAsBoolean();
+    return Commands.sequence(
+             new PathPlannerAuto("TAAB4C7",isPathMirrored),
+             Commands.waitSeconds(reefScoringTimeDelay),
+             Commands.either(new PathPlannerAuto("TAAC7RS6",isPathMirrored),
+                             new PathPlannerAuto("TAAC7S6",isPathMirrored),
+                             m_coralIntake::isCoralPresent),
+             Commands.either(new PathPlannerAuto("TAAS6C6",isPathMirrored),
+                             new PathPlannerAuto("TAAS6RC6",isPathMirrored),
+                             m_coralIntake::isCoralPresent),
+             Commands.waitSeconds(reefScoringTimeDelay)
+             );
+  }
+
+  //            Commands.either(new PathPlannerAuto("TAAC1RS1",isPathMirrored),
+  //                            new PathPlannerAuto("TAAC1S1",isPathMirrored),
+  //                            m_coralIntake::isCoralPresent),
+  //           Commands.either(new PathPlannerAuto("TAAS1C2",isPathMirrored),
+  //                            new PathPlannerAuto("TAAS1RC2",isPathMirrored),
+  //                            m_coralIntake::isCoralPresent),
+  //           Commands.waitSeconds(reefScoringTimeDelay),
+  //           Commands.either(new PathPlannerAuto("TAAC2RS2",isPathMirrored),
+  //                            new PathPlannerAuto("TAAC2S2",isPathMirrored),
+  //                            m_coralIntake::isCoralPresent));
+  // }
 
 
 }
