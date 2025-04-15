@@ -88,6 +88,9 @@ public class RobotContainer {
     //m_autoChooser.addOption("T2C BBCC10L4, C10S1, S1C11L4", AutoBuilder.buildAuto("T2C BBCC10L4, C10S1, S1C11L4"));
     m_autoChooser.addOption("LeftTwo_9-8_S6", AutoBuilder.buildAuto("LeftTwo_9-8_S6"));
     m_autoChooser.addOption("RightTwo_10-11_S1", AutoBuilder.buildAuto("RightTwo_10-11_S1"));
+    m_autoChooser.addOption("3 Coral B6", AutoBuilder.buildAuto("2C B6C7L4,C7S5,S5C6L4"));
+    m_autoChooser.addOption("Left_3_7-5_S5", AutoBuilder.buildAuto("Left_3_7-5_S5"));
+    //m_autoChooser.addOption("RightTwo_10-11_S1", AutoBuilder.buildAuto("RightTwo_10-11_S1"));
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
     try {
