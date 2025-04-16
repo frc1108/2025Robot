@@ -103,6 +103,42 @@ public final class Configs {
         }
     }
     
+    
+    public static final class Pickup {
+        public static final SparkMaxConfig pickupConfig = new SparkMaxConfig();
+
+        static {
+                // Configure basic settings of the arm motor
+                pickupConfig
+                  .idleMode(IdleMode.kBrake)
+                  .inverted(false)
+                  .smartCurrentLimit(40)
+                  .voltageCompensation(10);
+ 
+                /*
+                 * Configure the closed loop controller. We want to make sure we set the
+                 * feedback sensor as the primary encoder.
+                 */
+                pickupConfig
+                    .closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .p(2) //1.2
+                    //.d(0.075)
+                    .outputRange(-1, 1)
+                    .maxMotion
+                    // Set MAXMotion parameters for position control
+                    .maxVelocity(600)  // Added 20% speed to max pre-Heartland
+                    .maxAcceleration(1800)
+                    .allowedClosedLoopError(0.1);
+
+                pickupConfig
+                    .signals
+                    .faultsAlwaysOn(true)
+                    .warningsAlwaysOn(true);
+        }
+    }
+
+
     public static final class Elevator {
         public static final SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 

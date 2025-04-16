@@ -22,8 +22,10 @@ import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.PickupSubsystem;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
+import frc.robot.subsystems.PickupSubsystem.PickupSetpoint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -55,7 +57,8 @@ public class RobotContainer {
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
   private final CoralSubsystem m_coral = new CoralSubsystem();
-  private Vision m_reefVision, m_bargeVision;
+  private final PickupSubsystem m_pickup = new PickupSubsystem();
+  private Vision m_reefVision, m_twoReefVision, m_bargeVision;
   private final LEDSubsystem m_led = new LEDSubsystem();
   private final CoralIntakeSubsystem m_coralIntake = new CoralIntakeSubsystem();
 
@@ -95,6 +98,7 @@ public class RobotContainer {
     setupPathPlannerLog();
     try {
       m_reefVision = new Vision(m_robotDrive::visionPose, m_robotDrive,Constants.ReefVisionConstants.kCameraName,Constants.ReefVisionConstants.kCameraOffset);
+      m_twoReefVision = new Vision(m_robotDrive::visionPose, m_robotDrive,Constants.TwoReefVisionConstants.kCameraName,Constants.TwoReefVisionConstants.kCameraOffset);
       m_bargeVision= new Vision(m_robotDrive::visionPose, m_robotDrive,Constants.BargeVisionConstants.kCameraName,Constants.BargeVisionConstants.kCameraOffset);
     }
      catch(IOException e) {
@@ -130,8 +134,8 @@ public class RobotContainer {
     m_driverController.rightTrigger().whileTrue(m_climber.upClimber());
     m_driverController.leftTrigger().whileTrue(m_climber.downClimber());
 
-    m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
-    m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());
+    // m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
+    // m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());
 
     m_operatorController.povLeft().whileTrue(m_algae.inAlgaeRoller());
     m_operatorController.povRight().whileTrue(m_algae.outAlgaeRoller());
@@ -174,7 +178,28 @@ public class RobotContainer {
     m_operatorController.y().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel4)); //L4
     m_operatorController.povDown().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1)); //L4Down
     m_operatorController.back().onTrue(m_coral.setSetpointCommand(Setpoint.kStow)); //Stow
+
+    var joystickValueForAxisButton = 0.75;
+
+    m_operatorController.axisGreaterThan(XboxController.Axis.kLeftY.value,joystickValueForAxisButton).onTrue(this.none());  // Left stick up
+    m_operatorController.axisLessThan(XboxController.Axis.kLeftY.value,-joystickValueForAxisButton).onTrue(this.none());  // Left stick up
     
+    m_operatorController.axisGreaterThan(XboxController.Axis.kLeftX.value,joystickValueForAxisButton).onTrue(this.none());  // Left stick up
+    m_operatorController.axisLessThan(XboxController.Axis.kLeftX.value,-joystickValueForAxisButton).onTrue(this.none());  // Left stick up
+    
+    m_operatorController.axisGreaterThan(XboxController.Axis.kRightY.value,joystickValueForAxisButton)
+      .onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kCoralPickup));  // Left stick up
+    m_operatorController.axisLessThan(XboxController.Axis.kRightY.value,-joystickValueForAxisButton)
+      .onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kAlgaeStowL1));  // Left stick up
+    
+    m_operatorController.axisGreaterThan(XboxController.Axis.kRightX.value,joystickValueForAxisButton)
+      .onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kAlgaePickup));  // Left stick up
+    m_operatorController.axisLessThan(XboxController.Axis.kRightX.value,-joystickValueForAxisButton)
+      .onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kStow));  // Left stick up
+    m_operatorController.rightStick()
+      .onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kMax));
+    
+
 m_driverController.a()
     .onTrue(new InstantCommand(() -> {
         m_operatorController.setRumble(RumbleType.kLeftRumble, 1);
@@ -222,8 +247,8 @@ new Trigger(()->m_coralIntake.isCoralPresent())
     NamedCommands.registerCommand("reverseSlowCoral", reverseSlowCoral());
     NamedCommands.registerCommand("intakeAlgae", intakeAlgae());
     NamedCommands.registerCommand("reverseIntakeAlgae", reverseIntakeAlgae());
-    NamedCommands.registerCommand("upAlgae", upAlgae());
-    NamedCommands.registerCommand("downAlgae", downAlgae());
+    // NamedCommands.registerCommand("upAlgae", upAlgae());
+    // NamedCommands.registerCommand("downAlgae", downAlgae());
     NamedCommands.registerCommand("none", none());
   }
   /*
@@ -265,24 +290,24 @@ new Trigger(()->m_coralIntake.isCoralPresent())
         m_algae.outAlgaeRoller().withTimeout(1)
         );
   }
-  public Command upAlgae() {
-    return 
-      Commands.parallel(
-        m_algae.upAlgae().withTimeout(1)
-        );
-  }
-  public Command downAlgae() {
-    return 
-      Commands.parallel(
-        m_algae.downAlgae().withTimeout(1)
-        );
-  }
-  public Command downLOneAlgae() {
-    return 
-      Commands.parallel(
-        m_algae.downAlgae().withTimeout(.1)
-        );
-  }
+  // public Command upAlgae() {
+  //   return 
+  //     Commands.parallel(
+  //       m_algae.upAlgae().withTimeout(1)
+  //       );
+  // }
+  // public Command downAlgae() {
+  //   return 
+  //     Commands.parallel(
+  //       m_algae.downAlgae().withTimeout(1)
+  //       );
+  // }
+  // public Command downLOneAlgae() {
+  //   return 
+  //     Commands.parallel(
+  //       m_algae.downAlgae().withTimeout(.1)
+  //       );
+  // }
   public Command none() {
     return 
       Commands.parallel();
