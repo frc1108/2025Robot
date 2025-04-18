@@ -150,9 +150,9 @@ public final class Constants {
       public static final double kStow = 0.0;
       public static final double kAlgaeStowL1 = 1.5; //b intake
       public static final double kAlgaePickup = 6; //povDown //4
-      public static final double kCoralPickup = 10; //a L2 //7.5
-      public static final double kMax = 9; 
-    }
+      public static final double kCoralPickup = 10.5; //a L2 //7.5
+      public static final double kMax = 10; 
+     }
   }
 
   public static final class RollerConstants {

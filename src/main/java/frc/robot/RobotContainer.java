@@ -232,6 +232,8 @@ new Trigger(()->m_coralIntake.isCoralPresent())
                 .onFalse(m_led.runPattern(LEDPattern.solid(Color.kBlack)));
  // RobotModeTriggers.disabled().onTrue(m_coral.setSetpointCommand(Setpoint.kLevel1));
 
+new Trigger(()->m_roller.isCoralPresent()).onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kAlgaeStowL1));
+
 
 
 

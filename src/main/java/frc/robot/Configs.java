@@ -112,8 +112,8 @@ public final class Configs {
                 pickupConfig
                   .idleMode(IdleMode.kBrake)
                   .inverted(false)
-                  .smartCurrentLimit(40)
-                  .voltageCompensation(10);
+                  .smartCurrentLimit(50)
+                  .voltageCompensation(12);
  
                 /*
                  * Configure the closed loop controller. We want to make sure we set the
