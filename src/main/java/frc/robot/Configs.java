@@ -127,8 +127,8 @@ public final class Configs {
                     .outputRange(-1, 1)
                     .maxMotion
                     // Set MAXMotion parameters for position control
-                    .maxVelocity(600)  // Added 20% speed to max pre-Heartland
-                    .maxAcceleration(1800)
+                    .maxVelocity(900)  // 600
+                    .maxAcceleration(2700) //1800
                     .allowedClosedLoopError(0.1);
 
                 pickupConfig

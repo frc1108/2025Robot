@@ -149,10 +149,15 @@ public final class Constants {
     public static final class PickupSetpoints {
       public static final double kStow = 0.0;
       public static final double kAlgaeStowL1 = 1.5; //b intake
-      public static final double kAlgaePickup = 7.5; //povDown //4
-      public static final double kCoralPickup = 10.5; //a L2 //7.5
-      public static final double kMax = 11.5; 
+      public static final double kAlgaePickup = 6; //povDown //4
+      public static final double kCoralPickup = 10; //a L2 //7.5
+      public static final double kMax = 9; 
     }
+  }
+
+  public static final class RollerConstants {
+    public static final int kAlgaeRollerCanId = 27;
+    public static final int kCoralRollerCanId = 28;
   }
 
 public static final class BargeVisionConstants {
@@ -165,7 +170,7 @@ public static final class BargeVisionConstants {
             new Rotation3d(
               Rotation2d.fromDegrees(270).getRadians(), // 
                 Rotation2d.fromDegrees(360-37).getRadians(), //360-35
-                Rotation2d.fromDegrees(360-5).getRadians() //0
+                Rotation2d.fromDegrees(360-4).getRadians() //0
             ));
         public static final double kMaxDistanceMeters = 3;
     }
@@ -176,28 +181,28 @@ public static final class BargeVisionConstants {
       public static final Transform3d kCameraOffset = new Transform3d(
           new Translation3d(
               Units.inchesToMeters(6.5), // 1.0 in 6.5
-              Units.inchesToMeters(-5.375), // -12 in
+              Units.inchesToMeters(-4.875), // -5.375 previously
               Units.inchesToMeters(15)), //8.5 in
           new Rotation3d(
               0.0,
               Rotation2d.fromDegrees(11).getRadians(), //22
               Rotation2d.fromDegrees(0).getRadians()
           ));
-      public static final double kMaxDistanceMeters = 3;
+      public static final double kMaxDistanceMeters = 30;  //TODO Change back to 3
       //public static final double kMinDistanceMeters = 0.25;
   }
 
     public static final class TwoReefVisionConstants {
-      public static final String kCameraName = "Two Reef Tag Camera";
+      public static final String kCameraName = "Two Reef Camera";
       public static final Transform3d kCameraOffset = new Transform3d(
           new Translation3d(
-              Units.inchesToMeters(6.5), // 1.0 in 6.5
-              Units.inchesToMeters(5.375), // -12 in
-              Units.inchesToMeters(15)), //8.5 in
+              Units.inchesToMeters(6.75), // 1.0 in 6.5
+              Units.inchesToMeters(9), // 10.25 inch
+              Units.inchesToMeters(14.75)), //8.5 in
           new Rotation3d(
               0.0,
-              Rotation2d.fromDegrees(11).getRadians(), //22
-              Rotation2d.fromDegrees(-30).getRadians()
+              Rotation2d.fromDegrees(9).getRadians(), //22
+              Rotation2d.fromDegrees(-21.5).getRadians()
           ));
       public static final double kMaxDistanceMeters = 3;
       //public static final double kMinDistanceMeters = 0.25;

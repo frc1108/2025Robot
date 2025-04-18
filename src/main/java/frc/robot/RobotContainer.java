@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.AlgaeSubsystem;
+import frc.robot.subsystems.RollerSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
@@ -55,7 +55,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
-  private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
+  private final RollerSubsystem m_roller = new RollerSubsystem();
   private final CoralSubsystem m_coral = new CoralSubsystem();
   private final PickupSubsystem m_pickup = new PickupSubsystem();
   private Vision m_reefVision, m_twoReefVision, m_bargeVision;
@@ -82,17 +82,26 @@ public class RobotContainer {
     //configureEventTriggers();
     //m_autoChooser = AutoBuilder.buildAutoChooser();
     m_autoChooser = new SendableChooser<>();
-    m_autoChooser.addOption("Three Coral Right B3", this.ThreeCoralRight());
+
+    //Elevator towards reef side (ER)
+    m_autoChooser.addOption("ER 3Three Coral Right B3", this.ThreeCoralRight());
     m_autoChooser.addOption("Three Coral Left B4", this.ThreeCoralLeft());
-    m_autoChooser.addOption("12 Ft", AutoBuilder.buildAuto("12 Ft"));
+
+    // Elevator towards barge (EB)
     m_autoChooser.addOption("2 Coral B1", AutoBuilder.buildAuto("2C B1C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral B2", AutoBuilder.buildAuto("T3C B2C12L4,C12S2,S2C1L4"));
     m_autoChooser.addOption("3 Coral BX", AutoBuilder.buildAuto("TTwo2C BXC12L4,C12S2,S2C1L4"));
+
     //m_autoChooser.addOption("T2C BBCC10L4, C10S1, S1C11L4", AutoBuilder.buildAuto("T2C BBCC10L4, C10S1, S1C11L4"));
     m_autoChooser.addOption("LeftTwo_9-8_S6", AutoBuilder.buildAuto("LeftTwo_9-8_S6"));
     m_autoChooser.addOption("RightTwo_10-11_S1", AutoBuilder.buildAuto("RightTwo_10-11_S1"));
     m_autoChooser.addOption("3 Coral B6", AutoBuilder.buildAuto("2C B6C7L4,C7S5,S5C6L4"));
     m_autoChooser.addOption("Left_3_7-5_S5", AutoBuilder.buildAuto("Left_3_7-5_S5"));
+
+    // Elevator angled towards reef (EATR)
+
+    //Test autos
+    m_autoChooser.addOption("TEST 12 Ft", AutoBuilder.buildAuto("12 Ft"));
     //m_autoChooser.addOption("RightTwo_10-11_S1", AutoBuilder.buildAuto("RightTwo_10-11_S1"));
     SmartDashboard.putData("Auto Chooser",m_autoChooser);
     setupPathPlannerLog();
@@ -137,11 +146,11 @@ public class RobotContainer {
     // m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
     // m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());
 
-    m_operatorController.povLeft().whileTrue(m_algae.inAlgaeRoller());
-    m_operatorController.povRight().whileTrue(m_algae.outAlgaeRoller());
+    m_operatorController.povLeft().whileTrue(m_roller.inAlgaeRoller());
+    m_operatorController.povRight().whileTrue(m_roller.outAlgaeRoller());
 
-    m_operatorController.povLeft().and(m_operatorController.rightBumper()).whileTrue(m_algae.inCoralRoller());
-    m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_algae.outCoralRoller());
+    m_operatorController.povLeft().and(m_operatorController.rightBumper()).whileTrue(m_roller.inAlgaeRoller());
+    m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_roller.outAlgaeRoller());
 
 
     // m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
@@ -183,9 +192,11 @@ public class RobotContainer {
 
     m_operatorController.axisGreaterThan(XboxController.Axis.kLeftY.value,joystickValueForAxisButton).onTrue(this.none());  // Left stick up
     m_operatorController.axisLessThan(XboxController.Axis.kLeftY.value,-joystickValueForAxisButton).onTrue(this.none());  // Left stick up
+    m_operatorController.leftStick().whileTrue(m_roller.outCoralRollerFast());
     
-    m_operatorController.axisGreaterThan(XboxController.Axis.kLeftX.value,joystickValueForAxisButton).onTrue(this.none());  // Left stick up
-    m_operatorController.axisLessThan(XboxController.Axis.kLeftX.value,-joystickValueForAxisButton).onTrue(this.none());  // Left stick up
+    m_operatorController.axisGreaterThan(XboxController.Axis.kLeftX.value,joystickValueForAxisButton).whileTrue(m_roller.outCoralRollerSlow());  // Left stick right
+    m_operatorController.axisLessThan(XboxController.Axis.kLeftX.value,-joystickValueForAxisButton)
+      .whileTrue(m_roller.inCoralRoller());  // Left stick left
     
     m_operatorController.axisGreaterThan(XboxController.Axis.kRightY.value,joystickValueForAxisButton)
       .onTrue(m_pickup.setSetpointCommand(PickupSetpoint.kCoralPickup));  // Left stick up
@@ -247,8 +258,8 @@ new Trigger(()->m_coralIntake.isCoralPresent())
     NamedCommands.registerCommand("reverseSlowCoral", reverseSlowCoral());
     NamedCommands.registerCommand("intakeAlgae", intakeAlgae());
     NamedCommands.registerCommand("reverseIntakeAlgae", reverseIntakeAlgae());
-    // NamedCommands.registerCommand("upAlgae", upAlgae());
-    // NamedCommands.registerCommand("downAlgae", downAlgae());
+    NamedCommands.registerCommand("upAlgae", upAlgae());
+    NamedCommands.registerCommand("downAlgae", downAlgae());
     NamedCommands.registerCommand("none", none());
   }
   /*
@@ -281,21 +292,31 @@ new Trigger(()->m_coralIntake.isCoralPresent())
   public Command intakeAlgae() {
     return 
       Commands.parallel(
-        m_algae.inAlgaeRoller().withTimeout(1)
+        m_roller.inAlgaeRoller().withTimeout(1)
         );
   }
   public Command reverseIntakeAlgae() {
     return 
       Commands.parallel(
-        m_algae.outAlgaeRoller().withTimeout(1)
+        m_roller.outAlgaeRoller().withTimeout(1)
         );
   }
+  public Command upAlgae() {
+    return m_pickup.setSetpointCommand(PickupSetpoint.kAlgaeStowL1);
+  }
+
   // public Command upAlgae() {
   //   return 
   //     Commands.parallel(
   //       m_algae.upAlgae().withTimeout(1)
   //       );
   // }
+
+
+  public Command downAlgae() {
+    return m_pickup.setSetpointCommand(PickupSetpoint.kCoralPickup);
+  }
+
   // public Command downAlgae() {
   //   return 
   //     Commands.parallel(
@@ -350,6 +371,7 @@ new Trigger(()->m_coralIntake.isCoralPresent())
 
   Command ThreeCoralRight(){
     var reefScoringTimeDelay = 0.3;  //Adjust to reduce stopping time after scoring in seconds
+    var coralStationTimeDelay = 0.05;
     BooleanSupplier isAllianceFlipped = () -> m_robotDrive.isAllianceFlipped(); // Supplier so checked at time Command runs
     var isPathMirrored = isAllianceFlipped.getAsBoolean();
     return Commands.sequence(
@@ -358,18 +380,22 @@ new Trigger(()->m_coralIntake.isCoralPresent())
              Commands.either(new PathPlannerAuto("TAAC12RS1",isPathMirrored),
                              new PathPlannerAuto("TAAC12S1",isPathMirrored),
                              m_coralIntake::isCoralPresent),
-             Commands.either(new PathPlannerAuto("TAAS1C1",isPathMirrored),
-                             new PathPlannerAuto("TAAS1RC1",isPathMirrored),
-                             m_coralIntake::isCoralPresent),
+             new PathPlannerAuto("TAAS1C1",isPathMirrored),
+            //  Commands.waitSeconds(coralStationTimeDelay),
+            //  Commands.either(new PathPlannerAuto("TAAS1C1",isPathMirrored),
+            //                  new PathPlannerAuto("TAAS1RC1",isPathMirrored),
+            //                  m_coralIntake::isCoralPresent),
              Commands.waitSeconds(reefScoringTimeDelay),
              Commands.either(new PathPlannerAuto("TAAC1RS1",isPathMirrored),
                              new PathPlannerAuto("TAAC1S1",isPathMirrored),
                              m_coralIntake::isCoralPresent),
-            Commands.either(new PathPlannerAuto("TAAS1C2",isPathMirrored),
-                             new PathPlannerAuto("TAAS1RC2",isPathMirrored),
-                             m_coralIntake::isCoralPresent),
-            Commands.waitSeconds(reefScoringTimeDelay),
-            Commands.either(new PathPlannerAuto("TAAC2RS2",isPathMirrored),
+             new PathPlannerAuto("TAAS1C2",isPathMirrored),
+            //  Commands.waitSeconds(coralStationTimeDelay),
+            //  Commands.either(new PathPlannerAuto("TAAS1C2",isPathMirrored),
+            //                  new PathPlannerAuto("TAAS1RC2",isPathMirrored),
+            //                  m_coralIntake::isCoralPresent),
+             Commands.waitSeconds(reefScoringTimeDelay),
+             Commands.either(new PathPlannerAuto("TAAC2RS2",isPathMirrored),
                              new PathPlannerAuto("TAAC2S2",isPathMirrored),
                              m_coralIntake::isCoralPresent));
   }
@@ -384,10 +410,17 @@ new Trigger(()->m_coralIntake.isCoralPresent())
              Commands.either(new PathPlannerAuto("TAAC7RS6",isPathMirrored),
                              new PathPlannerAuto("TAAC7S6",isPathMirrored),
                              m_coralIntake::isCoralPresent),
-             Commands.either(new PathPlannerAuto("TAAS6C6",isPathMirrored),
-                             new PathPlannerAuto("TAAS6RC6",isPathMirrored),
+             new PathPlannerAuto("TAAS6C6",isPathMirrored),
+             Commands.waitSeconds(reefScoringTimeDelay),
+             Commands.either(new PathPlannerAuto("TAAC6RS6",isPathMirrored),
+                             new PathPlannerAuto("TAAC6S6",isPathMirrored),
                              m_coralIntake::isCoralPresent),
-             Commands.waitSeconds(reefScoringTimeDelay)
+
+            //  Commands.either(new PathPlannerAuto("TAAS6C6",isPathMirrored),
+            //                  new PathPlannerAuto("TAAS6RC6",isPathMirrored),
+            //                  m_coralIntake::isCoralPresent),
+            new PathPlannerAuto("TAAS6C6",isPathMirrored),
+            Commands.waitSeconds(reefScoringTimeDelay)
              );
   }
 

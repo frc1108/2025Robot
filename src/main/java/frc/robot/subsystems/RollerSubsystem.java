@@ -12,20 +12,21 @@ import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.Constants.RollerConstants;
 
 @Logged
-public class AlgaeSubsystem extends SubsystemBase {
+public class RollerSubsystem extends SubsystemBase {
 
-  final SparkMax m_algaeSpin = new SparkMax(27, MotorType.kBrushless);
-  final SparkMax m_coralSpin = new SparkMax(28, MotorType.kBrushless);
+  final SparkMax m_algaeRoller = new SparkMax(RollerConstants.kAlgaeRollerCanId, MotorType.kBrushless);
+  final SparkMax m_coralL1Roller = new SparkMax(RollerConstants.kCoralRollerCanId, MotorType.kBrushless);
 
   /** Creates a new AlgaeSubsystem. */
-  public AlgaeSubsystem() {
-    m_algaeSpin.configure(
+  public RollerSubsystem() {
+    m_algaeRoller.configure(
       Configs.AlgaeIntake.algaeIntakeConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
-    m_coralSpin.configure(
+    m_coralL1Roller.configure(
       Configs.CoralIntake.coralIntakeConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
@@ -35,20 +36,35 @@ public class AlgaeSubsystem extends SubsystemBase {
   public void periodic() {}
   
   private void setSpinPower(double power) {
-    m_algaeSpin.set(power);
+    m_algaeRoller.set(power);
   }
 
   public Command inAlgaeRoller() {
     return this.startEnd(
-      () -> this.setSpinPower(0.5),() -> this.setSpinPower(0.0));
+      () -> {
+        this.setSpinPower(0.5);
+        this.setCoralSpinPower(0.5);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
   }
+
   public Command outAlgaeRoller() {
     return this.startEnd(
-      () -> this.setSpinPower(-0.5),() -> this.setSpinPower(0.0));
+      () -> {
+        this.setSpinPower(-0.5);
+        this.setCoralSpinPower(-0.5);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
   }
 
   private void setCoralSpinPower(double power) {
-    m_coralSpin.set(power);
+    m_coralL1Roller.set(power);
   }
 
   public Command inCoralRoller() {
@@ -63,7 +79,19 @@ public class AlgaeSubsystem extends SubsystemBase {
       });
   }
 
-  public Command outCoralRoller() {
+  public Command outCoralRollerSlow() {
+    return this.startEnd(
+      () -> {
+        this.setSpinPower(-0.4);
+        this.setCoralSpinPower(0.1);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
+  }
+
+  public Command outCoralRollerFast() {
     return this.startEnd(
       () -> {
         this.setSpinPower(-0.5);
