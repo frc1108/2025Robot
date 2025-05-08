@@ -188,7 +188,7 @@ public static final class BargeVisionConstants {
               Rotation2d.fromDegrees(11).getRadians(), //22
               Rotation2d.fromDegrees(0).getRadians()
           ));
-      public static final double kMaxDistanceMeters = 30;  //TODO Change back to 3
+      public static final double kMaxDistanceMeters = 3;  //TODO Change back to 3
       //public static final double kMinDistanceMeters = 0.25;
   }
 

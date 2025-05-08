@@ -417,12 +417,8 @@ new Trigger(()->m_roller.isCoralPresent()).onTrue(m_pickup.setSetpointCommand(Pi
              Commands.either(new PathPlannerAuto("TAAC6RS6",isPathMirrored),
                              new PathPlannerAuto("TAAC6S6",isPathMirrored),
                              m_coralIntake::isCoralPresent),
+             new PathPlannerAuto("TAAS6C5",isPathMirrored)
 
-            //  Commands.either(new PathPlannerAuto("TAAS6C6",isPathMirrored),
-            //                  new PathPlannerAuto("TAAS6RC6",isPathMirrored),
-            //                  m_coralIntake::isCoralPresent),
-            new PathPlannerAuto("TAAS6C6",isPathMirrored),
-            Commands.waitSeconds(reefScoringTimeDelay)
              );
   }
 
