@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.732,
+        "y": 1.4
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.5217265861070197,
+        "y": 1.252764970507045
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.25,
+        "y": 1.1
+      },
+      "prevControl": {
+        "x": 1.454788011072248,
+        "y": 1.2433941090877616
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.75,
+    "maxAcceleration": 3.25,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 10.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -126.0
+  },
+  "reversed": false,
+  "folder": "Texas",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -140.0
+  },
+  "useDefaultConstraints": false
+}

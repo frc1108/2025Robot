@@ -38,6 +38,8 @@ public class Vision extends SubsystemBase {
 
         // Field layout is loaded
         fieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2025ReefscapeWelded.m_resourceFile);
+        //fieldLayout = new AprilTagFieldLayout("/home/lvuser/deploy/fieldmaps/2025-reefscape-welded.json");
+
 
         poseEstimator = new PhotonPoseEstimator(
             fieldLayout,

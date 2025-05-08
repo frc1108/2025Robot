@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -79,7 +80,7 @@ public class CoralSubsystem extends SubsystemBase {
   private void moveToSetpoint() {
     m_armController.setReference(m_armCurrentTarget, ControlType.kMAXMotionPositionControl);
     m_elevatorController.setReference(
-      m_elevatorCurrentTarget,ControlType.kMAXMotionPositionControl);
+      m_elevatorCurrentTarget,ControlType.kMAXMotionPositionControl,ClosedLoopSlot.kSlot0,CoralSubsystemConstants.kElevatorMotorFeedforwardinVolts);
   }
 
   private boolean lowerLimitIsPressed () {

@@ -76,7 +76,10 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.076; //New - .0762 Worn - .07395 Halfway Worn - .075
+    // REV Spiky wheel New 0.078
+    // REV Spikey wheels Halfway 0.0771875
+    // REV v2 wheel New 0.0762 
+    public static final double kWheelDiameterMeters = 0.0771875; //New - .0762 Worn - .07395 Halfway Worn - .075 
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -114,6 +117,7 @@ public final class Constants {
     public static final int kElevatorMotorCanId = 21;
     public static final int kArmMotorCanId = 41;
     public static final int kIntakeMotorCanId = 42;
+    public static final double kElevatorMotorFeedforwardinVolts = 0.26;
 
     public static final class ElevatorSetpoints {
       public static final double kStow = 0.0;
@@ -139,6 +143,23 @@ public final class Constants {
     }
   }
 
+  public static final class PickupSubsystemConstants {
+    public static final int kPickupMotorCanId = 26;
+
+    public static final class PickupSetpoints {
+      public static final double kStow = 0.0;
+      public static final double kAlgaeStowL1 = 1.5; //b intake
+      public static final double kAlgaePickup = 6; //povDown //4
+      public static final double kCoralPickup = 10.5; //a L2 //7.5
+      public static final double kMax = 10; 
+     }
+  }
+
+  public static final class RollerConstants {
+    public static final int kAlgaeRollerCanId = 27;
+    public static final int kCoralRollerCanId = 28;
+  }
+
 public static final class BargeVisionConstants {
         public static final String kCameraName = "Barge Tag Camera";
         public static final Transform3d kCameraOffset = new Transform3d(
@@ -149,40 +170,42 @@ public static final class BargeVisionConstants {
             new Rotation3d(
               Rotation2d.fromDegrees(270).getRadians(), // 
                 Rotation2d.fromDegrees(360-37).getRadians(), //360-35
-                Rotation2d.fromDegrees(360-5).getRadians() //0
+                Rotation2d.fromDegrees(360-4).getRadians() //0
             ));
         public static final double kMaxDistanceMeters = 3;
     }
 
-// Lower camera position constants
-// public static final class BargeVisionConstants {
-//       public static final String kCameraName = "Barge Tag Camera";
-//       public static final Transform3d kCameraOffset = new Transform3d(
-//           new Translation3d(
-//               Units.inchesToMeters(-5.5), // 5.5 in
-//               Units.inchesToMeters(5.5), // -12 in
-//               Units.inchesToMeters(7.375)), //8.5 in
-//           new Rotation3d(
-//               0.0,
-//               Rotation2d.fromDegrees(32.0).getRadians(), //22
-//               Rotation2d.fromDegrees(3.5).getRadians()
-//           ));
-//       public static final double kMaxDistanceMeters = 3;
-//   }
 
     public static final class ReefVisionConstants {
       public static final String kCameraName = "Reef Tag Camera";
       public static final Transform3d kCameraOffset = new Transform3d(
           new Translation3d(
               Units.inchesToMeters(6.5), // 1.0 in 6.5
-              Units.inchesToMeters(-5.375), // -12 in
+              Units.inchesToMeters(-4.875), // -5.375 previously
               Units.inchesToMeters(15)), //8.5 in
           new Rotation3d(
               0.0,
               Rotation2d.fromDegrees(11).getRadians(), //22
               Rotation2d.fromDegrees(0).getRadians()
           ));
+      public static final double kMaxDistanceMeters = 3;  //TODO Change back to 3
+      //public static final double kMinDistanceMeters = 0.25;
+  }
+
+    public static final class TwoReefVisionConstants {
+      public static final String kCameraName = "Two Reef Camera";
+      public static final Transform3d kCameraOffset = new Transform3d(
+          new Translation3d(
+              Units.inchesToMeters(6.75), // 1.0 in 6.5
+              Units.inchesToMeters(9), // 10.25 inch
+              Units.inchesToMeters(14.75)), //8.5 in
+          new Rotation3d(
+              0.0,
+              Rotation2d.fromDegrees(9).getRadians(), //22
+              Rotation2d.fromDegrees(-21.5).getRadians()
+          ));
       public static final double kMaxDistanceMeters = 3;
+      //public static final double kMinDistanceMeters = 0.25;
   }
 
 }

@@ -1,13 +1,17 @@
 {
-  "robotWidth": 0.8128,
-  "robotLength": 0.8128,
+  "robotWidth": 0.7874,
+  "robotLength": 0.7874,
   "holonomicMode": true,
   "pathFolders": [
     "2025",
-    "Test"
+    "TexasB",
+    "Test",
+    "Texas"
   ],
   "autoFolders": [
     "2025",
+    "SAVE",
+    "Right 3 Coral",
     "Test"
   ],
   "defaultMaxVel": 3.0,
@@ -16,14 +20,14 @@
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 56.25,
-  "robotMOI": 6.1935,
+  "robotMOI": 7.0,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.038,
   "driveGearing": 5.5,
-  "maxDriveSpeed": 4.94,
+  "maxDriveSpeed": 3.9,
   "driveMotorType": "vortex",
   "driveCurrentLimit": 80.0,
-  "wheelCOF": 1.2,
+  "wheelCOF": 1.1,
   "flModuleX": 0.273,
   "flModuleY": 0.273,
   "frModuleX": 0.273,

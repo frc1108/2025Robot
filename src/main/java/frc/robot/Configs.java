@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.util.Units;
@@ -90,8 +91,8 @@ public final class Configs {
                     .outputRange(-1, 1)
                     .maxMotion
                     // Set MAXMotion parameters for position control
-                    .maxVelocity(300)
-                    .maxAcceleration(900)
+                    .maxVelocity(360)  // Added 20% speed to max pre-Heartland
+                    .maxAcceleration(1080)
                     .allowedClosedLoopError(0.1);
 
                 armConfig
@@ -102,6 +103,42 @@ public final class Configs {
         }
     }
     
+    
+    public static final class Pickup {
+        public static final SparkMaxConfig pickupConfig = new SparkMaxConfig();
+
+        static {
+                // Configure basic settings of the arm motor
+                pickupConfig
+                  .idleMode(IdleMode.kBrake)
+                  .inverted(false)
+                  .smartCurrentLimit(50)
+                  .voltageCompensation(12);
+ 
+                /*
+                 * Configure the closed loop controller. We want to make sure we set the
+                 * feedback sensor as the primary encoder.
+                 */
+                pickupConfig
+                    .closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .p(2) //1.2
+                    //.d(0.075)
+                    .outputRange(-1, 1)
+                    .maxMotion
+                    // Set MAXMotion parameters for position control
+                    .maxVelocity(900)  // 600
+                    .maxAcceleration(2700) //1800
+                    .allowedClosedLoopError(0.1);
+
+                pickupConfig
+                    .signals
+                    .faultsAlwaysOn(true)
+                    .warningsAlwaysOn(true);
+        }
+    }
+
+
     public static final class Elevator {
         public static final SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
@@ -123,12 +160,12 @@ public final class Configs {
                   .velocityConversionFactor(sprocketDistanceMeters/60);
                 elevatorConfig.closedLoop
                   .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)
-                  .p(3)
+                  .p(3) //3
                   .outputRange(-1, 1);
                 elevatorConfig.closedLoop.maxMotion
-                  .maxVelocity(50) // m/s Not sure what exact units are in??
-                  .maxAcceleration(300)
-                  .allowedClosedLoopError(0.004);  // 4mm
+                  .maxVelocity(60) // 10 percent faster pre-Heartland both V & A  55
+                  .maxAcceleration(350) //355 
+                  .allowedClosedLoopError(0.005);  // 0.004m 
         }
 }
 
@@ -138,6 +175,7 @@ public static final class Intake {
         static {
                 // Configure basic settings of the arm motor
                 intakeConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(20).voltageCompensation(10);
+                intakeConfig.limitSwitch.forwardLimitSwitchEnabled(false).forwardLimitSwitchType(Type.kNormallyClosed);
         }}
 
 public static final class Algae {
@@ -148,7 +186,7 @@ public static final class Algae {
                 algaeConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(60)
-                .voltageCompensation(12);
+                ;
         }}
 public static final class AlgaeIntake {
         public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
@@ -157,7 +195,17 @@ public static final class AlgaeIntake {
                 // Configure basic settings of the algaeIntake motor
                 algaeIntakeConfig
                 .idleMode(IdleMode.kCoast)
-                .smartCurrentLimit(60)
+                .smartCurrentLimit(40)
+                .voltageCompensation(12);
+        }}
+public static final class CoralIntake {
+        public static final SparkMaxConfig coralIntakeConfig = new SparkMaxConfig();
+        
+        static {
+                // Configure basic settings of the algaeIntake motor
+                coralIntakeConfig
+                .idleMode(IdleMode.kCoast)
+                .smartCurrentLimit(20)
                 .voltageCompensation(12);
         }}
 }

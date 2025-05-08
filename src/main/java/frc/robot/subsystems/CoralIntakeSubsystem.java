@@ -9,16 +9,20 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.CoralSubsystemConstants;
 import frc.robot.Constants.CoralSubsystemConstants.IntakeSetpoints;
 
+@Logged
 public class CoralIntakeSubsystem extends SubsystemBase {
 
   // Initialize intake SPARK.  We will use open loop control for this.
   private final SparkMax m_intakeMotor = new SparkMax(CoralSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
+  //private final DigitalInput m_lidar = new DigitalInput(1);
 
   /** Creates a new CoralIntakeSubsystem. */
   public CoralIntakeSubsystem() {
@@ -26,6 +30,11 @@ public class CoralIntakeSubsystem extends SubsystemBase {
       Configs.Intake.intakeConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
+  }
+
+  public boolean isCoralPresent() {
+    return !m_intakeMotor.getForwardLimitSwitch().isPressed();
+    //return !m_lidar.get();
   }
 
   private void setIntakePower(double power) {
