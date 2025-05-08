@@ -9,28 +9,27 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.Constants.RollerConstants;
+
 
 @Logged
-public class AlgaeSubsystem extends SubsystemBase {
+public class RollerSubsystem extends SubsystemBase {
 
-  final SparkMax m_algaeUpDown = new SparkMax(26, MotorType.kBrushless);
-  final SparkMax m_algaeSpin = new SparkMax(27, MotorType.kBrushless);
-  final SparkMax m_coralSpin = new SparkMax(28, MotorType.kBrushless);
+  final SparkMax m_algaeRoller = new SparkMax(RollerConstants.kAlgaeRollerCanId, MotorType.kBrushless);
+  final SparkMax m_coralL1Roller = new SparkMax(RollerConstants.kCoralRollerCanId, MotorType.kBrushless);
+  final MedianFilter m_currentFilter = new MedianFilter(100);
 
   /** Creates a new AlgaeSubsystem. */
-  public AlgaeSubsystem() {
-    m_algaeUpDown.configure(
-      Configs.Algae.algaeConfig,
-      ResetMode.kResetSafeParameters,
-      PersistMode.kPersistParameters);
-    m_algaeSpin.configure(
+  public RollerSubsystem() {
+    m_algaeRoller.configure(
       Configs.AlgaeIntake.algaeIntakeConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
-    m_coralSpin.configure(
+    m_coralL1Roller.configure(
       Configs.CoralIntake.coralIntakeConfig,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
@@ -38,35 +37,37 @@ public class AlgaeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {}
-
-  // This method will be called once per scheduler run
-  private void setAlgaePower(double power) {
-    m_algaeUpDown.setVoltage(power);
-  }
-  public Command upAlgae() {
-    return this.startEnd(
-      () -> this.setAlgaePower(4),() -> this.setAlgaePower(-0.025));
-  }
-  public Command downAlgae() {
-    return this.startEnd(
-      () -> this.setAlgaePower(-4),() -> this.setAlgaePower(-0.025));
-  }
   
   private void setSpinPower(double power) {
-    m_algaeSpin.set(power);
+    m_algaeRoller.set(power);
   }
 
   public Command inAlgaeRoller() {
     return this.startEnd(
-      () -> this.setSpinPower(0.5),() -> this.setSpinPower(0.0));
+      () -> {
+        this.setSpinPower(0.5);
+        this.setCoralSpinPower(0.5);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
   }
+
   public Command outAlgaeRoller() {
     return this.startEnd(
-      () -> this.setSpinPower(-0.5),() -> this.setSpinPower(0.0));
+      () -> {
+        this.setSpinPower(-0.5);
+        this.setCoralSpinPower(-0.5);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
   }
 
   private void setCoralSpinPower(double power) {
-    m_coralSpin.set(power);
+    m_coralL1Roller.set(power);
   }
 
   public Command inCoralRoller() {
@@ -81,7 +82,19 @@ public class AlgaeSubsystem extends SubsystemBase {
       });
   }
 
-  public Command outCoralRoller() {
+  public Command outCoralRollerSlow() {
+    return this.startEnd(
+      () -> {
+        this.setSpinPower(-0.4);
+        this.setCoralSpinPower(0.1);
+      },
+      () -> {
+        this.setSpinPower(0.0);
+        this.setCoralSpinPower(0.0);
+      });
+  }
+
+  public Command outCoralRollerFast() {
     return this.startEnd(
       () -> {
         this.setSpinPower(-0.5);
@@ -91,5 +104,18 @@ public class AlgaeSubsystem extends SubsystemBase {
         this.setSpinPower(0.0);
         this.setCoralSpinPower(0.0);
       });
+  }
+
+  public double getCoralIntakeCurrent() {
+    return m_coralL1Roller.getOutputCurrent();
+  }
+
+  public double getFilteredCoralIntakeCurrent() {
+    return m_currentFilter.calculate(getCoralIntakeCurrent());
+  }
+
+  public boolean isCoralPresent() {
+    var coralStallCurrent = 10.0;
+    return (getFilteredCoralIntakeCurrent() > coralStallCurrent);
   }
 }
