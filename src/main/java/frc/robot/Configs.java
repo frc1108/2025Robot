@@ -207,5 +207,7 @@ public static final class CoralIntake {
                 .idleMode(IdleMode.kCoast)
                 .smartCurrentLimit(20)
                 .voltageCompensation(12);
+                coralIntakeConfig.limitSwitch
+                .forwardLimitSwitchType(Type.kNormallyOpen);
         }}
 }
