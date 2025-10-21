@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Seconds;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -21,6 +23,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -282,5 +285,27 @@ public class DriveSubsystem extends SubsystemBase {
 
     return false;
   }
+
+  public Pose2d predict(Time inTheFuture){
+        
+        Pose2d currPose = getPose();
+
+        var cs = getFieldVelocity();
+
+        return new Pose2d(
+            currPose.getX() + cs.vxMetersPerSecond * inTheFuture.in(Seconds), 
+            currPose.getY() + cs.vyMetersPerSecond * inTheFuture.in(Seconds), 
+            currPose.getRotation().plus(Rotation2d.fromRadians(cs.omegaRadiansPerSecond * inTheFuture.in(Seconds)))
+        );
+    }
+
+    public ChassisSpeeds getFieldVelocity() {
+      return getRobotRelativeSpeeds();
+  }
+
+  public double getSpeed() {
+    ChassisSpeeds fieldVelocity = getFieldVelocity();
+    return Math.sqrt(fieldVelocity.vxMetersPerSecond * fieldVelocity.vxMetersPerSecond + fieldVelocity.vyMetersPerSecond * fieldVelocity.vyMetersPerSecond);
+}
 
 }

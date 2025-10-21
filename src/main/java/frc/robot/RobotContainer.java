@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.autos.AlignToReef;
+import frc.robot.commands.autos.AlignToReef.FieldBranchSide;
 import frc.robot.subsystems.RollerSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
@@ -68,12 +72,17 @@ public class RobotContainer {
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   private final Field2d m_path;
+  private static final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+  private AlignToReef alignmentCommandFactory = null;
   private final SendableChooser<Command> m_autoChooser;
   private int m_invertDriveAlliance = -1;  /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     m_path = new Field2d();
+    if (m_robotDrive != null) {
+      alignmentCommandFactory = new AlignToReef(m_robotDrive,fieldLayout);
+    }
 
     // Configure the button bindings
     configureButtonBindings();
@@ -142,6 +151,16 @@ public class RobotContainer {
 
     m_driverController.rightTrigger().whileTrue(m_climber.upClimber());
     m_driverController.leftTrigger().whileTrue(m_climber.downClimber());
+
+    m_driverController.leftBumper().whileTrue(
+      alignmentCommandFactory.generateCommand(FieldBranchSide.LEFT)
+      .withName("Align Left Branch")
+  );
+
+  m_driverController.rightBumper().whileTrue(
+      alignmentCommandFactory.generateCommand(FieldBranchSide.RIGHT)
+      .withName("Align Right Branch")
+  );
 
     // m_operatorController.rightBumper().whileTrue(m_algae.upAlgae());
     // m_operatorController.leftBumper().whileTrue(m_algae.downAlgae());
@@ -434,5 +453,8 @@ new Trigger(()->m_roller.isCoralPresent()).onTrue(m_pickup.setSetpointCommand(Pi
   //                            m_coralIntake::isCoralPresent));
   // }
 
+  public static AprilTagFieldLayout getFieldLayout() {
+    return fieldLayout;
+}
 
 }

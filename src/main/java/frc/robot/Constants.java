@@ -4,14 +4,36 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Centimeter;
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.InchesPerSecond;
+import static edu.wpi.first.units.Units.Kilogram;
+import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Pounds;
+import static edu.wpi.first.units.Units.Seconds;
+import frc.robot.commands.VariableAutos.FieldBranch;
+
+
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -94,6 +116,104 @@ public final class Constants {
     public static final double kDriveDeadband = 0.05;
   }
 
+  public static final class AutoConstants {
+      public static final PIDConstants kTranslationPID = new PIDConstants(5.0,0,0);
+      public static final PIDConstants kRotationPID = new PIDConstants(5.0,0,0);
+
+      public static final PPHolonomicDriveController kDriveController = new PPHolonomicDriveController(
+          AutoConstants.kTranslationPID, 
+          AutoConstants.kRotationPID
+      );
+
+      public enum PathplannerConfigs{
+          PROGRAMMER_CHASSIS(new RobotConfig(
+              Kilogram.of(10), 
+              KilogramSquareMeters.of(1.9387211145),
+              new ModuleConfig(
+                  Inches.of(3.75/2.0),
+                  MetersPerSecond.of(4),
+                  1.00,
+                  DCMotor.getNEO(1),
+                  6.75,
+                  Amps.of(40),
+                  1
+              ),
+              new Translation2d(Inches.of(12.625), Inches.of(12.5625)),
+              new Translation2d(Inches.of(12.125), Inches.of(-12.5)),
+              new Translation2d(Inches.of(-12), Inches.of(12.5)),
+              new Translation2d(Inches.of(-12.125), Inches.of(-12.4375))
+          )),
+          COMP_CHASSIS(new RobotConfig(
+              Pounds.of(142), 
+              KilogramSquareMeters.of(4.86247863),
+              new ModuleConfig(
+                  Inches.of(3.75/2.0),
+                  MetersPerSecond.of(5.273 * 0.9),
+                  1.916,
+                  DCMotor.getNEO(1),
+                  5.900,
+                  Amps.of(40),
+                  1
+              ),
+              new Translation2d(Inches.of(13.375), Inches.of(11.375)),
+              new Translation2d(Inches.of(13.375), Inches.of(-11.375)),
+              new Translation2d(Inches.of(-13.375), Inches.of(11.375)),
+              new Translation2d(Inches.of(-13.375), Inches.of(-11.375))
+      ));
+;
+
+          public RobotConfig config;
+
+          private PathplannerConfigs(RobotConfig config) {
+              this.config = config;
+          }
+      }
+
+      public static final PPHolonomicDriveController kAutoAlignPIDController = new PPHolonomicDriveController(
+          new PIDConstants(5.5, 0.0, 0.1, 0.0), 
+          AutoConstants.kRotationPID
+      );
+
+      public static final Time kAutoAlignPredict = Seconds.of(0.0);
+
+      public static final Rotation2d kRotationTolerance = Rotation2d.fromDegrees(3.0);
+      public static final Distance kPositionTolerance = Centimeter.of(1.5);
+      public static final LinearVelocity kSpeedTolerance = InchesPerSecond.of(2);
+
+      public static final Time kEndTriggerDebounce = Seconds.of(0.04);
+
+      public static final Time kTeleopAlignAdjustTimeout = Seconds.of(2);
+      public static final Time kAutoAlignAdjustTimeout = Seconds.of(0.6);
+
+      public static final Time kUnstuckWait = Seconds.of(1.0);
+      public static final Time kUnstuckDuration = Seconds.of(0.35);
+
+      public static final LinearVelocity kStationApproachSpeed = InchesPerSecond.of(8);
+      public static final Time kStationApproachTimeout = Seconds.of(5);
+
+      public static final PathConstraints kStartingPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); // The constraints for this path.
+
+      public static final PathConstraints kTeleopPathConstraints = new PathConstraints(2.5, 2.0, 1/2 * Math.PI, 1 * Math.PI); // The constraints for this path.
+
+      public static final PathConstraints kAutoPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); //? consider making these more aggressive
+      
+      public static final double kTriggerDistance = 3.0;
+
+      public static final double kAutoIntakeWaitTime = 0.1;
+      public static final double kAutoIntakeTimeout = 0.2;
+
+      public static final class StationVisualizationConstants {
+              public static final Pose2d kBlueLeft = new Pose2d(0.947, 7.447, Rotation2d.fromDegrees(-50));
+              public static final Pose2d kBlueRight = new Pose2d(0.947, 0.614, Rotation2d.fromDegrees(50));
+              public static final Pose2d kRedLeft = new Pose2d(16.603, 0.614, Rotation2d.fromDegrees(130));
+              public static final Pose2d kRedRight = new Pose2d(16.603, 7.447, Rotation2d.fromDegrees(-120));
+      }
+
+      public static final class DefaultAutos {
+          public static final FieldBranch[] kLeft = {FieldBranch.J, FieldBranch.L, FieldBranch.K};
+          public static final FieldBranch[] kRight = {FieldBranch.E, FieldBranch.C, FieldBranch.D};
+      }
+  }
   // public static final class AutoConstants {
   //   public static final double kMaxSpeedMetersPerSecond = 3;
   //   public static final double kMaxAccelerationMetersPerSecondSquared = 3;
