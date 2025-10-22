@@ -196,7 +196,8 @@ public class RobotContainer {
     //Coral Intake
     m_operatorController.leftTrigger().whileTrue(m_coralIntake.runIntakeCommand()); //In
     m_operatorController.rightTrigger().whileTrue(m_coralIntake.reverseIntakeCommand()); //OutOperator
-    m_driverController.rightBumper().whileTrue(m_coralIntake.reverseIntakeCommand()); //OutDriver
+    m_driverController.povDown().whileTrue(m_coralIntake.reverseIntakeCommand()); //OutDriver
+    m_driverController.povLeft().whileTrue(Commands.run(()->m_robotDrive.setX(), m_robotDrive)); //OutDriver
     m_operatorController.povUp().whileTrue(m_coralIntake.reverseSlowIntakeCommand()); //Slow Out
     m_operatorController.start().whileTrue(m_coralIntake.reverseFastIntakeCommand()); //Fast Out
     //Coral/Elevator Positions

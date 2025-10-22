@@ -185,8 +185,8 @@ public final class Constants {
       public static final Time kTeleopAlignAdjustTimeout = Seconds.of(2);
       public static final Time kAutoAlignAdjustTimeout = Seconds.of(0.6);
 
-      public static final Time kUnstuckWait = Seconds.of(1.0);
-      public static final Time kUnstuckDuration = Seconds.of(0.35);
+      //public static final Time kUnstuckWait = Seconds.of(1.0);
+      //public static final Time kUnstuckDuration = Seconds.of(0.35);
 
       public static final LinearVelocity kStationApproachSpeed = InchesPerSecond.of(8);
       public static final Time kStationApproachTimeout = Seconds.of(5);
@@ -199,15 +199,12 @@ public final class Constants {
       
       public static final double kTriggerDistance = 3.0;
 
-      public static final double kAutoIntakeWaitTime = 0.1;
-      public static final double kAutoIntakeTimeout = 0.2;
-
-      public static final class StationVisualizationConstants {
-              public static final Pose2d kBlueLeft = new Pose2d(0.947, 7.447, Rotation2d.fromDegrees(-50));
-              public static final Pose2d kBlueRight = new Pose2d(0.947, 0.614, Rotation2d.fromDegrees(50));
-              public static final Pose2d kRedLeft = new Pose2d(16.603, 0.614, Rotation2d.fromDegrees(130));
-              public static final Pose2d kRedRight = new Pose2d(16.603, 7.447, Rotation2d.fromDegrees(-120));
-      }
+      // public static final class StationVisualizationConstants {
+      //         public static final Pose2d kBlueLeft = new Pose2d(0.947, 7.447, Rotation2d.fromDegrees(-50));
+      //         public static final Pose2d kBlueRight = new Pose2d(0.947, 0.614, Rotation2d.fromDegrees(50));
+      //         public static final Pose2d kRedLeft = new Pose2d(16.603, 0.614, Rotation2d.fromDegrees(130));
+      //         public static final Pose2d kRedRight = new Pose2d(16.603, 7.447, Rotation2d.fromDegrees(-120));
+      //}
 
       public static final class DefaultAutos {
           public static final FieldBranch[] kLeft = {FieldBranch.J, FieldBranch.L, FieldBranch.K};
