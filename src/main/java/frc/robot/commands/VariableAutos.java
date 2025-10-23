@@ -53,7 +53,9 @@ public class VariableAutos {
     public enum BranchSide{ //? you could consider bringing the tag offsets back and modifying dynamics (subtract 6.5 cm in x & y)  subtract 0.22 (22 cm ) from Y for L4
         LEFT(new Translation2d(-0.153209 + 0.0381 - 0.065, 0.5406845 + 0.02 - 0.03175 + 0.065)), //-0.109236, 0.5406845 + 0.02)) TODO check these offsets
         RIGHT(new Translation2d(0.218062 - 0.0508 + 0.01 - 0.065, 0.5408565 + 0.02 - 0.03175 + 0.065)),//0.218918 - 0.0508, 0.5408565 + 0.02)) 
-        MIDDLE(new Translation2d(0.064853 - 0.03175, 0.5408565 + 0.02 + 0.0254));
+        MIDDLE(new Translation2d(0.064853 - 0.03175, 0.5408565 + 0.02 + 0.0254)),
+        LEFTL4(new Translation2d(-0.153209 + 0.0381 - 0.065, 0.5406845 + 0.02 - 0.03175 + 0.065 - 0.22)), //-0.109236, 0.5406845 + 0.02)) TODO check these offsets
+        RIGHTL4(new Translation2d(0.218062 - 0.0508 + 0.01 - 0.065, 0.5408565 + 0.02 - 0.03175 + 0.065 - 0.22));//0.218918 - 0.0508, 0.5408565 + 0.02)) ;
 
         public Translation2d tagOffset;
         private BranchSide(Translation2d offsets) {
@@ -63,7 +65,10 @@ public class VariableAutos {
         public BranchSide mirror(){
             switch (this) {
                 case LEFT: return RIGHT;
+                case RIGHT: return LEFT;
                 case MIDDLE: return MIDDLE;
+                case LEFTL4: return RIGHTL4;
+                case RIGHTL4: return LEFTL4;
                 default: return LEFT;
             }
         }
