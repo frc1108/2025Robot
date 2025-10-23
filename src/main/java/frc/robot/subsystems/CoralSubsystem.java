@@ -107,8 +107,9 @@ private void zeroOnUserButton() {
   }
 }
 
-
-
+public double getElevatorCurrentTarget() {
+  return m_elevatorCurrentTarget;
+}
 /** 
  * Command to set the subsystem setpoint. This will set to predefined positions for the given setpoints
  */

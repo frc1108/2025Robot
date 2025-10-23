@@ -6,7 +6,7 @@ package frc.robot.commands.autos;
 
 import static frc.robot.Constants.AutoConstants.kAutoAlignAdjustTimeout;
 import static frc.robot.Constants.AutoConstants.kAutoAlignPredict;
-import static frc.robot.Constants.AutoConstants.kAutoPathConstraints;
+//import static frc.robot.Constants.AutoConstants.kAutoPathConstraints;
 import static frc.robot.Constants.AutoConstants.kTeleopAlignAdjustTimeout;
 import static frc.robot.Constants.AutoConstants.kTeleopPathConstraints;
 import static edu.wpi.first.units.Units.MetersPerSecond;
@@ -91,7 +91,9 @@ public class AlignToReef {
     public enum FieldBranchSide{
         LEFT(BranchSide.LEFT),
         RIGHT(BranchSide.RIGHT),
-        MIDDLE(BranchSide.MIDDLE);
+        MIDDLE(BranchSide.MIDDLE),
+        LEFTL4(BranchSide.LEFTL4),
+        RIGHTL4(BranchSide.RIGHTL4);
 
         public BranchSide branchSide;
 
@@ -100,6 +102,8 @@ public class AlignToReef {
                 case LEFT: return FieldBranchSide.RIGHT;
                 case RIGHT: return FieldBranchSide.LEFT;
                 case MIDDLE: return FieldBranchSide.MIDDLE;
+                case LEFTL4: return FieldBranchSide.RIGHTL4;
+                case RIGHTL4: return FieldBranchSide.LEFTL4;
             }
             System.out.println("Error, switch case failed to catch the field branch side");
             return this;
@@ -112,7 +116,7 @@ public class AlignToReef {
 
     private final StructPublisher<Pose2d> desiredBranchPublisher = NetworkTableInstance.getDefault().getTable("logging").getStructTopic("desired branch", Pose2d.struct).publish();
 
-    private PathConstraints pathConstraints = kAutoPathConstraints;
+    private PathConstraints pathConstraints = kTeleopPathConstraints;
 
     public void changePathConstraints(PathConstraints newPathConstraints){
         this.pathConstraints = newPathConstraints;
@@ -154,7 +158,7 @@ public class AlignToReef {
 
         PathPlannerPath path = new PathPlannerPath(
             waypoints, 
-            DriverStation.isAutonomous() ? pathConstraints : kTeleopPathConstraints,
+            kTeleopPathConstraints,
             new IdealStartingState(getVelocityMagnitude(m_swerve.getFieldVelocity()), m_swerve.getPose().getRotation()),
             new GoalEndState(0.0, waypoint.getRotation())
         );
@@ -163,9 +167,8 @@ public class AlignToReef {
 
         return (AutoBuilder.followPath(path).andThen(
             Commands.print("start position PID loop"),
-            PositionPIDCommand.generateCommand(m_swerve, waypoint, (
-                DriverStation.isAutonomous() ? kAutoAlignAdjustTimeout : kTeleopAlignAdjustTimeout
-            ))
+            PositionPIDCommand.generateCommand(m_swerve, waypoint,kTeleopAlignAdjustTimeout
+            )
                 .beforeStarting(Commands.runOnce(() -> {isPIDLoopRunning = true;}))
                 .finallyDo(() -> {isPIDLoopRunning = false;}),
             Commands.print("end position PID loop")
