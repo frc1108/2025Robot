@@ -15,6 +15,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.epilogue.NotLogged;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -28,7 +29,7 @@ public class Vision extends SubsystemBase {
     private final PhotonPoseEstimator poseEstimator;
     private final AprilTagFieldLayout fieldLayout;
     private final BiConsumer<Pose2d, Double> consumer;
-    private final DriveSubsystem drive;
+    @NotLogged private final DriveSubsystem drive;
     private Pose3d estimated3dPose;
 
     public Vision(BiConsumer<Pose2d, Double> consumer, DriveSubsystem drive, String photonCameraName, Transform3d cameraOffset) throws IOException{
