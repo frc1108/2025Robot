@@ -115,7 +115,10 @@ public class RollerSubsystem extends SubsystemBase {
   }
 
   public boolean isCoralPresent() {
-    var coralStallCurrent = 10.0;
-    return (getFilteredCoralIntakeCurrent() > coralStallCurrent);
+    return m_coralL1Roller.getForwardLimitSwitch().isPressed();
   }
+  // public boolean isCoralPresent() {
+  //   var coralStallCurrent = 10.0;
+  //   return (getFilteredCoralIntakeCurrent() > coralStallCurrent);
+  // }
 }

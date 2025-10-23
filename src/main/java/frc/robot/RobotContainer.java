@@ -180,8 +180,8 @@ m_driverController.rightBumper().and(()->(m_coral.getElevatorCurrentTarget()>Ele
     m_operatorController.povLeft().whileTrue(m_roller.inAlgaeRoller());
     m_operatorController.povRight().whileTrue(m_roller.outAlgaeRoller());
 
-    m_operatorController.povLeft().and(m_operatorController.rightBumper()).whileTrue(m_roller.inAlgaeRoller());
-    m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_roller.outAlgaeRoller());
+    //m_operatorController.povLeft().and(m_operatorController.rightBumper()).whileTrue(m_roller.inAlgaeRoller());
+    //m_operatorController.povRight().and(m_operatorController.leftBumper()).whileTrue(m_roller.outAlgaeRoller());
 
 
     // m_operatorController.rightTrigger().whileTrue(m_coral.coralSpinIn());
@@ -253,8 +253,8 @@ m_driverController.a()
         m_operatorController.setRumble(RumbleType.kRightRumble, 0); // Set both rumble types on False
     }));
 
-m_driverController.x().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
-m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
+//m_driverController.x().onTrue(m_led.runPattern(LEDPattern.solid(Color.kWhite)));
+//m_driverController.b().onTrue(m_led.runPattern(LEDPattern.solid(Color.kBlue)));
 
 m_driverController.y().onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 m_driverController.povUp().onTrue(this.intakeCoral());
