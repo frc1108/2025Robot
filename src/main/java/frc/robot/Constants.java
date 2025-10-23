@@ -117,61 +117,61 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-      public static final PIDConstants kTranslationPID = new PIDConstants(5.0,0,0);
-      public static final PIDConstants kRotationPID = new PIDConstants(5.0,0,0);
+      // public static final PIDConstants kTranslationPID = new PIDConstants(5.0,0,0);
+      // public static final PIDConstants kRotationPID = new PIDConstants(5.0,0,0);
 
-      public static final PPHolonomicDriveController kDriveController = new PPHolonomicDriveController(
-          AutoConstants.kTranslationPID, 
-          AutoConstants.kRotationPID
-      );
+      // public static final PPHolonomicDriveController kDriveController = new PPHolonomicDriveController(
+      //     AutoConstants.kTranslationPID, 
+      //     AutoConstants.kRotationPID
+      // );
 
-      public enum PathplannerConfigs{
-          PROGRAMMER_CHASSIS(new RobotConfig(
-              Kilogram.of(10), 
-              KilogramSquareMeters.of(1.9387211145),
-              new ModuleConfig(
-                  Inches.of(3.75/2.0),
-                  MetersPerSecond.of(4),
-                  1.00,
-                  DCMotor.getNEO(1),
-                  6.75,
-                  Amps.of(40),
-                  1
-              ),
-              new Translation2d(Inches.of(12.625), Inches.of(12.5625)),
-              new Translation2d(Inches.of(12.125), Inches.of(-12.5)),
-              new Translation2d(Inches.of(-12), Inches.of(12.5)),
-              new Translation2d(Inches.of(-12.125), Inches.of(-12.4375))
-          )),
-          COMP_CHASSIS(new RobotConfig(
-              Pounds.of(142), 
-              KilogramSquareMeters.of(4.86247863),
-              new ModuleConfig(
-                  Inches.of(3.75/2.0),
-                  MetersPerSecond.of(5.273 * 0.9),
-                  1.916,
-                  DCMotor.getNEO(1),
-                  5.900,
-                  Amps.of(40),
-                  1
-              ),
-              new Translation2d(Inches.of(13.375), Inches.of(11.375)),
-              new Translation2d(Inches.of(13.375), Inches.of(-11.375)),
-              new Translation2d(Inches.of(-13.375), Inches.of(11.375)),
-              new Translation2d(Inches.of(-13.375), Inches.of(-11.375))
-      ));
-;
+//       public enum PathplannerConfigs{
+//           PROGRAMMER_CHASSIS(new RobotConfig(
+//               Kilogram.of(10), 
+//               KilogramSquareMeters.of(1.9387211145),
+//               new ModuleConfig(
+//                   Inches.of(3.75/2.0),
+//                   MetersPerSecond.of(4),
+//                   1.00,
+//                   DCMotor.getNEO(1),
+//                   6.75,
+//                   Amps.of(40),
+//                   1
+//               ),
+//               new Translation2d(Inches.of(12.625), Inches.of(12.5625)),
+//               new Translation2d(Inches.of(12.125), Inches.of(-12.5)),
+//               new Translation2d(Inches.of(-12), Inches.of(12.5)),
+//               new Translation2d(Inches.of(-12.125), Inches.of(-12.4375))
+//           )),
+//           COMP_CHASSIS(new RobotConfig(
+//               Pounds.of(142), 
+//               KilogramSquareMeters.of(4.86247863),
+//               new ModuleConfig(
+//                   Inches.of(3.75/2.0),
+//                   MetersPerSecond.of(5.273 * 0.9),
+//                   1.916,
+//                   DCMotor.getNEO(1),
+//                   5.900,
+//                   Amps.of(40),
+//                   1
+//               ),
+//               new Translation2d(Inches.of(13.375), Inches.of(11.375)),
+//               new Translation2d(Inches.of(13.375), Inches.of(-11.375)),
+//               new Translation2d(Inches.of(-13.375), Inches.of(11.375)),
+//               new Translation2d(Inches.of(-13.375), Inches.of(-11.375))
+//       ));
+// ;
 
-          public RobotConfig config;
+//           public RobotConfig config;
 
-          private PathplannerConfigs(RobotConfig config) {
-              this.config = config;
-          }
-      }
+//           private PathplannerConfigs(RobotConfig config) {
+//               this.config = config;
+//           }
+//       }
 
       public static final PPHolonomicDriveController kAutoAlignPIDController = new PPHolonomicDriveController(
           new PIDConstants(5.5, 0.0, 0.1, 0.0), 
-          AutoConstants.kRotationPID
+          new PIDConstants(5.0,0,0)
       );
 
       public static final Time kAutoAlignPredict = Seconds.of(0.0);
@@ -185,17 +185,14 @@ public final class Constants {
       public static final Time kTeleopAlignAdjustTimeout = Seconds.of(2);
       public static final Time kAutoAlignAdjustTimeout = Seconds.of(0.6);
 
-      //public static final Time kUnstuckWait = Seconds.of(1.0);
-      //public static final Time kUnstuckDuration = Seconds.of(0.35);
+      //public static final LinearVelocity kStationApproachSpeed = InchesPerSecond.of(8);
+      //public static final Time kStationApproachTimeout = Seconds.of(5);
 
-      public static final LinearVelocity kStationApproachSpeed = InchesPerSecond.of(8);
-      public static final Time kStationApproachTimeout = Seconds.of(5);
+      //public static final PathConstraints kStartingPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); // The constraints for this path.
 
-      public static final PathConstraints kStartingPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); // The constraints for this path.
+      public static final PathConstraints kTeleopPathConstraints = new PathConstraints(2.5, 2.0, 1/2 * Math.PI, 1 * Math.PI,10,false); // The constraints for this path.
 
-      public static final PathConstraints kTeleopPathConstraints = new PathConstraints(2.5, 2.0, 1/2 * Math.PI, 1 * Math.PI); // The constraints for this path.
-
-      public static final PathConstraints kAutoPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); //? consider making these more aggressive
+      //public static final PathConstraints kAutoPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); //? consider making these more aggressive
       
       public static final double kTriggerDistance = 3.0;
 

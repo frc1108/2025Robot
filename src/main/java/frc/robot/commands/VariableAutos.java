@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 
-import static frc.robot.Constants.AutoConstants.kStationApproachSpeed;
+//import static frc.robot.Constants.AutoConstants.kStationApproachSpeed;
 import static frc.robot.Constants.AutoConstants.kTriggerDistance;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
@@ -123,17 +123,17 @@ public class VariableAutos {
     //private DynamicsCommandFactory dynamics;
     private DriveSubsystem swerve;
 
-    private final ChassisSpeeds reverseIntoStation;
+    // private final ChassisSpeeds reverseIntoStation;
 
-    public boolean isSwerveCloseToReef() {
-        Translation2d currentReef = 
-        (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue) ?
-            new Translation2d(4.5, 4.0) :
-            new Translation2d(13, 4.0)
-        ;
+    // public boolean isSwerveCloseToReef() {
+    //     Translation2d currentReef = 
+    //     (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue) ?
+    //         new Translation2d(4.5, 4.0) :
+    //         new Translation2d(13, 4.0)
+    //     ;
 
-        return (currentReef.getDistance(swerve.getPose().getTranslation()) < kTriggerDistance);
-    }
+    //     return (currentReef.getDistance(swerve.getPose().getTranslation()) < kTriggerDistance);
+    // }
 
     public VariableAutos(AlignToReef alignmentGenerator, 
     //DynamicsCommandFactory dynamics, 
@@ -143,7 +143,7 @@ public class VariableAutos {
         //this.dynamics = dynamics;
         this.swerve = swerve;
 
-        reverseIntoStation = new ChassisSpeeds(kStationApproachSpeed.unaryMinus().in(MetersPerSecond), 0, 0);
+        //reverseIntoStation = new ChassisSpeeds(kStationApproachSpeed.unaryMinus().in(MetersPerSecond), 0, 0);
     }
 
     // public PathPair getPathPair(FieldBranch branch, StationSide side, BranchHeight height){
