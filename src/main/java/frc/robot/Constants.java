@@ -101,7 +101,7 @@ public final class Constants {
     // REV Spiky wheel New 0.078
     // REV Spikey wheels Halfway 0.0771875
     // REV v2 wheel New 0.0762 
-    public static final double kWheelDiameterMeters = 0.0771875; //New - .0762 Worn - .07395 Halfway Worn - .075 
+    public static final double kWheelDiameterMeters = 0.0766514757; //New - .0762 Worn - .07395 Halfway Worn - .075 
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -190,7 +190,7 @@ public final class Constants {
 
       //public static final PathConstraints kStartingPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); // The constraints for this path.
 
-      public static final PathConstraints kTeleopPathConstraints = new PathConstraints(2.5, 2.0, 1/2 * Math.PI, 1 * Math.PI,10,false); // The constraints for this path.
+      public static final PathConstraints kTeleopPathConstraints = new PathConstraints(2.5, 2.0, 1/2 * Math.PI, 1 * Math.PI,10,false); // The constraints for this path. 2.0->1.8 
 
       //public static final PathConstraints kAutoPathConstraints = new PathConstraints(2.25, 2.25, 1/2 * Math.PI, 1 * Math.PI); //? consider making these more aggressive
       

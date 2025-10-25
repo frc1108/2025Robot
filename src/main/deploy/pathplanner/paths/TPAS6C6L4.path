@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4,
-        "y": 5.206999999999999
+        "x": 4.05,
+        "y": 5.18
       },
       "prevControl": {
-        "x": 3.8745317282672427,
-        "y": 5.423235318087482
+        "x": 3.6905442129420813,
+        "y": 5.799495553572386
       },
       "nextControl": null,
       "isLocked": true,
@@ -73,7 +73,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": -58.4112426388279
   },
   "reversed": false,
   "folder": "Texas",

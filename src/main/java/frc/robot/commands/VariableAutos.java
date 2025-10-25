@@ -54,8 +54,8 @@ public class VariableAutos {
         LEFT(new Translation2d(-0.153209 + 0.0381 - 0.065, 0.5406845 + 0.02 - 0.03175 + 0.065)), //-0.109236, 0.5406845 + 0.02)) TODO check these offsets
         RIGHT(new Translation2d(0.218062 - 0.0508 + 0.01 - 0.065, 0.5408565 + 0.02 - 0.03175 + 0.065)),//0.218918 - 0.0508, 0.5408565 + 0.02)) 
         MIDDLE(new Translation2d(0.064853 - 0.03175, 0.5408565 + 0.02 + 0.0254)),
-        LEFTL4(new Translation2d(-0.153209 + 0.0381 - 0.065, 0.5406845 + 0.02 - 0.03175 + 0.065 - 0.22)), //-0.109236, 0.5406845 + 0.02)) TODO check these offsets
-        RIGHTL4(new Translation2d(0.218062 - 0.0508 + 0.01 - 0.065, 0.5408565 + 0.02 - 0.03175 + 0.065 - 0.22));//0.218918 - 0.0508, 0.5408565 + 0.02)) ;
+        LEFTL4(new Translation2d(-0.153209 + 0.0381 - 0.035, 0.5406845 + 0.02 - 0.03175 + 0.065 - 0.22)), //-0.109236, 0.5406845 + 0.02)) TODO check these offsets Change L4 0.065->0.035
+        RIGHTL4(new Translation2d(0.218062 - 0.0508 + 0.01 - 0.035, 0.5408565 + 0.02 - 0.03175 + 0.065 - 0.22));//0.218918 - 0.0508, 0.5408565 + 0.02)) ;
 
         public Translation2d tagOffset;
         private BranchSide(Translation2d offsets) {
